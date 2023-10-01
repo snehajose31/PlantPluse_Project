@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #d0d9d0;
+    background-color: #191f19;
     margin: 0;
     display: flex;
     justify-content: center;
@@ -11,13 +11,14 @@ body {
 }
 
 .login-container {
-    background-color: #c0b6b6;
+    background-color: rgba(55, 168, 59, 0.3);
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px rgba(13, 56, 32, 0.2);
     padding: 20px;
     max-width: 400px;
     width: 90%;
     text-align: center;
+    opacity: 0.5;
     background-image: url('/static/images/box1.jpg');
     
 }
