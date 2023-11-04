@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('/static/images/dp4.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+
+        .header {
+            background-color: #003300;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1;
+
+                
+        }
+
+        .sidebar {
+            width: 20%;
+            background-color: #003300;
+            padding: 20px;
+            position: fixed;
+            top: 40px;
+            bottom: 0;
+            overflow: auto;
+            z-index: 2;
+        }
+
+        .content-container {
+            margin-left: 20%;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        /* Sidebar box styles */
+        .sidebar-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #2b542b;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            color:white;
+            margin-top: 40px;
+        }
+
+        .sidebar-item:hover {
+            background-color: #549954;
+        }
+
+        /* Content styles */
+        .content {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h2>Consultation</h2>
+    </div>
+
+    <div class="sidebar">
+        <!-- Botanist Details -->
+        <div class="sidebar-item" onclick="loadBotanistDetails()">
+            Botanist Details
+        </div>
+
+        <!-- Consultation -->
+        <div class="sidebar-item" onclick="loadConsultationForm()">
+            Consultation
+        </div>
+
+        <!-- Works -->
+        <div class="sidebar-item" onclick="loadWorksPage()">
+            Works
+        </div>
+
+        <!-- Blogs -->
+        <div class="sidebar-item" onclick="loadBlogsPage()">
+            Blogs
+        </div>
+    </div>
+
+    <div class="content-container" id="content">
+        <!-- Content will be loaded here dynamically using JavaScript -->
+    </div>
+
+    <!-- JavaScript to load the content dynamically -->
+    <script>
+        function loadBotanistDetails() {
+            const content = document.getElementById("content");
+            content.innerHTML = `
+                <div class="content">
+                    <h3>Botanist Details</h3>
+                    <!-- Add your botanist details content here -->
+                </div>
+            `;
+        }
+
+        function loadConsultationForm() {
+            const content = document.getElementById("content");
+            content.innerHTML = `
+                <div class="content">
+                    <h3>Consultation Form</h3>
+                    <!-- Add your consultation form here -->
+                </div>
+            `;
+        }
+
+        function loadWorksPage() {
+            const content = document.getElementById("content");
+            content.innerHTML = `
+                <div class="content">
+                    <h3>Works</h3>
+                    <!-- Add your works content here -->
+                </div>
+            `;
+        }
+
+        function loadBlogsPage() {
+            const content = document.getElementById("content");
+            content.innerHTML = `
+                <div class="content">
+                    <h3>Blogs</h3>
+                    <!-- Add your blogs content here -->
+                </div>
+            `;
+        }
+    </script>
+</body>
+
+</html>

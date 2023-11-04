@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        /* Reset some default styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+			background-image: url('/static/images/dp4.jpg'); /* Add your background image URL here */
+            background-size: cover;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            height: 400%;
+            width: 200px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgb(0, 51, 0);
+            padding-top: 20px;
+            opacity: 0.9;
+        }
+
+        .sidebar a {
+            padding: 15px;
+            text-decoration: none;
+            font-size: 15px;
+            color: rgb(247, 240, 240);
+            display: block;
+        }
+
+        .sidebar a:hover {
+            background-color: #8aeb8a;
+        }
+
+        /* Content Styles */
+        .content {
+            margin-left: 200px;
+            padding: 5px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: rgb(0, 51, 0);
+            padding: 3px;
+            color: white;
+            text-align: right;
+            width: 100%; /* Take the full width of the content area */
+            display: flex;
+            flex-direction: column; /* Display items in a column layout */
+            align-items: flex-end; /* Align items to the right */
+            opacity: 0.9;
+        }
+
+        /* Welcome Admin Styles */
+        .welcome-admin {
+            font-size: 15px;
+        }
+
+        /* Logout Button Styles */
+        .logout-button {
+            text-decoration: none;
+            color: white;
+            margin-top: 10px; /* Add margin to separate it from the welcome text */
+        }
+
+        /* Small Box Styles */
+        .small-box {
+            background-color: white;
+            padding: 20px;
+            margin: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            flex: 1; /* Distribute available space equally among boxes */
+            min-width: 200px;
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color:darkgreen;
+            min-width: 160px;
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            color: white;
+        }
+
+        .dropdown-content a:hover {
+            background-color:lightgreen;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="{% url 'adminpanel' %}">Dashboard</a>
+        <a href="{% url 'user' %}">Users</a>
+        <div class="dropdown-content">
+            {% comment %} <a href="{% url 'activate_user' user.id %}">activate</a>
+<a href="{% url 'deactivate_user' user.id %}">deactivate</a> {% endcomment %}
+
+        </div>
+        <!-- Product Actions Dropdown -->
+        <div class="dropdown">
+            <a href="#" class="dropbtn">Product</a>
+            <div class="dropdown-content">
+                <a href="{% url 'addproduct' %}">Add Product</a>
+                <a href="{% url 'viewproduct' %}">View Products</a> 
+            </div>
+            
+        </div>
+
+        <a href="#">Botanist</a>
+        <a href="#">Horticulture Expert</a>
+        <a href="#">Orders</a>
+        <a href="#">Settings</a>
+    </div>
+
+    <div class="content">
+        <!-- Header -->
+        <div class="header">
+            {% comment %} <div class="leftt">
+                <img src="{% static 'images/trlogo.png' %}" alt="Cart" class="Cart-icon" style="margin-left: 10px;">
+            </div> {% endcomment %}
+            <div class="welcome-admin">
+                <h1>Welcome, Admin</h1>
+            </div>
+            <a href="{% url 'index' %}" class="logout-button">Logout</a>
+        </div>
+
+        <!-- User Statistics Small Box -->
+        <div class="small-box">
+            <h2>User Statistics</h2>
+            <canvas id="userStatsChart"></canvas>
+        </div>
+        <div class="small-box">
+            <p>Total Users: {{ user_s|length }}</p> 
+        </div>
+        <!-- Recent Orders Small Box -->
+        <div class="small-box">
+            <h2>Recent Orders</h2>
+            <p> new Arrivals</p>
+
+        </div>
+        
+    </div>
+
+    <!-- Add the JavaScript code for the user statistics chart here -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Sample user statistics data (replace with your actual data)
+        var userData = {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+            datasets: [{
+                label: "User Count",
+                data: [100, 150, 200, 250, 300, 350],
+                backgroundColor: "rgba(75, 192, 192, 0.2)",
+                borderColor: "rgba(75, 192, 192, 1)",
+                borderWidth: 1
+            }]
+        };
+    
+        // Get the canvas element by id
+        var ctx = document.getElementById('userStatsChart').getContext('2d');
+    
+        // Create a new chart using Chart.js
+        var userStatsChart = new Chart(ctx, {
+            type: 'bar', // You can choose the chart type (bar, line, pie, etc.)
+            data: userData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

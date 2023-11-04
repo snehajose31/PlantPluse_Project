@@ -1,60 +1,79 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-	
     <link rel="stylesheet" href="{% static 'css/login.css'%}">
-    </head>
-    <body>
-        <div class="login-container">
-            <!--<div class="brand-text">PlantPulse</div>-->
-            <h2>Login</h2>
-            <form class="login-form" action="#" method="POST" onsubmit="return validateForm()">
-        {% csrf_token %}
-        <input class="form-input" type="text" name="username" id="username" placeholder="Username" required>
-        <span class="username-error" id="username-error"></span>
-        <input class="form-input" type="password" name="password" id="password" placeholder="Password" required>
-        <span class="password-error" id="password-error"></span>
-        <button class="login-button" type="submit">Login</button>
-    </form>
+    <title>Login Form</title>
+</head>
+<body>
+    
+    <div class="container">
+        <h2>Login</h2>
+        <form class="login-form"   method="POST" action="/login/"onsubmit="return validateForm()">
+        
+
+            {% csrf_token %}
+            <div>
+            <label for="username">Email</label>
+            {% comment %} <input class="form-input" type="email" name="email" id="email" placeholder="Email" required onchange="validateEmail()" oninput="validateEmail()"> {% endcomment %}
+            <input class="form-input" type="text" name="username" id="username" placeholder="Email">
+            <span class="error-message" id="email-error"></span>
+            </div>
+            <div>
+            <label for="password">Password</label>
+            <input class="form-input" type="password" name="password" id="password" placeholder="Password" required onchange="validatePassword()" oninput="validatePassword()">
+            <span class="error-message" id="password-error"></span>
+            </div>
+            <center><button class="login-button" type="submit">Login</button></center>
         </form>
-        <p class="forgot-password"><a href="#">Forgot your password?</a></p>
-        <p class="registration-link">Don't have an account? <a href="{% url 'registration'%}">Register here</a></p>
+        <center><p class="forgot-password"><a href="{% url 'reset_password' %}">Forgot your password?</a></p></center>
+        <center><p class="registration-link">Don't have an account? <a href="{% url 'registration'%}">Register here</a></p></center>
+    </div>
+    <div class="footer">
+        <!-- Your footer content, which can include links or additional information -->
     </div>
     <script>
+        {% comment %} function validateEmail() {
+            const emailInput = document.getElementById('email');
+            const emailError = document.getElementById('email-error');
+            const emailValue = emailInput.value.trim();
+        
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@(ajce\.com|gmail\.com)$/;
+        
+            if (!emailPattern.test(emailValue)) {
+                emailError.textContent = 'Invalid email address';
+            } else {
+                emailError.textContent = '';
+            }
+        } {% endcomment %}
+        
+        {% comment %} function validatePassword() {
+            const passwordInput = document.getElementById('password');
+            const passwordError = document.getElementById('password-error');
+            const passwordValue = passwordInput.value;
+        
+            // Regular expression for password validation
+            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{7,}$/;
+        
+            if (!passwordPattern.test(passwordValue)) {
+                passwordError.textContent = 'Password must contain at least one lowercase, one uppercase, one numerical, one special character, and be at least 7 characters long.';
+            } else {
+                passwordError.textContent = '';
+            }
+        } {% endcomment %}
+        
         function validateForm() {
-            var username = document.getElementById('username').value;
-            var password = document.getElementById('password').value;
-            var usernameRegex = /^[a-zA-Z]{6,}$/; // Username should be 6 or more alphabetic characters
-            var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&!*])[A-Za-z\d@#$%^&!*]{6,}$/; // Password requirements
-
-            // Get error message elements
-            var usernameError = document.getElementById('username-error');
-            var passwordError = document.getElementById('password-error');
-
-            // Reset previous error messages
-            usernameError.textContent = "";
-            passwordError.textContent = "";
-
-            // Perform validation
-            var isValid = true;
-
-            if (!username.match(usernameRegex)) {
-                usernameError.textContent = "Username must be 6 or more alphabetic characters.";
-                isValid = false;
-            }
-
-            if (!password.match(passwordRegex)) {
-                passwordError.textContent = "Password should be at least 6 characters long and contain one uppercase letter, one lowercase letter, one digit, and one special character.";
-                isValid = false;
-            }
-
-            return isValid;
+            //validateEmail();
+            validatePassword();
+        
+            // Return true to allow form submission if there are no errors
+            return (
+                //document.getElementById('email-error').textContent === '' &&
+                document.getElementById('password-error').textContent === ''
+            );
         }
-    </script>
-
+    </script>        
 </body>
 </html>

@@ -1,0 +1,186 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+   
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+    }
+    
+    header {
+        background-color: #112418;
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+    }
+    
+    .product-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 20px;
+    }
+    
+    .product-card {
+        background-color: white;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        margin: 10px;
+        padding: 20px;
+        width: 300px;
+        border-radius: 5px;
+    }
+    
+    .product-card img {
+        width: 100%;
+        height: auto;
+    }
+    
+    .product-details h2 {
+        font-size: 20px;
+        margin: 10px 0;
+    }
+    
+    .no-products {
+        text-align: center;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+    
+
+    .header-menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .header-menu li {
+        display: inline-block;
+        margin-right: 10px; /* Adjust the spacing as needed */
+    }
+    
+    .header-menu a {
+        text-decoration: none;
+        color: #fff; /* Adjust the color as needed */
+    }
+    
+    .search-bar {
+        float: right; /* Float the search bar to the right */
+    }
+    
+    .search-bar input[type="text"] {
+        width: 150px; /* Adjust the width as needed */
+    }
+    
+    .search-bar button {
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+    
+    
+
+    .header-menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        text-align: right; /* Align the menu items to the right */
+    }
+    
+    .header-menu li {
+        display: inline-block;
+        margin-right: 10px; /* Adjust the spacing as needed */
+    }
+    
+    .header-menu a {
+        text-decoration: none;
+        color: #fff; /* Adjust the color as needed */
+    }
+    
+    .search-bar {
+        float: right; /* Float the search bar to the right */
+    }
+    
+    .search-bar input[type="text"] {
+        width: 150px; /* Adjust the width as needed */
+    }
+    
+    .search-bar button {
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+    .Cart-icon {
+        color: white;
+    }
+    .Cart-icon {
+        filter: brightness(0) invert(1);
+    }
+/* Add more styling as needed */
+</style>
+<body>
+    <header>
+        <h1>Product List</h1>
+        <nav>
+            
+            <ul class="header-menu">
+                <li><a href="{% url 'home' %}"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="{% url 'index' %}"><i class="fa fa-sign-out"></i> Logout</a></li>
+                <li><a href="{% url 'index' %}"><img src="{% static 'images/cart3.png' %}" alt="Cart" class="Cart-icon" style="margin-right: 10px;"></a></li>
+                
+                <li>
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search...">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    
+    {% comment %} <header>
+        <h1>Product List</h1>
+    </header> {% endcomment %}
+    <div class="product-container">
+        {% for product in products %}
+         <div class="col-md-3">
+            <div class="product-card">
+                  <a href="{% url 'product_details' product.product_id %}">
+                  <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}"></a>
+                  <h4>{{ product.product_name }}</h4>
+                  <p>Sale Price: Rs.{{ product.sale_price }}</p>
+                  <p>Discount: {{ product.discount }}%</p>
+                  <p>Price: Rs.{{ product.price }}</p>
+                  {% comment %} <a href="{% url 'addtocart' %}" class="btn btn-primary">Add to Cart</a>
+                  <a href="{% url 'product_details' product.product_id %}" class="btn btn-info">View Details</a> {% endcomment %}
+               </a>
+            </div>
+            
+         </div>
+         {% endfor %}
+        {% comment %} {% for product in products %}
+        <div class="product-card">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            <div class="product-details">
+                <h2>{{ product.name }}</h2>
+                <p>{{ product.description }}</p>
+                <p>Price: ${{ product.price }}</p>
+                <p>Category: {{ product.category }}</p>
+                <p>Subcategory: {{ product.subcategory }}</p>
+                <p>Brand: {{ product.brand }}</p>
+                <p>Stock Quantity: {{ product.stock_quantity }}</p>
+            </div>
+        </div>
+        {% empty %}
+        <p class="no-products">No products available.</p>
+        {% endfor %} {% endcomment %}
+    </div>
+</body>
+</html>
