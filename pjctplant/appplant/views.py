@@ -240,36 +240,83 @@ def delete_product(request, product_id):
 
 def product_details(request, product_id):
     # Retrieve the product details from the database
-    product = get_object_or_404(Product, id=product_id)
+    product = get_object_or_404(Product, pk=product_id)
 
     # Render the product details template with the product data
     return render(request, 'details.html', {'product': product})
 
+
+
+# def edit_product(request, product_id):
+#     # Retrieve the product using get_object_or_404 to handle cases where the product doesn't exist
+#     product = get_object_or_404(Product, pk=product_id)
+
+#     if request.method == 'POST':
+#         try:
+#             # Update the product with the form data
+#             product.product_name = request.POST.get('product-name', product.product_name)
+#             product.category = request.POST.get('category-name', product.category)
+#             product.subcategory = request.POST.get('subcategory-name', product.subcategory)
+#             product.description = request.POST.get('description', product.description)
+#             product.price = request.POST.get('price', product.price)
+#             product.discount = request.POST.get('discount', product.discount)
+#             product.sale_price = request.POST.get('sale-price', product.sale_price)
+
+#             # Save the updated product
+#             product.save()
+
+#             # Redirect to a view or success page
+#             return redirect('viewproduct')  # Replace 'viewproduct' with the actual URL name
+
+#         except Exception as e:
+#             # Handle exceptions, such as validation errors
+#             # You can return an error message or render the form with error details
+#             return render(request, 'editproduct.html', {'product': product, 'error_message': str(e)})
+
+#     # If the request method is GET, render the edit product form
+#     return render(request, 'editproduct.html', {'product': product})
+        
+
+# from django.shortcuts import render, get_object_or_404, redirect
+# from .models import Product  # Import your Product model
+
+
+
 def edit_product(request, product_id):
-    # Retrieve the product using get_object_or_404 to handle cases where the product doesn't exist
     product = get_object_or_404(Product, pk=product_id)
 
     if request.method == 'POST':
-        # Handle form submission and update the product
-        # You can access form data using request.POST and request.FILES
-        # Perform validation and update the product data in the database
+        try:
+            # Debugging: Print form data
+            print(request.POST)
+            product.product_name = request.POST.get('product-name', product.product_name)
+            product.category = request.POST.get('category-name', product.category)
+            product.subcategory = request.POST.get('subcategory-name', product.subcategory)
+            product.quantity=request.POST.get('quantity', product.quantity)
+            product.description = request.POST.get('description', product.description)
+            product.price = request.POST.get('price', product.price)
+            product.discount = request.POST.get('discount', product.discount)
+            product.sale_price = request.POST.get('sale-price', product.sale_price)
 
-        # Example:
-        product.product_name = request.POST['product-name']
-        # product.category = request.POST['category-name']
-        # product.subcategory = request.POST['subcategory-name']
-      
-        product.description = request.POST['description']
-        product.price = request.POST['price']
-        product.discount = request.POST['discount']
-        product.sale_price = request.POST['sale-price']
-        
-        # Save the updated product
-        product.save()
+            # Debugging: Print updated product data
+            print(product.product_name, product.category, product.subcategory, product.description, product.price, product.discount, product.sale_price)
+            new_image = request.FILES.get('product_image')
+            if new_image:
+               product.product_image = new_image
+            # Save the updated product
+            product.save()
 
-        # Redirect to a product detail page or a success page
-        #return HttpResponseRedirect('/product_detail/{0}/'.format(product.product_id))
-       # return HttpResponseRedirect('adminpanel')
+            # Redirect to a view or success page
+            return redirect('viewproduct')  # Replace 'viewproduct' with the actual URL name
+
+        except Exception as e:
+            # Handle exceptions, such as validation errors
+            # Debugging: Print the error message for debugging
+            print(str(e))
+
+            # You can return an error message or render the form with error details
+            return render(request, 'editproduct.html', {'product': product, 'error_message': str(e)})
 
     # If the request method is GET, render the edit product form
     return render(request, 'editproduct.html', {'product': product})
+

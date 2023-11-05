@@ -2,34 +2,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE-edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
-    <title>fashion finds hub</title>
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
-    <!-- Font Awesome styles -->
-    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
-    <!-- jQuery UI CSS for the date picker -->
-    <link rel="stylesheet" type="text css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <!-- Custom styles for this template -->
-    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
-    <!-- Responsive style -->
-    <link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+    
+    
     <style>
         /* Add custom CSS styles here */
         .container {
             max-width: 800px;
             margin-top: 50px;
-            margin-left: 50 px;
+            margin-left: 100 px;
             padding: 20px;
             background-color: #f4f4f4;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 50px auto;
         }
 
         h1 {
@@ -66,11 +51,22 @@
         button[type="submit"]:hover {
             background-color: #cc0000;
         }
+        .header {
+            background-color: #003300;
+            color: #fff;
+            text-align: left;
+            padding: 9px;
+            position: relative; /* Needed for absolute positioning of the logo */
+            width: 100%;
+        }
+        
     </style>
 
 </head>
-
-    <body class="sub_page"> 
+<body>
+    <div class="header">
+        <h2><center>Edit Product</center></h2>
+    </div>
         {% comment %} <div class="hero_area">
            <!-- header section strats -->
            <header class="header_section" style="background-color: white;">
@@ -91,7 +87,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="full">
-                                <h class="left-corner-heading"><strong>EDIT PRODUCT</strong></h2>
+                                {% comment %} <h class="left-corner-heading"><strong><center>EDIT PRODUCT</center></strong></h2> {% endcomment %}
                                 
                             </div>
                             
@@ -101,21 +97,21 @@
             </section>
     <div class="container">
        
-        <form method="post" enctype="multipart/form-data">
-            <input type="text" name="product-name" value="{{ product.product_name }}" required>
+        <form method="POST" enctype="multipart/form-data">
+            
 
             {% csrf_token %}
             <!-- Edit Product Form Fields -->
             <label for="product-name">Product Name</label>
             <input type="text" name="product-name" value="{{ product.product_name }}" required>
 
-            {% comment %} <label for="category-name">Category Name</label>
+            <label for="category-name">Category Name</label>
             <select name="category-name" id="category-name" required onchange="updateSubcategoryOptions()">
                 <option value="">Select</option>
-                <option value="ornaments" {% if product.category == "ornaments" %}selected{% endif %}>Ornaments</option>
-                <option value="bags" {% if product.category == "bags" %}selected{% endif %}>Bags</option>
+                <option value="Plant" {% if product.category == "Plant" %}selected{% endif %}>Plant</option>
+                <option value="fertilizer" {% if product.category == "bags" %}selected{% endif %}>fertilizer</option>
                 <!-- Add other category options as needed -->
-            </select> {% endcomment %}
+            </select> 
 
             <label for="subcategory-name">Subcategory Name</label>
             <select name="subcategory-name" id="subcategory-name" required>
@@ -123,8 +119,8 @@
             </select>
             
             <!-- Other form fields -->
-            <label for="stock">Stock</label>
-            <input type="number" name="stock" value="{{ product.stock }}" required>
+            <label for="quantity">Quantity</label>
+            <input type="number" name="quantity" value="{{ product.quantity }}" required>
 
             <label for="description">Description</label>
             <textarea name="description" required>{{ product.description }}</textarea>
@@ -142,9 +138,9 @@
            
 
             <!-- Add this block of code below your form fields to display the product image -->
-<label for="product-image">Product Image</label>
-<img src="{{ product.product_image.url }}" alt="Product Image">
-
+            <label for="product-image">Product Image</label>
+            <img src="{{ product.product_image.url }}" alt="{{ product.name }}">
+            <input type="file" id="productImage" name="product_image" accept=".jpeg, .jpg, .png">
 
 
             <button type="submit">Update Product</button>
@@ -158,7 +154,7 @@
             const subcategoryDropdown = document.getElementById("subcategory-name");
             const selectedCategory = categoryDropdown.value;
             const subcategoryOptions = {
-                ornaments: ["Neckpieces", "Earrings", "Rings"],
+                Plant: ["flowering plant", "Medicinal plant", "purifing plants"],
                 bags: ["Clutches", "Handbags"],
             };
 

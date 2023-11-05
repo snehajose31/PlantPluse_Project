@@ -140,20 +140,19 @@
                     <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}" width="100">
                 </td>
                 <td>
-                    <form action="{% url 'delete_product' product.product_id %}" method="post"> 
+                <form action="{% url 'delete_product' product.product_id %}" method="post"> 
                         {% csrf_token %}
-                        <input type="hidden" name="product_id" value="{{ product.product_id }}">
+                        <input type="hidden" name="product_id" value="">
                         <button type="submit" class="delete-button">Delete</button>
                         
-                    </form>
+                       </form>
                 </td>
                 <td>
                     <form action="{% url 'edit_product' product.product_id %}" method="post"> 
                         {% csrf_token %}
-                        <input type="hidden" name="product_id" value="{{ product.product_id }}">
-                       
+                        <input type="hidden" name="product_id" value="">
                         <button type="submit" class="delete-button">edit</button>
-                    </form>
+                </form>
                 </td>
                 
             </tr>
