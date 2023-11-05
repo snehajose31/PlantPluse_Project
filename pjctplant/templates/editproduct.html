@@ -98,53 +98,59 @@
     <div class="container">
        
         <form method="POST" enctype="multipart/form-data">
-            
-
             {% csrf_token %}
             <!-- Edit Product Form Fields -->
             <label for="product-name">Product Name</label>
             <input type="text" name="product-name" value="{{ product.product_name }}" required>
-
+        
             <label for="category-name">Category Name</label>
-            <select name="category-name" id="category-name" required onchange="updateSubcategoryOptions()">
+            <select name="category-name" required>
                 <option value="">Select</option>
                 <option value="Plant" {% if product.category == "Plant" %}selected{% endif %}>Plant</option>
-                <option value="fertilizer" {% if product.category == "bags" %}selected{% endif %}>fertilizer</option>
+                <option value="fertilizer" {% if product.category == "fertilizer" %}selected{% endif %}>Fertilizer</option>
                 <!-- Add other category options as needed -->
-            </select> 
-
-            <label for="subcategory-name">Subcategory Name</label>
-            <select name="subcategory-name" id="subcategory-name" required>
-                <!-- Subcategory options will be added dynamically here -->
             </select>
-            
+        
+            <label for="subcategory-name">Subcategory Name</label>
+            <select name="subcategory-name" required>
+                <option value="">Select</option>
+                <!-- Add subcategory options here based on the selected category -->
+                <option value="Subcategory1" {% if product.subcategory == "Subcategory1" %}selected{% endif %}>Flowering plant</option>
+                <option value="Subcategory2" {% if product.subcategory == "Subcategory2" %}selected{% endif %}>Medicinal plant</option>
+                <!-- Add more subcategories as needed -->
+            </select>
+        
             <!-- Other form fields -->
             <label for="quantity">Quantity</label>
             <input type="number" name="quantity" value="{{ product.quantity }}" required>
-
+        
             <label for="description">Description</label>
             <textarea name="description" required>{{ product.description }}</textarea>
-
+        
             <label for="price">Product Price</label>
             <input type="number" name="price" value="{{ product.price }}" required>
-
+        
             <label for="discount">Discount (%)</label>
             <input type="number" name="discount" value="{{ product.discount }}" oninput="calculateSalePrice()">
-
-
+        
             <label for="sale-price">Sale Price</label>
             <input type="number" name="sale-price" value="{{ product.sale_price }}" readonly>
 
-           
-
-            <!-- Add this block of code below your form fields to display the product image -->
-            <label for="product-image">Product Image</label>
-            <img src="{{ product.product_image.url }}" alt="{{ product.name }}">
-            <input type="file" id="productImage" name="product_image" accept=".jpeg, .jpg, .png">
-
-
+            {% comment %} <label for="price">Status</label>
+            <input type="number" name="status" value="{{ product.status }}" required> {% endcomment %}
+        
+            <!-- Display the product image -->
+            <label for="product_image">Product Image</label>
+            {% if product.product_image %}
+            <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}">
+            {% else %}
+                    No image available
+            {% endif %}
+            <input type="file" id="product_image" name="product_image" accept=".jpeg, .jpg, .png">
+        
             <button type="submit">Update Product</button>
         </form>
+        
     </div>
 
     <script>

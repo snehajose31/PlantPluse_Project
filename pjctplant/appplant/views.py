@@ -190,7 +190,7 @@ def add_product(request):
             discount=discount,
             sale_price=sale_price,  # Assign the calculated sale price
             status=status,
-            product_image=product_image
+            product_image=product_image,
         )
         product.save()
 
@@ -287,33 +287,50 @@ def edit_product(request, product_id):
 
     if request.method == 'POST':
         try:
-            # Debugging: Print form data
-            print(request.POST)
-            product.product_name = request.POST.get('product-name', product.product_name)
-            product.category = request.POST.get('category-name', product.category)
-            product.subcategory = request.POST.get('subcategory-name', product.subcategory)
-            product.quantity=request.POST.get('quantity', product.quantity)
-            product.description = request.POST.get('description', product.description)
-            product.price = request.POST.get('price', product.price)
-            product.discount = request.POST.get('discount', product.discount)
-            product.sale_price = request.POST.get('sale-price', product.sale_price)
+            product_name = request.POST.get('product-name')
+            category = request.POST.get('category-name')
+            subcategory = request.POST.get('subcategory-name')
+            quantity = request.POST.get('quantity')
+            description = request.POST.get('description')
+            price = request.POST.get('price')
+            discount = request.POST.get('discount')# Retrieve as a string
+            product_image = request.FILES.get('product_image')
+            if product_image:
+                product.product_image = product_image
 
-            # Debugging: Print updated product data
-            print(product.product_name, product.category, product.subcategory, product.description, product.price, product.discount, product.sale_price)
-            new_image = request.FILES.get('product_image')
-            if new_image:
-               product.product_image = new_image
-            # Save the updated product
+            price = float(price)
+
+            # Convert discount to a float
+            discount = float(discount)
+
+            
+            
+
+            # Calculate sale_price
+            sale_price = price - (price * (discount / 100))
+
+            # Create a new Product object and save it to the database
+            product = Product(
+                product_id=product_id,
+                product_name=product_name,
+                category=category,
+                subcategory=subcategory,
+                quantity=quantity,
+                description=description,
+                price=price,
+                discount=discount,
+                sale_price=sale_price,  # Assign the calculated sale price
+
+                product_image=product_image
+            )
             product.save()
 
-            # Redirect to a view or success page
-            return redirect('viewproduct')  # Replace 'viewproduct' with the actual URL name
+            # Redirect to a success page or any other desired action
+            return redirect('viewproduct') # Replace 'viewproduct' with the actual URL name
 
         except Exception as e:
-            # Handle exceptions, such as validation errors
-            # Debugging: Print the error message for debugging
             print(str(e))
-
+            # Handle exceptions, such as validation errors
             # You can return an error message or render the form with error details
             return render(request, 'editproduct.html', {'product': product, 'error_message': str(e)})
 

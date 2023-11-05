@@ -155,9 +155,11 @@
                   <a href="{% url 'product_details' product.product_id %}">
                   <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}"></a>
                   <h4>{{ product.product_name }}</h4>
+                  <p>{{ product.description }}</p>
                   <p>Sale Price: Rs.{{ product.sale_price }}</p>
                   <p>Discount: {{ product.discount }}%</p>
                   <p>Price: Rs.{{ product.price }}</p>
+                  
                   {% comment %} <a href="{% url 'addtocart' %}" class="btn btn-primary">Add to Cart</a>
                   <a href="{% url 'product_details' product.product_id %}" class="btn btn-info">View Details</a> {% endcomment %}
                </a>

@@ -106,7 +106,7 @@
             const content = document.getElementById("content");
             content.innerHTML = `
                 <div class="content">
-                    <h3>Botanist Details</h3>
+                    <h3><center>Botanist Details</center></h3>
                     <!-- Add your botanist details content here -->
                 </div>
             `;
@@ -116,8 +116,95 @@
             const content = document.getElementById("content");
             content.innerHTML = `
                 <div class="content">
-                    <h3>Consultation Form</h3>
-                    <!-- Add your consultation form here -->
+                   
+                    <!DOCTYPE html>
+                    <html lang="en">
+                        <head>
+                            <style>
+                                body {
+                                    font-family: Arial, sans-serif;
+                                    background-color: #f0f0f0;
+                                    margin: 0;
+                                    padding: 0;
+                                }
+                                
+                                
+                                
+                                main {
+                                    max-width: 800px;
+                                    margin: 20px auto;
+                                    background-color: #fff;
+                                    padding: 20px;
+                                    border: 1px solid #ddd;
+                                    border-radius: 5px;
+                                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                                }
+                                
+                                h1, h2 {
+                                    color: #003300;
+                                }
+                                
+                                .scheduler, .question-session {
+                                    margin: 20px 0;
+                                }
+                                
+                                label {
+                                    display: block;
+                                    font-weight: bold;
+                                }
+                                
+                                input[type="date"],
+                                input[type="time"],
+                                textarea {
+                                    width: 100%;
+                                    padding: 10px;
+                                    margin-top: 5px;
+                                    margin-bottom: 15px;
+                                    border: 1px solid #ccc;
+                                    border-radius: 4px;
+                                    box-sizing: border-box;
+                                }
+                                
+                                button {
+                                    background-color: #003300;
+                                    color: #fff;
+                                    border: none;
+                                    padding: 10px 20px;
+                                    border-radius: 4px;
+                                    cursor: pointer;
+                                }
+                                
+                                button:hover {
+                                    background-color: #001a00;
+                                }
+                            </style>        
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            {% comment %} <title>Botanist Consultation</title> {% endcomment %}
+                            <link rel="stylesheet" href="styles.css">
+                        </head>
+                        <body>
+            
+                            <main>
+                                <section class="scheduler">
+                                    <h2>Appointment Scheduler</h2>
+                                    <p>Select a day and time for your consultation:</p>
+                                    <label for="appointment-day">Select a Day:</label>
+                                    <input type="date" id="appointment-day">
+                                    <label for="appointment-time">Select a Time:</label>
+                                    <input type="time" id="appointment-time">
+                                    <button id="schedule-appointment">Schedule Appointment</button>
+                                </section>
+                                <section class="question-session">
+                                    <h2>Question Session</h2>
+                                    <p>Ask your plant-related questions here:</p>
+                                    <textarea id="question-text" placeholder="Type your question here"></textarea>
+                                    <button id="submit-question">Submit Question</button>
+                                </section>
+                            </main>
+                        </body>
+                    </html>
+
                 </div>
             `;
         }
@@ -126,7 +213,7 @@
             const content = document.getElementById("content");
             content.innerHTML = `
                 <div class="content">
-                    <h3>Works</h3>
+                    <h3><center>Works</center></h3>
                     <!-- Add your works content here -->
                 </div>
             `;
@@ -136,7 +223,7 @@
             const content = document.getElementById("content");
             content.innerHTML = `
                 <div class="content">
-                    <h3>Blogs</h3>
+                    <h3><center>Blogs</center></h3>
                     <!-- Add your blogs content here -->
                 </div>
             `;
