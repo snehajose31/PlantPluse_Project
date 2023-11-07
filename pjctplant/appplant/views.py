@@ -5,8 +5,10 @@ from . models import User
 from django.template import RequestContext
 # from django.http import HttpResponse
 from . models import Product
-from . models import User
+from . models import *
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user
 
 
 # Create your views here.
@@ -77,17 +79,18 @@ def login(request):
         password = request.POST["password"]
         if username and password:
             user = authenticate(request, email=username, password=password)
+            if user.is_authenticated:
 
-            if user is not None:
-                if user.role == User.Role.ADMIN:  # Assuming you have a 'role' field to distinguish between users and admins
-                     # Log in the admin user
-                    return redirect('/adminpanel/')  # Redirect to the admin panel URL
+                if user is not None:
+                    if user.role == User.Role.ADMIN:  # Assuming you have a 'role' field to distinguish between users and admins
+                        # Log in the admin user
+                        return redirect('/adminpanel/')  # Redirect to the admin panel URL
+                    else:
+                        request.session["useremail"] = user.email
+                        return redirect('/home')  # Redirect to the regular user's home page
                 else:
-                    request.session["useremail"] = user.email
-                    return redirect('/home')  # Redirect to the regular user's home page
-            else:
-                messages.error(request, "Invalid credentials.")
-                return redirect('/login')
+                    messages.error(request, "Invalid credentials.")
+                    return redirect('/login')
         else:
             messages.error(request, "Please fill out all fields.")
             return redirect('/login')
@@ -337,3 +340,78 @@ def edit_product(request, product_id):
     # If the request method is GET, render the edit product form
     return render(request, 'editproduct.html', {'product': product})
 
+def view_cart(request):
+    email=request.session["useremail"]
+    user = get_object_or_404(User, email=email)
+    user_id = user.id
+    print(user_id)
+    cart_items = AddToCart.objects.filter(user=user_id, is_active=True)
+
+    # Calculate order summary
+    subtotal = sum(item.product.sale_price * item.quantity for item in cart_items)
+    shipping = 5 # Adjust this value as needed
+    total = subtotal + shipping
+    
+    context = {
+        'cart_items': cart_items,
+        'subtotal': subtotal,
+        'shipping': shipping,
+        'total': total,
+    }
+    return render(request, 'view_cart.html', context)
+
+def add_to_cart(request, product_id):
+    # Retrieve the product based on its ID (you should have a Product model)
+    product = Product.objects.get(pk=product_id) 
+    email=request.session["useremail"]
+    user = get_object_or_404(User, email=email)
+    
+        # Check if the user already has this product in their cart
+    cart_item = AddToCart(user=user, product=product, quantity=product_id)  # You can set the quantity as neede
+    cart_item.save()
+    print(cart_item)
+    return redirect('view_cart') 
+
+def flowering_plants(request):
+    # Retrieve products under the "flowering plants" subcategory
+    flowering_plants = Product.objects.filter(category="plant", subcategory='flowering plant')
+    print(flowering_plants)  # Add this line for debugging
+
+    return render(request, 'flowering_plants.html', {'products': flowering_plants})
+
+
+def medicinal_plants(request):
+    # Retrieve all products that belong to the "Medicinal Plants" subcategory
+    medicinal_plants = Product.objects.filter(category="plant", subcategory='Medicinal plant')
+    print(medicinal_plants)
+    
+    return render(request, 'medicinal_plants.html', {'products': medicinal_plants})
+
+def organic(request):
+    # Retrieve all products that belong to the "Medicinal Plants" subcategory
+    organic = Product.objects.filter(category="fertilizer", subcategory='organic')
+    print(organic)
+    
+    return render(request, 'organic.html', {'products': organic})
+
+
+
+def add_to_wishlist(request, id):
+    if request.user.is_authenticated:
+        product = Product1.objects.get(id=id)
+        wishlist_item, created = WishlistItem.objects.get_or_create(user=request.user, product=product)
+        if created:
+            # The item was added to the wishlist
+            messages.success(request, f'{product.product_name} has been added to your wishlist.')
+        else:
+            # The item is already in the wishlist
+            messages.warning(request, f'{product.product_name} is already in your wishlist.')
+    return redirect('wishlist')
+
+
+def wishlist(request):
+    if request.user.is_authenticated:
+        wishlist_items = WishlistItem.objects.filter(user=request.user)
+        return render(request, 'wishlist.html', {'wishlist_items': wishlist_items})
+    else:
+        return redirect('login')  # Redirect to the login page if the user is not authenticated

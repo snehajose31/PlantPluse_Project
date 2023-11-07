@@ -24,6 +24,16 @@ urlpatterns = [
     path('delete_product/<int:product_id>/', views.delete_product, name='delete_product'),
     path('product/<int:product_id>/', views.product_details, name='product_details'),
     path('edit_product/<int:product_id>/', views.edit_product, name='edit_product'),
+    path('view_cart/', views.view_cart, name='view_cart'),
+    path('add_to_cart/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
+    
+    # path('plants/flowering plant/', views.flowering_plants, name='flowering_plants'),
+    path('subcategory/flowering-plants/', views.flowering_plants, name='flowering_plants'),
+    path('subcategory/medicinal-plants/', views.medicinal_plants, name='medicinal_plants'),
+    path('subcategory/organic/', views.organic, name='organic'),
+
+    
+    
     
     path('reset_password/', auth_views.PasswordResetView.as_view(), name="reset_password"),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),

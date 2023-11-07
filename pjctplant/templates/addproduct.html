@@ -118,7 +118,7 @@
                     <option value="plant">Plant</option>
                     <option value="fertilizer">Fertilizer & Pesticide</option>
                     <option value="seed">Seed</option>
-                    <option value="accessories">Accessories</option>
+                    {% comment %} <option value="accessories">Accessories</option> {% endcomment %}
                     <!-- Add more categories as needed -->
                 </select>
             </div>
@@ -234,7 +234,8 @@
             const selectedCategory = categoryDropdown.value;
             const subcategoryOptions = {
                 plant: ["flowering plant", "Medicinal plant", "purifing plants"],
-                bags: ["Clutches", "Handbags"],
+                fertilizer : ["organic", "inorganic"],
+                seed : ["vegetable seed","flowering seed"],
             };
 
             // Clear existing options

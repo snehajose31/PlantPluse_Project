@@ -102,8 +102,24 @@
             <!-- Edit Product Form Fields -->
             <label for="product-name">Product Name</label>
             <input type="text" name="product-name" value="{{ product.product_name }}" required>
-        
+            
             <label for="category-name">Category Name</label>
+            <select id="category-name" name="category-name" class="form-control" required onchange="updateSubcategoryOptions()">
+                <option value="">Select</option>
+                <option value="plant">Plant</option>
+                <option value="fertilizer">Fertilizer & Pesticide</option>
+                <option value="seed">Seed</option>
+                {% comment %} <option value="accessories">Accessories</option> {% endcomment %}
+                <!-- Add more categories as needed -->
+            </select>
+       
+            <label for="subcategory-name">Subcategory Name</label>
+            <select id="subcategory-name" name="subcategory-name" class="form-control" required>
+                <!-- Subcategory options will be added dynamically here -->
+            </select>
+       
+
+            {% comment %} <label for="category-name">Category Name</label>
             <select name="category-name" required>
                 <option value="">Select</option>
                 <option value="Plant" {% if product.category == "Plant" %}selected{% endif %}>Plant</option>
@@ -118,7 +134,7 @@
                 <option value="Subcategory1" {% if product.subcategory == "Subcategory1" %}selected{% endif %}>Flowering plant</option>
                 <option value="Subcategory2" {% if product.subcategory == "Subcategory2" %}selected{% endif %}>Medicinal plant</option>
                 <!-- Add more subcategories as needed -->
-            </select>
+            </select> {% endcomment %}
         
             <!-- Other form fields -->
             <label for="quantity">Quantity</label>
@@ -160,9 +176,20 @@
             const subcategoryDropdown = document.getElementById("subcategory-name");
             const selectedCategory = categoryDropdown.value;
             const subcategoryOptions = {
-                Plant: ["flowering plant", "Medicinal plant", "purifing plants"],
-                bags: ["Clutches", "Handbags"],
+                plant: ["flowering plant", "Medicinal plant", "purifing plants"],
+                fertilizer : ["organic", "inorganic"],
+                seed : ["vegetable seed","flowering seed"],
             };
+
+            
+        {% comment %} function updateSubcategoryOptions() {
+            const categoryDropdown = document.getElementById("category-name");
+            const subcategoryDropdown = document.getElementById("subcategory-name");
+            const selectedCategory = categoryDropdown.value;
+            const subcategoryOptions = {
+                Plant: ["flowering plant", "Medicinal plant", "purifing plants"],
+                fertilizer: ["organic", "inorganic"],
+            }; {% endcomment %}
 
             // Clear existing options
             subcategoryDropdown.innerHTML = "";

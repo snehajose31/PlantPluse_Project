@@ -152,27 +152,27 @@
                                 <li class="dropdown">
                                     <a href="#" class="nav-link" data-toggle="dropdown">PLANTS</a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="{% url 'plants' %}">All Plants</a></li>
-                                        <li><a href="{% url 'index' %}">Flowering Plants</a></li>
-                                        <li><a href="{% url 'index' %}">Medicinal Plants</a></li>
+                                        {% comment %} <li><a href="{% url 'plants' %}">All Plants</a></li> {% endcomment %}
+                                        <li><a href="{% url 'flowering_plants' %}">Flowering Plants</a></li>
+                                        <li><a href="{% url 'medicinal_plants' %}">Medicinal Plants</a></li>
                                     </ul>
                                 </li>
                                 
                                 <li class="dropdown">
                                     <a href="#" class="nav-link" data-toggle="dropdown">FERTILIZER & PESTICIDE</a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="{% url 'index' %}">All Fertilizer & Pesticide</a></li>
-                                        <li><a href="{% url 'index' %}">Organic Fertilizer</a></li>
-                                        <li><a href="{% url 'index' %}">Chemical Fertilizer</a></li>
+                                        {% comment %} <li><a href="{% url 'index' %}">All Fertilizer & Pesticide</a></li> {% endcomment %}
+                                        <li><a href="{% url 'organic' %}">Organic </a></li>
+                                        <li><a href="{% url 'plants' %}">inorganic</a></li>
                                     </ul>
                                 </li>
                                 
                                 <li class="dropdown">
                                     <a href="#" class="nav-link" data-toggle="dropdown">SEED</a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="{% url 'index' %}">All Seeds</a></li>
-                                        <li><a href="{% url 'index' %}">Vegetable Seeds</a></li>
-                                        <li><a href="{% url 'index' %}">Flowering Seeds</a></li>
+                                        {% comment %} <li><a href="{% url 'index' %}">All Seeds</a></li> {% endcomment %}
+                                        <li><a href="{% url 'plants' %}">Vegetable Seeds</a></li>
+                                        <li><a href="{% url 'plants' %}">Flowering Seeds</a></li>
                                     </ul>
                                 </li>
                                 

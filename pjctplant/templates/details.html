@@ -214,15 +214,15 @@
                 </p>
                 <p class="product-discount">Discount :{{product.discount}}% Off</p><br>
                 <p class="product-description">Product Description:{{ product.description }}</p>
-                 {% comment %} <button class="add-to-cart">Add to Cart</button> 
-                <button class="add-to-cart">Buy Now</button> {% endcomment %}
-                {% comment %} <a href="{% url 'view_cart' %}" class="btn btn-primary">Add to Cart</a> {% endcomment %}
-                {% comment %} <form method="post" action="{% url 'add_to_cart' product.product_id %}"> {% endcomment %}
+                {% comment %} <button class="add-to-cart" a href="{% url 'view_cart' %}" class="btn btn-primary">Add to Cart</a> </button>  {% endcomment %}
+                {% comment %} <button class="add-to-cart">Buy Now</button> {% endcomment %} 
+                {% comment %} <a href="{% url 'view_cart' %}" class="btn btn-primary">Add to Cart</a>  {% endcomment %}
+                <form method="post" action="{% url 'add_to_cart' product.product_id %}"> 
                     {% csrf_token %}
                     <button type="submit" class="btn btn-success">Add to Cart</button>
                   </form>
                   
-                <a href="" class="btn btn-primary">Buy Now</a>
+                {% comment %} <a href="" class="btn btn-primary">Buy Now</a> {% endcomment %}
                 
             </div>
             <section class="product-specs">

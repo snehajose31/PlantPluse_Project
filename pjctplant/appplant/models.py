@@ -45,3 +45,21 @@ class Product(models.Model):
 
     def _str_(self):
         return self.product_name
+
+
+class AddToCart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    date_added = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
+
+    def _str_(self):
+     return f"{self.quantity} x {self.product.product_name} in {self.user.username}'s cart"
+ 
+class WishlistItem(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey('Product', on_delete=models.CASCADE)
+
+    def _str_(self):
+        return self.product.product_name

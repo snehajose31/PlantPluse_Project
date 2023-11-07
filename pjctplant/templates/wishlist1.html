@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist</title>
+    <link rel="stylesheet" href="{% static 'css/product_list.css' %}">
+    <!-- Add your other meta tags, stylesheets, and scripts here -->
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Use a light background color */
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #f7444e;
+            padding: 40px 0; /* Increased padding for the header */
+        }
+
+        .header-buttons {
+            display: flex;
+            justify-content: flex-end; /* Right-align the buttons */
+        }
+
+        .header-buttons a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px; /* Add spacing between buttons */
+            font-weight: bold;
+            font-size: 18px
+        }
+
+        .header-buttons a:last-child {
+            margin-right: 0; /* Remove right margin for the last button */
+        }
+
+        .container {
+            max-width: 1200px; /* Set a max-width for the product container */
+            margin: 0 auto;
+        }
+
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between; /* Center and space between product cards */
+            margin: 20px 0; /* Increased vertical margin */
+        }
+
+        .product-card {
+            background-color: #ffffff; /* White background for product cards */
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1); /* Softer shadow */
+            margin: 10px 0; /* Increased vertical margin */
+            padding: 20px;
+            width: calc(15.33% - 10px); /* Adjust the width based on your layout */
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: scale(1.03); /* Slight scale effect on hover */
+            box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2); /* Shadow enhancement on hover */
+        }
+
+        .product-card img {
+            width: 100%;
+            height: auto;
+        }
+
+        .product-details h4 {
+            font-size: 20px; /* Slightly larger font size for product names */
+            margin: 10px 0;
+        }
+
+       
+        .product-price {
+          display: flex;
+          flex-direction: column; /* Display the sale price and discount vertically */
+          margin-top: 10px;
+          
+      }
+  
+      .product-price span {
+          font-weight: ;
+      }
+  
+      .discount {
+           /* Add strikethrough to the price */
+      }
+  
+
+        .no-products {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        .Cart-icon{
+          position: absolute;
+          right: 0;
+          top:60px;
+          width: 40px; /* Adjust the width to your desired size */
+          height: 40px;
+
+        }
+    </style>
+</head>
+<body class="sub_page">
+    <div class="header">
+      <div class="header-buttons">
+        
+        <div class="container" style="background-color: #f7444e; padding: 20px 0; text-align: right; color: white;">
+          <div>
+              {% if user.is_authenticated %}
+              <strong style="font-size: 20px;">WELCOME, {{ user.fullName }}!</strong>
+              {% endif %}
+              
+                {% comment %} <img src="{% static 'images/.png' %}" alt="Logo" class="logo"> {% endcomment %}
+                
+                
+            </div>
+              <a href="{% url 'userhome' %}" style="color: white; text-decoration: none; margin-left: 700px;">HOME</a>
+              <a href="{% url 'Customer_Profile' %}" style="color: white; text-decoration: none; margin-left: 20px;">PROFILE</a>
+              <a href="{% url 'adminpanel' %}"><img src="{% static 'images/cart1.png' %}" alt="Cart" class="Cart-icon" style="margin-right: 10px;"></a>
+              <a href="{% url 'logout' %}" style="color: white; text-decoration: none; margin-left: 20px;">LOGOUT</a>
+          </div>
+      </div>
+      
+      </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="product-container">
+            {% if wishlist_items %}
+                {% for item in wishlist_items %}
+                    <div class="product-card">
+                        <a href="{% url 'product_details' item.product.id %}">
+                            <img src="{{ item.product.product_image.url }}" alt="{{ item.product.product_name }}">
+                        </a>
+                        <h4 class="product-details">{{ item.product.product_name }}</h4>
+                        <div class="product-price">
+                            <span>Sale Price: Rs.{{ item.product.sale_price }}</span>
+                            <span>Discount: {{ item.product.discount }}%</span>
+                        </div>
+                        {% comment %} <p class="price">Price: Rs.{{ item.product.price }}</p> {% endcomment %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="no-products">Your wishlist is empty.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
