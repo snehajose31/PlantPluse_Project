@@ -31,7 +31,9 @@ urlpatterns = [
     path('subcategory/flowering-plants/', views.flowering_plants, name='flowering_plants'),
     path('subcategory/medicinal-plants/', views.medicinal_plants, name='medicinal_plants'),
     path('subcategory/organic/', views.organic, name='organic'),
-
+    path('subcategory/inorganic/', views.inorganic, name='inorganic'),
+    path('sucategory/seed/',views.vegetable_seed,name='vegetable_seed'),
+     path('sucategory/seed/',views.flowering_seed,name='flowering_seed'),
     
     
     

@@ -1,10 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>organic</title>
-    
+    <title>inorganic</title>
 
     <style>
         body {
@@ -63,7 +63,7 @@
 </head>
 <body>
     <header>
-        <h1>Organic </h1>
+        <h1>Inorganic</h1>
         <a href="/home" class="logout-icon">
             <img src="/static/images/log4.png" alt="Logout">
         </a>
@@ -84,7 +84,7 @@
             </div>
         </div>
         {% empty %}
-        <p class="no-products">No seed available.</p>
+        <p class="no-products">No product.</p>
         {% endfor %}
     </div>
 </body>

@@ -80,16 +80,22 @@
             height: auto; /* To maintain the aspect ratio of the logo */
             position: absolute;
             left: 10px; /* Adjust the left position as needed */
-            top: 10px; /* Adjust the top position as needed */
+            top: 20px; /* Adjust the top position as needed */
         }
 
         /* Adjust the header style */
         .header {
             background-color: #003300;
             color: #fff;
-            text-align: left;
-            padding: 10px;
-            position: relative; /* Needed for absolute positioning of the logo */
+            text-align: center; /* Center the content horizontally and vertically */
+            padding: 1px;
+            position: relative;
+            height: 15vh; /* Set the header's height to the viewport height */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
         }
 
     </style>
@@ -97,8 +103,8 @@
 <body>
     <!-- Header Section -->
     <div class="header">
-        <img src="{% static 'images/trlogo.png' %}" alt="Logo" class="logo">
-        <h2><center>Add Product</center></h2>
+    
+        <h2><center>Add product</center></h2>
         <a href="{% url 'adminpanel' %}"><img src="{% static 'images/log4.png' %}" alt="Cart" class="Cart-icon" style="margin-right: 10px;"></a>
     </div>
 
@@ -151,13 +157,13 @@
                 <label for="sale-price">Sale Price</label>
                 <input type="number" id="sale-price" name="sale-price" class="form-control" readonly>
             </div>
-            <div class="form-group">
+            {% comment %} <div class="form-group">
                 <label for="status">Status</label>
-                <select id="status" name="status" class="form-control" required>
+                 <select id="status" name="status" class="form-control" required>
                     <option value="active">active</option>
                     <option value="inactive">inactive </option>
                 </select>
-            </div>
+            </div> {% endcomment %}
             <div class="form-group">
                 <label for="product-image">Product Image</label>
                 <input type="file" id="product-image" name="product-image" class="form-control" accept="image/*" required onchange="validateProductImage(this)">

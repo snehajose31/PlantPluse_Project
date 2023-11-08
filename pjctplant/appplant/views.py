@@ -348,15 +348,15 @@ def view_cart(request):
     cart_items = AddToCart.objects.filter(user=user_id, is_active=True)
 
     # Calculate order summary
-    subtotal = sum(item.product.sale_price * item.quantity for item in cart_items)
-    shipping = 5 # Adjust this value as needed
-    total = subtotal + shipping
+    # subtotal = sum(item.product.sale_price * item.quantity for item in cart_items)
+    # shipping = -15680 # Adjust this value as needed
+    # total = subtotal + shipping
     
     context = {
         'cart_items': cart_items,
-        'subtotal': subtotal,
-        'shipping': shipping,
-        'total': total,
+        # 'subtotal': subtotal,
+        # 'shipping': shipping,
+        # 'total': total,
     }
     return render(request, 'view_cart.html', context)
 
@@ -394,7 +394,26 @@ def organic(request):
     
     return render(request, 'organic.html', {'products': organic})
 
+def inorganic(request):
+    # Retrieve all products that belong to the "Medicinal Plants" subcategory
+    inorganic = Product.objects.filter(category="fertilizer", subcategory='inorganic')
+    print(inorganic)
+    
+    return render(request, 'inorganic.html', {'products': inorganic})
 
+def vegetable_seed(request):
+    # Retrieve all products that belong to the "Medicinal Plants" subcategory
+    vegetable_seed = Product.objects.filter(category="seed", subcategory='vegetable seed')
+    print(vegetable_seed)
+    
+    return render(request, 'vegetable_seed.html', {'products': vegetable_seed})
+
+def flowering_seed(request):
+    # Retrieve all products that belong to the "Medicinal Plants" subcategory
+    flowering_seed = Product.objects.filter(category="seed", subcategory='flowering seed')
+    print(flowering_seed)
+    
+    return render(request, 'flowering_seed.html', {'products': flowering_seed})
 
 def add_to_wishlist(request, id):
     if request.user.is_authenticated:

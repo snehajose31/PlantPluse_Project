@@ -2,87 +2,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% comment %} <!-- Add your head content here (meta tags, title, links to stylesheets, etc.) -->
-    <!-- <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product List</title>
-    <link rel="stylesheet" href="{% static 'css/product_list.css' %}">
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE-edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
-    <title></title>
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
-    <!-- Font Awesome styles -->
-    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
-    <!-- jQuery UI CSS for the date picker -->
-    <link rel="stylesheet" type="text css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <!-- Custom styles for this template -->
-    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
-    <!-- Responsive style -->
-    <link href="{% static 'css/responsive.css' %}" rel="stylesheet"> --> {% endcomment %}
-  
+    <style>
+        /* Styles for the horizontal product box */
+        .card {
+            display: flex;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            align-items: center; /* Vertically center the content */
+        }
+
+        .card img {
+            max-width: 100px; /* Adjust the image width as needed */
+            height: auto;
+            margin-right: 10px;
+        }
+
+        .card-body {
+            flex: 1; /* Allow the text to take up remaining space */
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .btn-danger {
+            background-color: #d9534f;
+            color: #fff;
+            border: none;
+            align-self: flex-end; /* Align the button to the bottom */
+        }
+
+        .btn-danger:hover {
+            background-color: #c9302c;
+        }
+        .header {
+            background-color: #003300;
+            color: #fff;
+            text-align: left;
+            padding: 10px;
+            position: relative; /* Needed for absolute positioning of the logo */
+        }
+        .Cart-icon{
+            position: absolute;
+            right: 0;
+            top:70px;
+
+        }
+
+
+    </style>
+
+
 
 </head>
-{% comment %} <body class="sub_page">
-    <div class="hero_area">
-      <div class="container">
-        <nav class="navbar navbar-expand-lg custom_nav-container ">
-           <!--<a class="navbar-brand" href="index.html"><img width="250" src="images/logo.png" alt="#" /></a>--> {% endcomment %}
-           {% comment %} <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-           <span class=""> </span>
-           </button> {% endcomment %}
-           {% comment %} <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav">
-                 <li class="nav-item active">
-                    <a class=" nav-link" href="{% url 'home' %}">Home </a>
-                 </li> {% endcomment %}
-                
-
-                {% comment %} <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="{% static '#' %}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label">User <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                       <li><a href="{% url 'login' %}">login</a></li>
-                       <li><a href="{% url 'logout' %}">logout</a></li>
-                       <li><a href="{% url 'Customer_Profile' %}">Profile</a></li>
-                    </ul>
-                 </li> {% endcomment %}
-                  {% comment %} <li class="nav-item">
-                    <a class="nav-link" href="{% url 'product' %}">Products</a>
-                 </li>
-                 <li class="nav-item">
-                     <a class="nav-link" href="{% url 'Customer_Profile' %}">Profile</a>
-                 </li> 
-                 <li class="nav-item">
-                     <a class="nav-link" href="{% url 'logout' %}">logout</a>
-                 </li> {% endcomment %}
-                 <!--<li class="nav-item">
-                    <a class="nav-link" href="blog_list.html">Blog</a>
-                 </li>
-                 <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact</a>
-                 </li>-->
-                 <li class="nav-item">
-                    {% comment %} <a class="nav-link" href="{% url 'view_cart' %}">
-                       <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
-                          
-                        </svg>
-                    </a> {% endcomment %}
-                 </li>
-                 <form class="form-inline">
-                    <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
-                    <i class="fa fa-search" aria-hidden="true"></i>
-                    </button>
-                 </form>
-              </ul>
-           </div>
-        </nav>
-     </div>
-    </div>
+<div class="header">
+    <h1><center>Shopping Cart</center></h1>
+    {% comment %} <img src="{% static 'images/trlogo.png' %}" alt="Logo" class="logo"> {% endcomment %}
+    <a href="{% url 'home' %}"><img src="{% static 'images/log4.png' %}" alt="Cart" class="Cart-icon" style="margin-right: 10px;"></a>
+</div>
 
     <!-- Inner page section -->
     <section class="inner_page_head">
@@ -90,7 +78,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="full">
-                        <h3>Shopping Cart</h3>
+                        {% comment %} <h3>Shopping Cart</h3> {% endcomment %}
                     </div>
                 </div>
             </div>
@@ -123,7 +111,7 @@
                 {% endfor %}
             </div>
             <div class="col-md-4">
-                <div class="order-summary">
+                {% comment %} <div class="order-summary">
                     <h3>Price Details</h3>
                     <p>Price: Rs.{{ subtotal }}</p>
                     <p>Shipping: Rs.{{ shipping }}</p>
@@ -133,10 +121,10 @@
                         <button type="submit" class="btn btn-success">Place Order</button>
                         {% comment %} <form method="post" action="{% url 'add_to_cart' product.id %}"> {% endcomment %}
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-primary">Add to Cart</button>
+                            {% comment %} <button type="submit" class="btn btn-primary">Add to Cart</button> {% endcomment %}
                         </form>
                     </form>
-                </div>
+                </div> 
             </div>
         </div>
     </div>

@@ -135,7 +135,7 @@
                 <td>{{ product.price }}</td>
                 <td>{{ product.discount }}%</td>
                 <td>{{ product.sale_price }}</td>
-                <td>{{ product.status }}</td>
+                {% comment %} <td>{{ product.status }}</td> {% endcomment %}
                 <td>
                     {% if product.product_image %}
                         <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}" width="100">
