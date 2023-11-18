@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            background-image: url('/static/images/booking1.jpg'); /* Add your background image URL here */
+            background-size: cover;
+        }
+
+        header, footer {
+            background-color: #003300;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input, select, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #003300;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #001a00;
+        }
+
+        #calendar {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1></h1>
+</header>
+
+<main>
+    <h4><center>Consultation Form</center></h4>
+    <label for="appointment-date">Select a Date:</label>
+    <input type="date" id="appointment-date" onchange="updateSelectedDate()">
+
+    <div id="calendar"></div>
+
+    <label for="appointment-time">Select a Time Slot:</label>
+    <select id="appointment-time">
+        <option value="09:00">09:00 AM - 09:30 AM</option>
+        <option value="09:30">09:30 AM - 10:00 AM</option>
+        <!-- Add more time slots as needed -->
+    </select>
+
+    <label for="botanist">Select a Botanist:</label>
+    <select id="botanist">
+        <option value="botanist1">Botanist 1</option>
+        <option value="botanist2">Botanist 2</option>
+        <!-- Add more botanists as needed -->
+    </select>
+
+    <label for="subject">Subject:</label>
+    <textarea id="subject" rows="4"></textarea>
+
+    <button id="schedule-appointment">Schedule Appointment</button>
+</main>
+<br><br>
+<footer>
+    <p>&copy; 2023 PlantPulse</p>
+</footer>
+
+<script>
+    const appointmentDateInput = document.getElementById("appointment-date");
+    const calendar = document.getElementById("calendar");
+
+    function updateSelectedDate() {
+        const selectedDate = appointmentDateInput.value;
+    }
+
+    // Add an event listener to display the calendar when clicking on the date input
+    appointmentDateInput.addEventListener("click", function () {
+        calendar.style.display = "block";
+    });
+
+    // Add an event listener to hide the calendar when clicking outside of it
+    document.addEventListener("click", function (event) {
+        if (event.target !== appointmentDateInput) {
+            calendar.style.display = "none";
+        }
+    });
+
+    // Add an event listener for the "Schedule Appointment" button
+    const scheduleAppointmentButton = document.getElementById("schedule-appointment");
+    scheduleAppointmentButton.addEventListener("click", validateAppointment);
+
+    function validateAppointment() {
+        const selectedDate = document.getElementById("appointment-date").value;
+        const selectedTime = document.getElementById("appointment-time").value;
+        const selectedBotanist = document.getElementById("botanist").value;
+        const subject = document.getElementById("subject").value;
+
+        if (selectedDate && selectedTime && selectedBotanist && subject) {
+            // All fields are filled, show the alert
+            alert("Appointment scheduled successfully!\nDate: " + selectedDate +
+                "\nTime Slot: " + selectedTime + "\nBotanist: " + selectedBotanist 
+                );
+
+            // Hide the calendar after scheduling the appointment
+            calendar.style.display = "none";
+        } else {
+            // Display an error message if any field is empty
+            alert("Please fill out all fields before scheduling the appointment.");
+        }
+    }
+</script>
+
+</body>
+</html>

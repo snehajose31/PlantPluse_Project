@@ -135,8 +135,8 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="quantity">Quantity</label>
-                <input type="number" id="quantity" name="quantity" class="form-control" required>
+                <label for="stock">Stock</label>
+                <input type="number" id="stock" name="stock" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
@@ -157,13 +157,13 @@
                 <label for="sale-price">Sale Price</label>
                 <input type="number" id="sale-price" name="sale-price" class="form-control" readonly>
             </div>
-            {% comment %} <div class="form-group">
+            <div class="form-group">
                 <label for="status">Status</label>
                  <select id="status" name="status" class="form-control" required>
                     <option value="active">active</option>
                     <option value="inactive">inactive </option>
                 </select>
-            </div> {% endcomment %}
+            </div> 
             <div class="form-group">
                 <label for="product-image">Product Image</label>
                 <input type="file" id="product-image" name="product-image" class="form-control" accept="image/*" required onchange="validateProductImage(this)">
@@ -239,7 +239,7 @@
             const subcategoryDropdown = document.getElementById("subcategory-name");
             const selectedCategory = categoryDropdown.value;
             const subcategoryOptions = {
-                plant: ["flowering plant", "Medicinal plant", "purifing plants"],
+                plant: ["flowering plant", "Medicinal plant"],
                 fertilizer : ["organic", "inorganic"],
                 seed : ["vegetable seed","flowering seed"],
             };
@@ -270,7 +270,7 @@
             const descriptionValue = input.value;
             const wordCount = descriptionValue.trim().split(/\s+/).length;
         
-            if (wordCount > 30) {
+            if (wordCount > 60) {
                 descriptionError.textContent = "Description should not exceed 30 words.";
             } else {
                 descriptionError.textContent = "";

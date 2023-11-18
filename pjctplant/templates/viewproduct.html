@@ -115,12 +115,12 @@
                 <th>Product Name</th>
                 <th>Category</th>
                 <th>Subcategory</th>
-                <th>Quantity</th>
+                <th>stock</th>
                 <th>Description</th>
                 <th>Product Price</th>
                 <th>Discount</th>
                 <th>Sale Price</th>
-                <th>Status</th>
+                <th></th> 
                 <th>Product Image</th>
                 <th>Action</th>
                 
@@ -128,14 +128,14 @@
             {% for product in products %}
             <tr>
                 <td>{{ product.product_name }}</td>
-                <td>{{ product.category }}</td>
-                <td>{{ product.subcategory }}</td>
-                <td>{{ product.quantity }}</td>
+                <td>{{ product.procat.name }}</td>
+                <td>{{ product.subcat.name}}</td>
+                <td>{{ product.stock }}</td>
                 <td>{{ product.description }}</td>
                 <td>{{ product.price }}</td>
                 <td>{{ product.discount }}%</td>
                 <td>{{ product.sale_price }}</td>
-                {% comment %} <td>{{ product.status }}</td> {% endcomment %}
+                <td></td> 
                 <td>
                     {% if product.product_image %}
                         <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}" width="100">
@@ -144,17 +144,17 @@
                     {% endif %}
                 </td>
                 <td>
-                <form action="{% url 'delete_product' product.product_id %}" method="post"> 
+                <form action="{% url 'delete_product' product.id %}" method="post"> 
                         {% csrf_token %}
-                        <input type="hidden" name="product_id" value="">
-                        <button type="submit" class="delete-button">Delete</button>
+                        <input type="hidden" name="id" value="">
+                        <button type="submit" class="delete-button">Deactivate</button>
                         
                        </form>
                 </td>
                 <td>
-                    <form action="{% url 'edit_product' product.product_id %}" method="post"> 
+                    <form action="{% url 'edit_product' product.id %}" method="post"> 
                         {% csrf_token %}
-                        <input type="hidden" name="product_id" value="">
+                        <input type="hidden" name="id" value="">
                         <button type="submit" class="delete-button">edit</button>
                 </form>
                 </td>

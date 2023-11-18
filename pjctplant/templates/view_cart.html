@@ -1,132 +1,161 @@
-{% load static %}
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <style>
-        /* Styles for the horizontal product box */
-        .card {
-            display: flex;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 10px;
-            align-items: center; /* Vertically center the content */
-        }
-
-        .card img {
-            max-width: 100px; /* Adjust the image width as needed */
-            height: auto;
-            margin-right: 10px;
-        }
-
-        .card-body {
-            flex: 1; /* Allow the text to take up remaining space */
-        }
-
-        .card-title {
-            font-size: 1.25rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .card-text {
-            font-size: 1rem;
-            color: #555;
-            margin-bottom: 10px;
-        }
-
-        .btn-danger {
-            background-color: #d9534f;
-            color: #fff;
-            border: none;
-            align-self: flex-end; /* Align the button to the bottom */
-        }
-
-        .btn-danger:hover {
-            background-color: #c9302c;
-        }
-        .header {
-            background-color: #003300;
-            color: #fff;
-            text-align: left;
-            padding: 10px;
-            position: relative; /* Needed for absolute positioning of the logo */
-        }
-        .Cart-icon{
-            position: absolute;
-            right: 0;
-            top:70px;
-
-        }
-
-
+        /* Your existing CSS styles here */
+        
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+        
+            table, th, td {
+                border: 1px solid #ccc;
+            }
+        
+            th, td {
+                padding: 10px;
+                text-align: center;
+            }
+        
+            th {
+                background-color: #f2f2f2;
+            }
+        
+            img {
+                max-width: 100px;
+                height: auto;
+                display: block;
+                margin: 0 auto;
+            }
+        
+            .order-summary {
+                margin-top: 20px;
+                padding: 10px;
+                border: 1px solid #ccc;
+            }
+        
+            .order-summary h3 {
+                text-align: center;
+            }
+        
+            .order-summary p {
+                text-align: left;
+            }
+        
+            .order-summary button {
+                display: block;
+                margin: 0 auto;
+            }
+        
+            input[type="number"] {
+                width: 50px;
+                text-align: center;
+            }
+            .Cart-icon{
+                position: absolute;
+                right: 0;
+                top:70px;
+    
+            }
+            .header {
+                background-color: #003300;
+                color: #fff;
+                text-align: left;
+                padding: 10px;
+                position: relative; /* Needed for absolute positioning of the logo */
+            }
+            .btn-danger {
+                background-color: #d9534f;
+                color: #fff;
+            }
     </style>
-
-
-
 </head>
+<body>
+
 <div class="header">
     <h1><center>Shopping Cart</center></h1>
-    {% comment %} <img src="{% static 'images/trlogo.png' %}" alt="Logo" class="logo"> {% endcomment %}
     <a href="{% url 'home' %}"><img src="{% static 'images/log4.png' %}" alt="Cart" class="Cart-icon" style="margin-right: 10px;"></a>
 </div>
 
-    <!-- Inner page section -->
-    <section class="inner_page_head">
-        <div class="container_fuild">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="full">
-                        {% comment %} <h3>Shopping Cart</h3> {% endcomment %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="container">
+<!-- Inner page section -->
+<section class="inner_page_head">
+    <div class="container_fuild">
         <div class="row">
-            <div class="col-md-8">
-                {% for item in cart_items %}
-                <div class="card mb-3">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="{{ item.product.product_image.url }}" alt="{{ item.product.product_name }}">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ item.product.product_name }}</h5>
-                                <p class="card-text">Discount: {{ item.product.discount }}%</p>
-                                <p class="card-text">Sale Price: Rs.{{ item.product.sale_price }}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {% comment %} <form method="post" action="{% url 'remove_from_cart' item.id %}"> {% endcomment %}
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger">Remove from Cart</button>
-                    </form>
+            <div class="col-md-12">
+                <div class="full">
+                    <!-- <h3>Shopping Cart</h3> -->
                 </div>
-                {% endfor %}
-            </div>
-            <div class="col-md-4">
-                {% comment %} <div class="order-summary">
-                    <h3>Price Details</h3>
-                    <p>Price: Rs.{{ subtotal }}</p>
-                    <p>Shipping: Rs.{{ shipping }}</p>
-                    <p>Total Amount: ${{ total }}</p>
-                    <form method="post" action="">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-success">Place Order</button>
-                        {% comment %} <form method="post" action="{% url 'add_to_cart' product.id %}"> {% endcomment %}
-                            {% csrf_token %}
-                            {% comment %} <button type="submit" class="btn btn-primary">Add to Cart</button> {% endcomment %}
-                        </form>
-                    </form>
-                </div> 
             </div>
         </div>
     </div>
+</section>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td>
+                            <img src="{{ item.product.product_image.url }}" alt="{{ item.product.product_name }}" width="100"> 
+                            {{ item.product.product_name }}
+                        </td>
+                        <td>
+                            <!-- Input field for quantity -->
+                            <input type="number" name="stock" max="{{ item.product.stock }}" min="1"  onchange="updateTotal({{ item.product.sale_price }}, this.value)"> 
+                        </td>
+                        <td>
+                            Rs.{{ item.product.sale_price }}
+                        </td>
+                        <td id="total_{{ item.id }}">Rs.{{ item.total_price }}</td>
+                        
+                        <td>
+                            <form method="post" action="{% url 'remove_from_cart' item.id %}"> 
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="order-summary">
+                <h3>Total Amount: Rs.<span id="total">{{ total }}</span></h3>
+                <form method="post" action="">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success">Place Order</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateTotal(price, stock) {
+        let total = price * stock;
+        let itemId = event.target.parentNode.parentNode.id.split('_')[1];
+        document.getElementById(`total_${itemId}`).innerHTML = `Rs.${total}`;
+
+        let totalAmount = 0;
+        let allTotalElements = document.querySelectorAll('[id^="total_"]');
+        allTotalElements.forEach(element => {
+            totalAmount += parseFloat(element.innerHTML.replace('Rs.', ''));
+        });
+
+        document.getElementById('total').innerHTML = `Total Amount: Rs.${totalAmount}`;
+    }
+</script>
 </body>
 </html>

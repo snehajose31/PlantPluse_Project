@@ -1,518 +1,128 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultation Page</title>
+    {% load static %}
     <style>
-        /* Global styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('/static/images/dp4.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center center;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
         }
 
-        .header {
-            background-color: #003300;
-            color: #fff;
+        .box-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .box {
+            padding: 20px;
+            margin: 10px;
             text-align: center;
-            padding: 10px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1;
-
-                
-        }
-
-        .sidebar {
-            width: 20%;
-            background-color: #003300;
-            padding: 20px;
-            position: fixed;
-            top: 40px;
-            bottom: 0;
-            overflow: auto;
-            z-index: 2;
-        }
-
-        .content-container {
-            margin-left: 20%;
-            padding: 20px;
-            margin-top: 50px;
-        }
-
-        /* Sidebar box styles */
-        .sidebar-item {
-            margin-bottom: 10px;
-            padding: 10px;
-            background-color: #2b542b;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            color:white;
-            margin-top: 40px;
+            flex: 1;
+            opacity: 0;
+            transform: translateY(0);
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; /* Center the content vertically */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .sidebar-item:hover {
-            background-color: #549954;
-        }
-        /* Logout icon styles */
-        .logout-icon {
-            position: absolute;
-            right: 10px; /* Adjust the right position as needed */
-            top: 55px; /* Adjust the top position as needed */
-            text-decoration: none;
-            color: #fff;
+        .box:nth-child(even) {
+            transform: translateX(100%);
         }
 
+        .box i {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
 
-        
+        /* Colors for each box */
+        .box:nth-child(1) {
+            background-color: #497034; /* Blue */
+        }
+
+        .box:nth-child(2) {
+            background-color: #6aad45; /* Red */
+        }
+
+        .box:nth-child(3) {
+            background-color: #2ecc71; /* Green */
+        }
+
+        .box:nth-child(4) {
+            background-color: #f39c12; /* Orange */
+        }
+
+        /* Images for each box */
+        .box img {
+            width: 50px; /* Adjust the image size as needed */
+            height: 50px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .box span {
+            font-size: 16px;
+        }
     </style>
 </head>
-
 <body>
-    <div class="header">
-        <h2>Consultation</h2>
-        <a href="/home" class="logout-icon">
-            <img src="/static/images/log4.png" alt="Logout">
-        </a>
+
+<div class="box-container">
+    <div class="box" onclick="redirectTo('{% url 'book-appointment' %}')">
+        <img src="{% static 'images/appo1.png' %}" alt="Book Appointment">
+        <span>Book Appointment</span>
     </div>
+    <div class="box" onclick="redirectTo('{% url 'work' %}')">
+        <img src="{% static 'images/work1.png' %}" alt="Work">
+        <span>Work</span>
+    </div>
+</div>
+
+<div class="box-container">
+    <div class="box" onclick="redirectTo('{% url 'botdetail' %}')">
+        <img src="{% static 'images/det1.png' %}" alt="Details">
+        <span>Details</span>
+    </div>
+    <div class="box" onclick="redirectTo('{% url 'index' %}')">
+        <img src="{% static 'images/art2.png' %}" alt="Chat with Doctor">
+        <span>Article</span>
+    </div>
+</div>
+
+<script>
+    // Function to redirect to a specified page
+    function redirectTo(page) {
+        window.location.href = page;
+    }
     
 
-    <div class="sidebar">
-        <!-- Botanist Details -->
-        <div class="sidebar-item" onclick="loadBotanistDetails()">
-            Botanist Details
-        </div>
-
-        <!-- Consultation -->
-        <div class="sidebar-item" onclick="loadConsultationForm()">
-            Consultation
-        </div>
-
-        <!-- Works -->
-        <div class="sidebar-item" onclick="loadWorksPage()">
-            Works
-        </div>
-
-        <!-- Blogs -->
-        {% comment %} <div class="sidebar-item" onclick="loadBlogsPage()">
-            Blogs
-        </div> {% endcomment %}
-    </div>
-
-    <div class="content-container" id="content">
-        <!-- Content will be loaded here dynamically using JavaScript -->
-    </div>
-
-    <!-- JavaScript to load the content dynamically -->
-    <script>
-        function loadBotanistDetails() {
-            const content = document.getElementById("content");
-            content.innerHTML = `
-            <div class="content">
-                <!DOCTYPE html>
-                <html>
-
-                <head>
-                    <style>
-                        /* Global styles */
-                        body {
-                            font-family: Arial, sans-serif;
-                            margin: 0;
-                            padding: 0;
-                            background-image: url('/static/images/dp4.jpg');
-                            background-size: cover;
-                            background-repeat: no-repeat;
-                            background-position: center center;
-                        }
-
-                        .header {
-                            background-color: #003300;
-                            color: #fff;
-                            text-align: center;
-                            padding: 10px;
-                            position: fixed;
-                            top: 0;
-                            left: 0;
-                            right: 0;
-                            z-index: 1;
-                        }
-
-                        .sidebar {
-                            width: 20%;
-                            background-color: #003300;
-                            padding: 20px;
-                            position: fixed;
-                            top: 40px;
-                            bottom: 0;
-                            overflow: auto;
-                            z-index: 2;
-                        }
-
-                        .content-container {
-                            margin-left: 20%;
-                            padding: 20px;
-                            margin-top: 50px;
-                        }
-
-                        /* Sidebar box styles */
-                        .sidebar-item {
-                            margin-bottom: 10px;
-                            padding: 10px;
-                            background-color: #2b542b;
-                            cursor: pointer;
-                            transition: background-color 0.3s ease;
-                            color: white;
-                            margin-top: 40px;
-                        }
-
-                        .sidebar-item:hover {
-                            background-color: #549954;
-                        }
-
-                        /* Content styles */
-                        .content {
-                            background-color: #f9f9f9;
-                            border: 1px solid #ddd;
-                            padding: 20px;
-                        }
-
-                        /* Add this part for botanist details */
-                        .botanist-box {
-                            background-color: #85b87f;
-                            border: 1px solid #ddd;
-                            padding: 20px;
-                            border-radius: 5px;
-                            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-                            margin-bottom: 20px;
-                        }
-
-                        .botanist-box img {
-                            max-width: 100%;
-                            border: 1px solid #ddd;
-                            border-radius: 5px;
-                        }
-
-                        .botanist-box h2 {
-                            font-size: 18px;
-                            color: #003300;
-                            margin-top: 10px;
-                        }
-
-                        .botanist-box p {
-                            font-size: 14px;
-                            color: #555;
-                            margin-top: 5px;
-                        }
-
-                        .botanist-box h3 {
-                            font-size: 16px;
-                            color: #003300;
-                            margin-top: 10px;
-                        }
-
-                        .botanist-box ul {
-                            list-style: disc;
-                            margin-left: 20px;
-                            font-size: 14px;
-                            color: #555;
-                            margin-top: 5px;
-                        }
-                    </style>
-                </head>
-                <h3><center>Botanist Details</center></h3>
-                
-                <!-- Botanist 1 -->
-                <div class="botanist-box">
-                    <img src="/static/images/botanist1.jpg" alt="Botanist 1">
-                    <h2>Dr.P. V. Benjamin</h2>
-                    <p>Qualification: Ph.D. in Botany</p>
-                    <p>Specialty: Plants Disease</p>
-                    <p>Experience in Industry: 10 years</p>
-                    <p>Academic Details: B.Sc. in Botany, M.Sc. in Plant Science,PhD. in Plant Pathology</p>
-                    <h3>Recent Articles:</h3>
-                    <ul>
-                        <li>Article 1: Plant disease recognition</li>
-                        <li>Article 2: Plant nutrition</li>
-                    </ul>
-                </div>
-    
-                <!-- Botanist 2 -->
-                <div class="botanist-box">
-                    <img src="/static/images/bot3.jpg" alt="Botanist 2">
-                    <h2>Dr. Balakrishnan</h2>
-                    <p>Qualification: Ph.D. in Plant Physiology</p>
-                    <p>Specialty: Plant Growth Analysis</p>
-                    <p>Experience in Industry: 15 years</p>
-                    <p>Academic Details: B.Sc. in Plant Biology, M.Sc. in Plant Physiology</p>
-                    <h3>Recent Articles:</h3>
-                    <ul>
-                        <li>Article 1: Understanding Plant Growth Patterns</li>
-                        <li>Article 2: Nutrient Uptake in Plants</li>
-                    </ul>
-                </div>
-            </div>
-        `;
-        }
-
-        function loadConsultationForm() {
-            const content = document.getElementById("content");
-            content.innerHTML = `
-            <!DOCTYPE html>
-                    
-                        <head>
-                            <style>
-                                body {
-                                    font-family: Arial, sans-serif;
-                                    background-color: #f0f0f0;
-                                    margin: 0;
-                                    padding: 0;
-                                }
-                                
-                                
-                                
-                                main {
-                                    max-width: 800px;
-                                    margin: 20px auto;
-                                    background-color: #fff;
-                                    padding: 20px;
-                                    border: 1px solid #ddd;
-                                    border-radius: 5px;
-                                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                                }
-                                
-                                h1, h2 {
-                                    color: #003300;
-                                }
-                                
-                                .scheduler, .question-session {
-                                    margin: 20px 0;
-                                }
-                                
-                                label {
-                                    display: block;
-                                    font-weight: bold;
-                                }
-                                
-                                input[type="date"],
-                                input[type="time"],
-                                textarea {
-                                    width: 100%;
-                                    padding: 10px;
-                                    margin-top: 5px;
-                                    margin-bottom: 15px;
-                                    border: 1px solid #ccc;
-                                    border-radius: 4px;
-                                    box-sizing: border-box;
-                                }
-                                
-                                button {
-                                    background-color: #003300;
-                                    color: #fff;
-                                    border: none;
-                                    padding: 10px 20px;
-                                    border-radius: 4px;
-                                    cursor: pointer;
-                                }
-                                
-                                button:hover {
-                                    background-color: #001a00;
-                                }
-                            </style>   
-                <div class="content">
-                    <h3><center>Consultation Form</center></h3>
-        
-                    
-            <main>
-                <section class="scheduler">
-                    <h2>Appointment Scheduler</h2>
-                    <label for="botanist-select">Choose a Botanist:</label>
-                    <br>
-                    <select id="botanist-select">
-                        <option value="botanist1">Dr.P. V. Benjamin</option>
-                        <option value="botanist2">Dr. Balakrishnan</option>
-                    </select>
-                    <br><br>
-                    <label for="appointment-day">Select a Day:</label>
-                    <input type="date" id="appointment-day">
-                    <br>
-                    <label for="appointment-time">Select a Time:</label>
-                    <input type="time" id="appointment-time">
-                    <button id="schedule-appointment">Schedule Appointment</button>
-                </section>
-                <section class="question-session">
-                    <h2>Question Session</h2>
-                    <p>Ask your plant-related questions here:</p>
-                    <textarea id="question-text" placeholder="Type your question here"></textarea>
-                    <button id="submit-question">Submit Question</button>
-                </section>
-            </main>
-        </div>
-    `;
-    
-    // Add event listener for the "Schedule Appointment" button
-    const scheduleAppointmentButton = document.getElementById("schedule-appointment");
-    scheduleAppointmentButton.addEventListener("click", validateAppointment);
-
-    function validateAppointment() {
-        const selectedDay = new Date(document.getElementById("appointment-day").value);
-        const selectedTime = document.getElementById("appointment-time").value;
-        const currentTime = new Date();
-        const minTime = new Date();
-        const maxTime = new Date();
-
-        // Set the minimum and maximum allowed time (8:00 to 18:00)
-        minTime.setHours(8, 0, 0);
-        maxTime.setHours(18, 0, 0);
-
-        if (
-            selectedDay < currentTime ||  // Selected day is before the current day
-            (selectedDay.toDateString() === currentTime.toDateString() && (selectedTime < "08:00" || selectedTime > "18:00")) // Same day but outside valid time
-        ) {
-            alert("Invalid date and time selection. Please select a valid date and time.");
-        } else {
-            alert("Appointment scheduled successfully!");
-        }
+    // Function to animate the boxes
+    function animateBoxes() {
+        const boxes = document.querySelectorAll('.box');
+        boxes.forEach((box, index) => {
+            setTimeout(() => {
+                box.style.opacity = '1';
+                box.style.transform = 'translateY(0)';
+            }, index * 500); // Adjust the delay as needed
+        });
     }
 
-}
-        
+    // Call the function to animate boxes on page load
+    window.onload = animateBoxes;
+</script>
 
-function loadWorksPage() {
-    const content = document.getElementById("content");
-    content.innerHTML = `
-    <!DOCTYPE html>
-                    
-    <head>
-        <style>
-            <style>
-                /* Add this CSS to style the work boxes */
-                .botanist-works {
-                    margin-bottom: 20px;
-                }
-            
-                .work-box {
-                    background-color: #fff;
-                    border: 1px solid #ddd;
-                    padding: 10px;
-                    margin: 10px;
-                    border-radius: 5px;
-                    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-                    display: inline-block;
-                    width: 45%; /* Adjust the width as needed */
-                    text-align: center;
-                }
-            
-                .work-box img {
-                    max-width: 100%;
-                    border: 1px solid #ddd;
-                    border-radius: 5px;
-                }
-            
-                .work-box h3 {
-                    font-size: 16px;
-                    color: #003300;
-                    margin-top: 10px;
-                }
-            
-                .work-box p {
-                    font-size: 14px;
-                    color: #555;
-                    margin-top: 5px;
-                }
-            </style>
-            
-        <div class="content">
-            <h3><center>Works</center></h3>
-
-            <!-- Botanist 1 Works -->
-            <div class="botanist-works">
-                <h2>Dr.P. V. Benjamin's Works</h2>
-                <div class="works-container" id="botanist1-works">
-                    <!-- Dynamically generate work boxes for botanist 1 here -->
-                </div>
-            </div>
-
-            <!-- Botanist 2 Works -->
-            <div class="botanist-works">
-                <h2>Dr. Balakrishnan's Works</h2>
-                <div class="works-container" id="botanist2-works">
-                    <!-- Dynamically generate work boxes for botanist 2 here -->
-                </div>
-            </div>
-        </div>
-    `;
-
-    // Example works for botanist 1
-    const botanist1Works = [
-        {
-            title: "",
-            description: "Plant Diseases Due to Contaminated Water",
-            imageSrc: "/static/images/plantd2.png",
-        },
-        {
-            title: "",
-            description: "Tomatoes disease",
-            imageSrc: "/static/images/plantw1.png",
-        },
-        // Add more works for botanist 1 here (up to 2)
-    ];
-
-    // Example works for botanist 2
-    const botanist2Works = [
-        {
-            title: "",
-            description: "Leaf sensors used for to identify whether crop need to be irrigated ",
-            imageSrc: "/static/images/botw1.jpg",
-        },
-        {
-            title: "",
-            description: "Sensors for plant health monitoring",
-            imageSrc: "/static/images/plant3.jpg",
-        },
-        // Add more works for botanist 2 here (up to 2)
-    ];
-
-    // Dynamically generate work boxes for botanist 1
-    const botanist1WorksContainer = document.getElementById("botanist1-works");
-    botanist1Works.forEach((work) => {
-        botanist1WorksContainer.innerHTML += `
-            <div class="work-box">
-                <img src="${work.imageSrc}" alt="${work.title}">
-                <h3>${work.title}</h3>
-                <p>${work.description}</p>
-            </div>
-        `;
-    });
-
-    // Dynamically generate work boxes for botanist 2
-    const botanist2WorksContainer = document.getElementById("botanist2-works");
-    botanist2Works.forEach((work) => {
-        botanist2WorksContainer.innerHTML += `
-            <div class="work-box">
-                <img src="${work.imageSrc}" alt="${work.title}">
-                <h3>${work.title}</h3>
-                <p>${work.description}</p>
-            </div>
-        `;
-    });
-}
-
-
-        {% comment %} function loadBlogsPage() {
-            const content = document.getElementById("content");
-            content.innerHTML = `
-                <div class="content">
-                    <h3><center>Blogs</center></h3>
-                    <!-- Add your blogs content here -->
-                </div>
-            `;
-        } {% endcomment %}
-    </script>
 </body>
-
 </html>

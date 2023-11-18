@@ -59,11 +59,39 @@
             text-decoration: none;
             color: #fff;
         }
+        .search-form {
+            display: inline-block;
+            margin-right: 50px; /* Adjust the margin as needed to position the search bar properly */
+            float: right;
+            top: 80px;
+            
+        }
+        
+        .search-input {
+            padding: 5px;
+            width: 200px; /* Adjust the width as needed */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .search-button {
+            background-color: #457557;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        
     </style>
 </head>
 <body>
     <header>
         <h1>Flowering Plants</h1>
+        <form action="/search" method="GET" class="search-form">
+            <input type="text" name="q" placeholder="Search products..." class="search-input">
+            <button type="submit" class="search-button">Search</button>
+        </form>
         <a href="/home" class="logout-icon">
             <img src="/static/images/log4.png" alt="Logout">
         </a>
@@ -73,7 +101,7 @@
         {% for product in products %}
         <div class="col-md-3">
             <div class="product-card">
-                <a href="{% url 'product_details' product.product_id %}">
+                <a href="{% url 'product_details' product.id %}">
                     <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}">
                 </a>
                 <h4>{{ product.product_name }}</h4>

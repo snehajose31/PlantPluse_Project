@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        /* Your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #003366;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .doctor-info {
+            text-align: right;
+        }
+
+        .doctor-name {
+            font-weight: bold;
+        }
+
+        .dashboard-container {
+            display: flex;
+            height: calc(100vh - 40px); /* Adjust height based on your header size */
+        }
+
+        aside {
+            background-color: #f2f2f2;
+            padding: 20px;
+            width: 200px;
+        }
+
+        main {
+            flex: 1;
+            padding: 20px;
+        }
+
+        /* Style for sidebar links */
+        .sidebar-link {
+            display: block;
+            padding: 10px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: #333;
+            background-color: #ddd;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .sidebar-link:hover {
+            background-color: #ccc;
+        }
+
+        /* Style for scheduling form */
+        .schedule-form {
+            margin-top: 20px;
+        }
+
+        .schedule-list {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="doctor-info">
+            <div class="doctor-name">Hello, Dr. {% if user.is_authenticated %}{{ user.username }}{% endif %}</div>
+        </div>
+    </header>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside>
+            <a href="#" class="sidebar-link" onclick="showDashboard()">Dashboard</a>
+            <a href="#" class="sidebar-link" onclick="showPatients()">Patients</a>
+            <a href="#" class="sidebar-link" onclick="showAppointments()">Appointments</a>
+            <a href="#" class="sidebar-link" onclick="showScheduling()">Scheduling</a>
+        </aside>
+
+        <!-- Main Content -->
+        <main id="dashboard-content">
+            <!-- Default content or dynamically loaded content goes here -->
+            <h2>Welcome to the Dashboard!</h2>
+        </main>
+    </div>
+
+    <script>
+        // Your JavaScript functions for handling sidebar clicks and changing content
+        function showDashboard() {
+            document.getElementById('dashboard-content').innerHTML = '<h2>Dashboard Content Goes Here</h2>';
+        }
+
+        function showPatients() {
+            document.getElementById('dashboard-content').innerHTML = '<h2>Patients Content Goes Here</h2>';
+        }
+
+        function showAppointments() {
+            document.getElementById('dashboard-content').innerHTML = '<h2>Appointments Content Goes Here</h2>';
+        }
+
+        function showScheduling() {
+            document.getElementById('dashboard-content').innerHTML = `
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <style>
+                    .schedule-box {
+                        border: 1px solid #ccc;
+                        padding: 20px;
+                        border-radius: 8px;
+                        margin: 20px 0;
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                    }
+            
+                    .schedule-form label {
+                        display: block;
+                        margin-bottom: 8px;
+                    }
+            
+                    .schedule-form input {
+                        width: 100%;
+                        padding: 8px;
+                        margin-bottom: 16px;
+                        box-sizing: border-box;
+                    }
+            
+                    .schedule-form button {
+                        padding: 10px 15px;
+                        background-color: #4CAF50;
+                        color: #fff;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                    }
+            
+                    .schedule-form button:hover {
+                        background-color: #45a049;
+                    }
+                </style>
+                <title>Scheduling Form</title>
+            </head>
+            <body>
+            
+            <div class="schedule-box">
+                <h2>Scheduling</h2>
+                {% comment %} <form class="schedule-form" method="post" action="{% url 'add_schedule' %}"> {% endcomment %}
+                    {% csrf_token %}
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" name="date" required>
+                    <br>
+                    <label for="time">Time:</label>
+                    <input type="text" id="time" name="time" placeholder="HH:MM AM/PM" required>
+                    <br>
+                    <button type="submit">Add Schedule</button>
+                </form>
+            
+                <div class="schedule-list">
+                    <!-- List of existing schedules goes here -->
+                </div>
+            </div>
+            
+            </body>
+            </html>
+            
+            `;
+        }
+    </script>
+</body>
+
+</html>

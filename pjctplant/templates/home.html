@@ -81,9 +81,12 @@
                 </div>
                 {% comment %} <p>{{ user.username }}</p> {% endcomment %}
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <h6 class="welcome-message">Welcome, {{ request.session.useremail }}</h6>
+                    <h6 class="welcome-message">Welcome,{% if user.is_authenticated %}{{ user.username }}
+                    {% endif %}
+                    <br><br>
                     <a href="{% url 'logout' %}" class="float-right"><img src="{% static 'images/logout2.png' %}" alt="Logout" class="logout-icon" style="margin-right: 10px;"></a>
                     <a href="{% url 'profile' %}" class="float-right" style="margin-right: 10px;"><img src="{% static 'images/profile3.jpg' %}" alt="profile" class="profilr-icon"></a>
+                    
                 </div>
 					<!--<div class="login-box">
 						<--<select id="basic" class="selectpicker show-tick " data-placeholder="Sign In">
@@ -172,7 +175,7 @@
                                     <ul class="dropdown-menu">
                                         {% comment %} <li><a href="{% url 'index' %}">All Seeds</a></li> {% endcomment %}
                                         <li><a href="{% url 'vegetable_seed' %}">Vegetable Seeds</a></li>
-                                        <li><a href="{% url 'flowering_seed' %}">Flowering Seeds</a></li>
+                                        {% comment %} <li><a href="{% url 'flowering_seed' %}">Flowering Seeds</a></li> {% endcomment %}
                                     </ul>
                                 </li>
                                 
@@ -189,27 +192,30 @@
                                 <li><a href="wishlist.html">Wishlist</a></li> {% endcomment %}
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'bot'%}">BOTANIST</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'botanist'%}">BOTANIST</a></li>
                         {% comment %} <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li> {% endcomment %}
                         <li class="nav-item"><a class="nav-link" href="/contact-us">HORTICULTURE EXPERT</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'view_cart'%}"><img src="{% static 'images/cart99.jpg' %}" alt="profile" class="profilr-icon"></a></li>
+                    </ul>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
 
                 <!-- Start Atribute Navigation -->
-                <!--<div class="attr-nav">
+                {% comment %} <div class="attr-nav">
                     <ul>
-                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                        <li class="side-menu">
-							<a href="#">
+                        ?<li class="search"><a href="#"><i class="fa fa-search"></i></a></li> {% endcomment %}
+                        {% comment %} <li class="side-menu">
+							 <a href="{% url 'view_cart' %}">
+                                
 								<i class="fa fa-shopping-bag"></i>
-								<span class="badge">3</span>
+								<span class="badge">3</span>  
 								<p>My Cart</p>
-							</a>
-						</li>
+							</a> 
+                            
                     </ul>
-                </div>
-            <!-- End Atribute Navigation -->
+                </div>  {% endcomment %}
+            <!-- End Atribute Navigation 
             </div>
             <!-- Start Side Menu -->
             <div class="side">
@@ -266,7 +272,7 @@
                         <div class="col-md-12">
                             <h1 class="m-b-20"> PlantPulse</strong></h1>
                             <p class="m-b-40"><i>Every Plant Has a Heartbeat.</i></p>
-                            <p><a class="btn hvr-hover" href="#">Shop New</a></p>
+                            {% comment %} <p><a class="btn hvr-hover" href="#">Shop New</a></p> {% endcomment %}
                         </div>
                     </div>
                 </div>
@@ -278,7 +284,7 @@
                         <div class="col-md-12">
                             <h1 class="m-b-20"> PlantPulse</strong></h1>
                             <p class="m-b-40"><i>Elevate your space with the power of green.</i></p>
-                            <p><a class="btn hvr-hover" href="#">Shop New</a></p>
+                            {% comment %} <p><a class="btn hvr-hover" href="#">Shop New</a></p> {% endcomment %}
                         </div>
                     </div>
                 </div>
@@ -290,7 +296,7 @@
                         <div class="col-md-12">
                             <h1 class="m-b-20"> PlantPulse</strong></h1>
                             <p class="m-b-40"><i>Greening Your World, One Plant Pulse at a Time.</i></p>
-                            <p><a class="btn hvr-hover" href="#">Shop New</a></p>
+                            {% comment %} <p><a class="btn hvr-hover" href="#">Shop New</a></p> {% endcomment %}
                         </div>
                     </div>
                 </div>

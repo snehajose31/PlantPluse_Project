@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>user details</title>
+    <title>User details</title>
     <style>
         /* Add your CSS styles for the View Product page here */
         body {
@@ -93,7 +93,38 @@
             top:50px;
             color:white;
         }
-        
+
+        /* Add styles for the search bar */
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            padding: 8px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .search-button {
+            padding: 8px;
+            background-color: #0056b3;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .search-button:hover {
+            background-color: #003366;
+        }
+        .deactivate-button{
+            background-color:#e82734;
+        }
+        .activate-button{
+            background-color:#24db1a;
+        }
     </style>
 </head>
 <body>
@@ -104,42 +135,55 @@
             <div class="user_no">
                 <p>Total Users: {{ user_s|length }}</p>
             </div>
-        
-        
+            
         {% comment %} <a href="{% url 'adminpanel' %}"><img src="{% static 'images/log4.png' %}" alt="Cart" class="Cart" style="margin-right: 10px;"></a> {% endcomment %}
     </div>
    
     <div class="container">
-        {% comment %} <h1>View Products</h1> {% endcomment %}
+        <!-- Search Bar -->
+        <div class="search-container">
+            <form action="{% url 'search_user' %}" method="get">
+                <input type="text" class="search-input" name="query" placeholder="Search by username">
+                <button type="submit" class="search-button">Search</button>
+            </form>
+        </div>
+
         <table>
             <tr>
                 <th>Username</th>
                 <th>Email</th>
-                {% comment %} <th>Password</th> {% endcomment %}
                 <th>Role</th>
+                <th>Activate/Deactivate</th>
             </tr>
 
             {% for user in user_s %}
             <tr>
                 <td>{{ user.username }}</td>
                 <td>{{ user.email }}</td>
-                {% comment %} <td>{{ user.password }}</td> {% endcomment %}
                 <td>{{ user.role }}</td>
                 <td>
                     {% comment %} <form action="{% url 'delete_user' user.id %}" method="post"> {% endcomment %}
                         {% csrf_token %}
+                        {% comment %} <input type="hidden" name="user_id" value="{{ user.id }}">
+                        <button type="submit" class="delete-button">Delete</button> {% endcomment %}
+                    
+                    <form action="{% url 'deactivate_user' user.id %}" method="post">
+                        {% csrf_token %}
                         <input type="hidden" name="user_id" value="{{ user.id }}">
-                        {% comment %} <button type="submit" class="delete-button">Delete</button> {% endcomment %}
+                        <button type="submit" class="deactivate-button">Deactivate</button>
+                    </form>
+
+                    <form action="{% url 'activate_user' user.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                        <button type="submit" class="activate-button">Activate</button>
                     </form>
                 </td>
             </tr>
             {% endfor %}
-            <div class="user_no">
-                <p>Total Users: {{ user_s|length }}</p>
-            </div>
         </table>
     </div>
-<br><br><br><br><br><br><br><br><br>
+
     <!-- Footer Section -->
     <div class="footer">
         &copy; 2023 PlantPulse

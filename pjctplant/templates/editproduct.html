@@ -104,7 +104,7 @@
             <input type="text" name="product-name" value="{{ product.product_name }}" required>
             
             <label for="category-name">Category Name</label>
-            <select id="category-name" name="category-name" class="form-control" required onchange="updateSubcategoryOptions()">
+            <select id="category-id" name="category-name" class="form-control" required onchange="updateSubcategoryOptions()">
                 <option value="">Select</option>
                 <option value="plant">Plant</option>
                 <option value="fertilizer">Fertilizer & Pesticide</option>
@@ -114,7 +114,7 @@
             </select>
        
             <label for="subcategory-name">Subcategory Name</label>
-            <select id="subcategory-name" name="subcategory-name" class="form-control" required>
+            <select id="subcategory-id" name="subcategory-name" class="form-control" required>
                 <!-- Subcategory options will be added dynamically here -->
             </select>
        
@@ -137,8 +137,8 @@
             </select> {% endcomment %}
         
             <!-- Other form fields -->
-            <label for="quantity">Quantity</label>
-            <input type="number" name="quantity" value="{{ product.quantity }}" required>
+            <label for="stock">Stock</label>
+            <input type="number" name="quantity" value="{{ product.stock }}" required>
         
             <label for="description">Description</label>
             <textarea name="description" required>{{ product.description }}</textarea>
@@ -170,65 +170,48 @@
     </div>
 
     <script>
-        // JavaScript code to update subcategory options dynamically based on the selected category goes here
-        function updateSubcategoryOptions() {
-            const categoryDropdown = document.getElementById("category-name");
-            const subcategoryDropdown = document.getElementById("subcategory-name");
-            const selectedCategory = categoryDropdown.value;
-            const subcategoryOptions = {
-                plant: ["flowering plant", "Medicinal plant", "purifing plants"],
-                fertilizer : ["organic", "inorganic"],
-                seed : ["vegetable seed","flowering seed"],
-            };
-
-            
-        {% comment %} function updateSubcategoryOptions() {
-            const categoryDropdown = document.getElementById("category-name");
-            const subcategoryDropdown = document.getElementById("subcategory-name");
-            const selectedCategory = categoryDropdown.value;
-            const subcategoryOptions = {
-                Plant: ["flowering plant", "Medicinal plant", "purifing plants"],
-                fertilizer: ["organic", "inorganic"],
-            }; {% endcomment %}
-
-            // Clear existing options
-            subcategoryDropdown.innerHTML = "";
-
-            // Add new options based on the selected category
-            for (const option of subcategoryOptions[selectedCategory]) {
-                const optionElement = document.createElement("option");
-                optionElement.value = option;
-                optionElement.textContent = option;
-                subcategoryDropdown.appendChild(optionElement);
-            }
-        }
-
-        // Initial call to populate subcategories based on the initial selected category
-        updateSubcategoryOptions();
-
-        <!-- Add this to your HTML file inside the <head> section -->
-           
-                // Function to calculate the sale price
-                function calculateSalePrice() {
-                    const priceInput = document.querySelector('input[name="price"]');
-                    const discountInput = document.querySelector('input[name="discount"]');
-                    const salePriceInput = document.querySelector('input[name="sale-price"]');
-                    
-                    const price = parseFloat(priceInput.value);
-                    const discount = parseFloat(discountInput.value);
-            
-                    // Check if both price and discount are valid numbers
-                    if (!isNaN(price) && !isNaN(discount)) {
-                        const salePrice = price - (price * (discount / 100));
-                        salePriceInput.value = salePrice.toFixed(2); // Display with 2 decimal places
-                    } else {
-                        salePriceInput.value = ""; // Clear the sale price if inputs are invalid
-                    }
+            // Function to update subcategory options
+            function updateSubcategoryOptions() {
+                const categoryDropdown = document.querySelector('select[name="category-name"]');
+                const subcategoryDropdown = document.querySelector('select[name="subcategory-name"]');
+                const selectedCategory = categoryDropdown.value;
+                const subcategoryOptions = {
+                    plant: ["flowering plant", "Medicinal plant"],
+                    fertilizer: ["organic", "inorganic"],
+                    seed: ["vegetable seed", "flowering seed"],
+                };
+        
+                // Clear existing options
+                subcategoryDropdown.innerHTML = "";
+        
+                // Add new options based on the selected category
+                for (const option of subcategoryOptions[selectedCategory]) {
+                    const optionElement = document.createElement("option");
+                    optionElement.value = option;
+                    optionElement.textContent = option;
+                    subcategoryDropdown.appendChild(optionElement);
                 }
-                
-                // Initial call to calculate sale price when the page loads
-                window.addEventListener('load', calculateSalePrice);
-            
-    </script>
+            }
+        
+            // Function to calculate the sale price
+            function calculateSalePrice() {
+                // Your existing code for calculating the sale price remains the same
+            }
+        
+            // Event listener to call updateSubcategoryOptions on change
+            document.addEventListener('DOMContentLoaded', function() {
+                updateSubcategoryOptions();
+        
+                const categoryDropdown = document.querySelector('select[name="category-name"]');
+                categoryDropdown.addEventListener('change', updateSubcategoryOptions);
+        
+                // Calculate sale price on input changes
+                const priceInput = document.querySelector('input[name="price"]');
+                const discountInput = document.querySelector('input[name="discount"]');
+                priceInput.addEventListener('input', calculateSalePrice);
+                discountInput.addEventListener('input', calculateSalePrice);
+            });
+        </script>
+        
 </body>
 </html>

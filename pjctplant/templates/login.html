@@ -16,9 +16,9 @@
 
             {% csrf_token %}
             <div>
-            <label for="username">Email</label>
+            <label for="email">Email</label>
             {% comment %} <input class="form-input" type="email" name="email" id="email" placeholder="Email" required onchange="validateEmail()" oninput="validateEmail()"> {% endcomment %}
-            <input class="form-input" type="text" name="username" id="username" placeholder="Email">
+            <input class="form-input" type="email" name="email" id="email" placeholder="Email">
             <span class="error-message" id="email-error"></span>
             </div>
             <div>
@@ -35,34 +35,6 @@
         <!-- Your footer content, which can include links or additional information -->
     </div>
     <script>
-        {% comment %} function validateEmail() {
-            const emailInput = document.getElementById('email');
-            const emailError = document.getElementById('email-error');
-            const emailValue = emailInput.value.trim();
-        
-            const emailPattern = /^[a-zA-Z0-9._%+-]+@(ajce\.com|gmail\.com)$/;
-        
-            if (!emailPattern.test(emailValue)) {
-                emailError.textContent = 'Invalid email address';
-            } else {
-                emailError.textContent = '';
-            }
-        } {% endcomment %}
-        
-        {% comment %} function validatePassword() {
-            const passwordInput = document.getElementById('password');
-            const passwordError = document.getElementById('password-error');
-            const passwordValue = passwordInput.value;
-        
-            // Regular expression for password validation
-            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{7,}$/;
-        
-            if (!passwordPattern.test(passwordValue)) {
-                passwordError.textContent = 'Password must contain at least one lowercase, one uppercase, one numerical, one special character, and be at least 7 characters long.';
-            } else {
-                passwordError.textContent = '';
-            }
-        } {% endcomment %}
         
         function validateForm() {
             //validateEmail();

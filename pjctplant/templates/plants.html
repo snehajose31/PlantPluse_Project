@@ -152,7 +152,7 @@
         {% for product in products %}
          <div class="col-md-3">
             <div class="product-card">
-                  <a href="{% url 'product_details' product.product_id %}">
+                  <a href="{% url 'product_details' product.id %}">
                   <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}"></a>
                   <h4>{{ product.product_name }}</h4>
                   <p>{{ product.description }}</p>
@@ -161,7 +161,7 @@
                   <p>Price: Rs.{{ product.price }}</p>
                   
                   {% comment %} <a href="{% url 'addtocart' %}" class="btn btn-primary">Add to Cart</a>
-                  <a href="{% url 'product_details' product.product_id %}" class="btn btn-info">View Details</a> {% endcomment %}
+                  <a href="{% url 'product_details' product.id %}" class="btn btn-info">View Details</a> {% endcomment %}
                </a>
             </div>
             

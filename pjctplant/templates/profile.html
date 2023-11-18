@@ -224,7 +224,8 @@
             <div class="user-profile">
                 <img src="{% static 'images/avatar.jpg' %}" alt="User Avatar">
                 <br>
-                Hello,{{ request.session.useremail }}
+                Hello,{% if user.is_authenticated %}{{ user.username }}
+                {% endif %}
             </div>
         </div>
         <div class="sidebar-item">MY ORDERS</div>
@@ -259,7 +260,8 @@
             middleContent.innerHTML = `
                 <div class="form-container">
                     <h2><center>Profile Information Form</center></h2>
-                    <form onsubmit="return validateProfileForm();">
+                    <form  method="POST" action="{% url 'profile' %}" onsubmit="return validateProfileForm();">
+                        {% csrf_token %}
                         <div class="form-group">
                             <label for="full-name">Full Name</label>
                             <input type="text" id="fullname" name="fullname" class="form-control" required>
@@ -297,7 +299,7 @@
 
                         <div class="form-group">
                             <label for="phone">Phone</label>
-                            <input type="tel" id="phone" name="phone" class="form-control" required>
+                            <input type="tel" id="phone" name="phone" class="form-control" value="{{userinfo.phone}}" required>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Save</button>

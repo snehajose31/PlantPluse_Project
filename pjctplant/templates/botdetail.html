@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('/static/images/booking1.jpg');
+            background-size: cover;
+            
+        }
+
+        .header {
+            background-color: #003300;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .content-container {
+            display: flex; /* Use flexbox for horizontal alignment */
+            justify-content: center; /* Center items horizontally */
+            align-items: center; /* Center items vertically */
+            height: 50vh; /* Set the height of the container to the full viewport height */
+        }
+
+        /* Content styles */
+        .botanist-box {
+            background-color: #85b87f;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            margin: 10px; /* Add margin for spacing */
+            max-width: 300px; /* Added max-width to limit the width of the box */
+        }
+
+        .botanist-box img {
+            max-width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px; /* Added margin-bottom for spacing */
+        }
+
+        .botanist-box h2,
+        .botanist-box h3,
+        .botanist-box p {
+            margin: 0;
+        }
+
+        .botanist-box h2 {
+            font-size: 18px;
+            color: #003300;
+            margin-top: 10px;
+        }
+
+        .botanist-box p {
+            font-size: 14px;
+            color: #555;
+            margin-top: 5px;
+        }
+
+        .botanist-box h3 {
+            font-size: 16px;
+            color: #003300;
+            margin-top: 10px;
+        }
+
+        .botanist-box ul {
+            list-style: disc;
+            margin-left: 20px;
+            font-size: 14px;
+            color: #555;
+            margin-top: 5px;
+        }
+
+        .footer {
+            background-color: #003300;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>Botanist Details</h1>
+    </div>
+
+    <div class="content-container">
+
+        <!-- Botanist 1 -->
+        <div class="botanist-box">
+            <img src="/static/images/botanist1.jpg" alt="Botanist 1">
+            <h2>Dr. P. V. Benjamin</h2>
+            <p>Qualification: Ph.D. in Botany</p>
+            <p>Specialty: Plants Disease</p>
+            <p>Experience in Industry: 10 years</p>
+            <p>Academic Details: B.Sc. in Botany, M.Sc. in Plant Science, PhD. in Plant Pathology</p>
+            <h3>Recent Articles:</h3>
+            <ul>
+                <li>Article 1: Plant disease recognition</li>
+                <li>Article 2: Plant nutrition</li>
+            </ul>
+        </div>
+
+        <!-- Botanist 2 -->
+        <div class="botanist-box">
+            <img src="/static/images/bot3.jpg" alt="Botanist 2">
+            <h2>Dr. Balakrishnan</h2>
+            <p>Qualification: Ph.D. in Plant Physiology</p>
+            <p>Specialty: Plant Growth Analysis</p>
+            <p>Experience in Industry: 15 years</p>
+            <p>Academic Details: B.Sc. in Plant Biology, M.Sc. in Plant Physiology</p>
+            <h3>Recent Articles:</h3>
+            <ul>
+                <li>Article 1: Understanding Plant Growth Patterns</li>
+                <li>Article 2: Nutrient Uptake in Plants</li>
+            </ul>
+        </div>
+
+    </div>
+<br><br><br><br><br><br><br><br><br><br>
+    <div class="footer">
+        <p>&copy; 2023 PlantPulse</p>
+    </div>
+
+</body>
+
+</html>

@@ -130,7 +130,7 @@
             
         </div>
 
-        <a href="#">Botanist</a>
+        <a href={% url 'regibot' %}>Botanist</a>
         <a href="#">Horticulture Expert</a>
         <a href="#">Orders</a>
         <a href="#">Settings</a>
@@ -145,7 +145,7 @@
             <div class="welcome-admin">
                 <h1>Welcome, Admin</h1>
             </div>
-            <a href="{% url 'index' %}" class="logout-button">Logout</a>
+            <a href="{% url 'logout' %}" class="logout-button">Logout</a>
         </div>
 
         <!-- User Statistics Small Box -->
@@ -153,6 +153,7 @@
             <h2>User Statistics</h2>
             <canvas id="userStatsChart"></canvas>
         </div>
+
         <div class="small-box">
             <h2>Add product Here</h2>
             <a href="{% url 'addproduct' %}">Add Product</a>
