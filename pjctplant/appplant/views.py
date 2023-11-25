@@ -10,6 +10,16 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user
 from django.contrib.auth import get_user_model
+from django.http import JsonResponse
+from django.contrib.auth import update_session_auth_hash
+import razorpay
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+
+from .models import Product2, Cart, CartItem
+from django.http import JsonResponse
 
 # Create your views here.
 def index(request):
@@ -91,18 +101,18 @@ def contact(request):
 def profile(request):
     user=request.user
     try:
-        userinfo=UserInfo.objects.filter(user=user)
+        userinfo=UserProfile.objects.filter(user=user)
         if request.method == 'POST':
             full_name = request.POST.get('fullname')
             gender = request.POST.get('gender')
             date_of_birth = request.POST.get('date-of-birth')
             email = request.POST.get('email')
             phone = request.POST.get('phone')
-            user_info = UserInfo(user=request.user, contact_no=phone, place='', city='', district='', pincode='')
+            user_info = UserProfile(user=request.user, contact_no=phone, place='', city='', district='', pincode='')
         user_info.save()
          
     except:
-         userinfo=UserInfo()   
+         userinfo=UserProfile()   
     
     return render(request,'profile.html',{'userinfo':userinfo})
 
@@ -269,45 +279,49 @@ def edit_product(request, id):
     return render(request, 'editproduct.html', {'product': product})
 
 
-def view_cart(request):
-    user=request.user
-    user_id = user.id
-    print(user_id)
-    cart_items = AddToCart3.objects.filter(user=user_id, is_active=True)
 
-    # Ensure the quantity is at least 1 and update the total price based on the quantity
-    for item in cart_items:
-        if item.product.stock < 1 or item.product.stock is None:
-            item.product.stock = 1  # Set the minimum quantity to 1
-        item.total_price = item.product.sale_price * item.product.stock # Update the total price based on the new quantity
 
-    # Calculate order summary
-    subtotal = sum(item.total_price for item in cart_items)
-    shipping = 5  # Adjust this value as needed
-    total = subtotal + shipping
 
-    context = {
-    'cart_items': cart_items,
-    'subtotal': subtotal,
-    'shipping': shipping,
-    'total': total,
-    'total_amount': total,  # Add the total amount to the context
-}
 
-    return render(request, 'view_cart.html', context)
+# def view_cart(request):
+#     user=request.user
+#     user_id = user.id
+#     print(user_id)
+#     cart_items = AddToCart3.objects.filter(user=user_id, is_active=True)
 
-def add_to_cart(request, id):
-    # Retrieve the product based on its ID (you should have a Product model)
-    product = Product2.objects.get(pk=id) 
-    user=request.user
-    email=user.email
-    user = get_object_or_404(User, email=email)
+#     # Ensure the quantity is at least 1 and update the total price based on the quantity
+#     for item in cart_items:
+#         if item.product.stock < 1 or item.product.stock is None:
+#             item.product.stock = 1  # Set the minimum quantity to 1
+#         item.total_price = item.product.sale_price * item.product.stock # Update the total price based on the new quantity
+
+#     # Calculate order summary
+#     subtotal = sum(item.total_price for item in cart_items)
+#     shipping = 5  # Adjust this value as needed
+#     total = subtotal + shipping
+
+#     context = {
+#     'cart_items': cart_items,
+#     'subtotal': subtotal,
+#     'shipping': shipping,
+#     'total': total,
+#     'total_amount': total,  # Add the total amount to the context
+# }
+
+#     return render(request, 'view_cart.html', context)
+
+# def add_to_cart(request, id):
+#     # Retrieve the product based on its ID (you should have a Product model)
+#     product = Product2.objects.get(pk=id) 
+#     user=request.user
+#     email=user.email
+#     user = get_object_or_404(User, email=email)
     
-        # Check if the user already has this product in their cart
-    cart_item = AddToCart3(user=user, product=product)  # You can set the quantity as neede
-    cart_item.save()
-    print(cart_item)
-    return redirect('view_cart') 
+#         # Check if the user already has this product in their cart
+#     cart_item = AddToCart3(user=user, product=product)  # You can set the quantity as neede
+#     cart_item.save()
+#     print(cart_item)
+#     return redirect('view_cart') 
 
 def flowering_plants(request):
     # Retrieve products under the "flowering plants" subcategory
@@ -453,26 +467,26 @@ def works(request):
 
 
 
-def remove_from_cart(request, item_id):
-    item = get_object_or_404(AddToCart3, pk=item_id)
+# def remove_from_cart(request, item_id):
+#     item = get_object_or_404(AddToCart3, pk=item_id)
 
-    if item.user == request.user:
-        # Remove the item from the cart and the database
-        item.delete()
+#     if item.user == request.user:
+#         # Remove the item from the cart and the database
+#         item.delete()
 
-    # Recalculate order summary after item removal
-    cart_items = AddToCart3.objects.filter(user=request.user, is_active=True)
-    subtotal = sum(item.product.sale_price * item.quantity for item in cart_items)
-    shipping = 10  # Adjust this value as needed
-    total = subtotal + shipping
+#     # Recalculate order summary after item removal
+#     cart_items = AddToCart3.objects.filter(user=request.user, is_active=True)
+#     subtotal = sum(item.product.sale_price * item.quantity for item in cart_items)
+#     shipping = 10  # Adjust this value as needed
+#     total = subtotal + shipping
 
-    context = {
-        'cart_items': cart_items,
-        'subtotal': subtotal,
-        'shipping': shipping,
-        'total': total,
-    }
-    return render(request, 'view_cart.html', context)
+#     context = {
+#         'cart_items': cart_items,
+#         'subtotal': subtotal,
+#         'shipping': shipping,
+#         'total': total,
+#     }
+#     return render(request, 'view_cart.html', context)
 
 
 
@@ -502,7 +516,30 @@ def activate_user(request, user_id):
 
 
 
-def wishlist(request):
+# def wishlist(request):
+#     if request.user.is_authenticated:
+#         wishlist_items = WishlistItem3.objects.filter(user=request.user)
+#         return render(request, 'wish.html', {'wishlist_items': wishlist_items})
+#     else:
+#         return redirect('login')  # Redirect to the login page if the user is not authenticated
+
+# def add_to_wishlist(request, id):
+#     if request.user.is_authenticated:
+#         product = Product2.objects.get(id=id)
+#         wishlist_item, created = WishlistItem3.objects.get_or_create(user=request.user, product=product)
+#         if created:
+#             # The item was added to the wishlist
+#             messages.success(request, f'{product.product_name} has been added to your wishlist.')
+#         else:
+#             # The item is already in the wishlist
+#             messages.warning(request, f'{product.product_name} is already in your wishlist.')
+#     return redirect('wish')
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import Product2, WishlistItem3
+
+def wishs(request):
     if request.user.is_authenticated:
         wishlist_items = WishlistItem3.objects.filter(user=request.user)
         return render(request, 'wish.html', {'wishlist_items': wishlist_items})
@@ -520,3 +557,342 @@ def add_to_wishlist(request, id):
             # The item is already in the wishlist
             messages.warning(request, f'{product.product_name} is already in your wishlist.')
     return redirect('wish')
+
+# your_app/views.py
+
+from django.shortcuts import render
+from .models import User
+
+def pf(request):
+    # Assuming the user is authenticated
+    user = request.user
+
+    # Pass the user's name and email to the template context
+    context = {
+        'user_fullname': user.username,
+        'user_email': user.email,
+    }
+
+    return render(request, 'profile.html', context)
+
+
+def delete_from_wishlist(request, id):
+    if request.user.is_authenticated:
+        wishlist_item = get_object_or_404(WishlistItem3, user=request.user, product__id=id)
+        product_name = wishlist_item.product.product_name  # Store the product name for the message
+        wishlist_item.delete()
+        messages.success(request, f'{product_name} has been removed from your wishlist.')
+    else:
+        messages.warning(request, 'You must be logged in to remove items from your wishlist.')
+
+    return redirect('wish')
+
+
+
+
+from django.shortcuts import render, redirect
+from .models import UserProfile
+
+
+
+
+from django.http import HttpResponseRedirect
+import datetime
+
+
+def profile1(request):
+    user=request.user
+    try:
+        user_info=UserProfile.objects.filter(user=user)
+        if request.method == 'POST':
+            full_name = request.POST.get('fullname')
+            gender = request.POST.get('gender')
+            date_of_birth_str = request.POST.get('date-of-birth')
+            address = request.POST.get('address')
+            email = request.POST.get('email')
+            phone = request.POST.get('phone')
+
+            user_info = UserProfile(user=request.user,name=full_name,email = email,gender = gender,date_of_birth = date_of_birth_str, address = address,phone = phone)
+        user_info.save()
+         
+    except:
+         userinfo=UserProfile()   
+         if request.method == 'POST':
+            userinfo.user =request.user
+            userinfo.gender = request.POST.get('gender')
+            userinfo.date_of_birth_str = request.POST.get('date-of-birth')
+            userinfo.address = request.POST.get('address')
+            userinfo.email = request.POST.get('email')
+            userinfo.phone = request.POST.get('phone')
+            userinfo.save
+         
+    # user = request.user
+    # try:
+    #     user_profile = UserProfile.objects.get(user=user)
+    # except UserProfile.DoesNotExist:
+    #     user_profile = UserProfile(user=user)
+
+    # if request.method == 'POST':
+    #     full_name = request.POST.get('fullname')
+    #     gender = request.POST.get('gender')
+    #     date_of_birth_str = request.POST.get('date-of-birth')
+    #     address = request.POST.get('address')
+    #     email = request.POST.get('email')
+    #     phone = request.POST.get('phone')
+
+    #     # Attempt to convert the date of birth string to a datetime.date object
+    #     try:
+    #         date_of_birth = datetime.datetime.strptime(date_of_birth_str, '%m/%d/%Y').date()
+    #     except ValueError:
+    #         # Handle the case where the date format is incorrect
+    #         date_of_birth = None
+
+    #     # Update or create the UserProfile instance
+    #     user_profile.full_name = full_name
+    #     user_profile.gender = gender
+    #     user_profile.date_of_birth = date_of_birth
+    #     user_profile.address = address
+    #     user_profile.email = email
+    #     user_profile.phone = phone
+
+    #     user_profile.save()
+
+    #     # Redirect to the profile page after saving
+    #     return HttpResponseRedirect('/profile')
+
+    return render(request, 'profile.html', {'UserProfile': user_info})
+
+
+
+# def checkout(request):
+#     # Assuming you have a function to calculate total in your models or views
+#     total = calculate_total(request.user)  # Replace with your own logic
+
+#     if request.method == 'POST':
+#         # Assuming you have a form for the checkout details
+#         # Replace 'YourCheckoutForm' with the actual form class
+#         form = YourCheckoutForm(request.POST)
+
+#         if form.is_valid():
+#             # Process the order, save the details, etc.
+#             # You may need to create a new Order model and save the order details there
+#             # This is just a placeholder code
+#             name = form.cleaned_data['name']
+#             gender = form.cleaned_data['gender']
+#             dob = form.cleaned_data['dob']
+#             email = form.cleaned_data['email']
+#             address = form.cleaned_data['address']
+#             phone = form.cleaned_data['phone']
+
+#             # Redirect to a thank you page or order confirmation page
+#             messages.success(request, 'Order placed successfully!')
+#             return redirect('order_confirmation')
+#     else:
+#         form = YourCheckoutForm()  # Replace with the actual form class
+
+#     # Get the items in the cart for the order summary
+#     cart_items = AddToCart3.objects.filter(user=request.user)  # Replace with your own logic
+
+#     return render(request, 'yourapp/checkout.html', {'form': form, 'cart_items': cart_items, 'total': total})
+# def checkout(request):
+#      # Fetch the cart items for the current user
+#      cart_items = AddToCart3.objects.filter(user=request.user)
+
+#     # Calculate the total amount (you may already have a function for this)
+#      total = sum(item.quantity * item.product.price for item in cart_items)
+
+# #     # Other logic for processing the checkout form, if needed
+
+#      return render(request, 'checkot.html', {'cart_items': cart_items, 'total': total})
+
+
+
+
+def log1(request):
+    return render(request,'log.html')
+
+
+def change_password(request):
+    if request.method == 'POST':
+        old_password = request.POST.get('old_password')  # Get the old password from the form
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+
+        user = request.user  # Get the currently logged-in user
+
+        # Check if the entered old password matches the user's current password
+        if not user.check_password(old_password):
+            return JsonResponse({'error': 'Incorrect old password'}, status=400)
+
+        if new_password == confirm_password:
+            # Change the user's password and save it to the database
+            user.set_password(new_password)
+            user.save()
+
+            # Update the session to keep the user logged in
+            update_session_auth_hash(request, user)
+
+            return JsonResponse({'message': 'Password changed successfully'})
+        else:
+            return JsonResponse({'error': 'Passwords do not match'}, status=400)
+
+    return render(request, 'change_password.html')
+
+
+
+def add_to_cart(request, id):
+    product = Product2.objects.get(pk=id)
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    cart_item, item_created = CartItem.objects.get_or_create(cart=cart, product=product)
+    
+    if not item_created:
+        cart_item.quantity += 1
+        cart_item.save()
+    
+    return redirect('view_cart')
+
+
+def remove_from_cart(request, id):
+    product = Product2.objects.get(pk=id)
+    cart = Cart.objects.get(user=request.user)
+    try:
+        cart_item = cart.cartitem_set.get(product=product)
+        if cart_item.quantity >= 1:
+             cart_item.delete()
+    except CartItem.DoesNotExist:
+        pass
+    
+    return redirect('view_cart')
+
+def view_cart(request):
+    cart = request.user.cart
+    cart_items = CartItem.objects.filter(cart=cart)
+    for item in cart_items:
+        item.total_price = item.product.sale_price * item.quantity
+    
+    total_amount = sum(item.total_price for item in cart_items)
+
+    return render(request, 'view_cart.html', {'cart_items': cart_items,'total_amount': total_amount})
+
+def increase_cart_item(request, id):
+    product = Product2.objects.get(pk=id)
+    cart = request.user.cart
+    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+
+    cart_item.quantity += 1
+    cart_item.save()
+
+    return redirect('view_cart')
+
+def decrease_cart_item(request, id):
+    product = Product2.objects.get(pk=id)
+    cart = request.user.cart
+    cart_item = cart.cartitem_set.get(product=product)
+
+    if cart_item.quantity > 1:
+        cart_item.quantity -= 1
+        cart_item.save()
+    else:
+        cart_item.delete()
+
+    return redirect('view_cart')
+
+
+def fetch_cart_count(request):
+    cart_count = 0
+    if request.user.is_authenticated:
+        cart = request.user.cart
+        cart_count = CartItem.objects.filter(cart=cart).count()
+    return JsonResponse({'cart_count': cart_count})
+
+
+
+def get_cart_count(request):
+    if request.user.is_authenticated:
+        cart_items = CartItem.objects.filter(cart=request.user.cart)
+        cart_count = cart_items.count()
+    else:
+        cart_count = 0
+    return cart_count
+
+
+@csrf_exempt
+def create_order(request):
+    if request.method == 'POST':
+        user = request.user
+        cart = user.cart
+
+        cart_items = CartItem.objects.filter(cart=cart)
+        total_amount = sum(item.product.price * item.quantity for item in cart_items)
+
+        try:
+            order = Order.objects.create(user=user, total_amount=total_amount)
+            for cart_item in cart_items:
+                OrderItem.objects.create(
+                    order=order,
+                    product=cart_item.product,
+                    quantity=cart_item.quantity,
+                    item_total=cart_item.product.price * cart_item.quantity
+                )
+
+            client = razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
+            payment_data = {
+                'amount': int(total_amount * 100),
+                'currency': 'INR',
+                'receipt': f'order_{order.id}',
+                'payment_capture': '1'
+            }
+            orderData = client.order.create(data=payment_data)
+            order.payment_id = orderData['id']
+            order.save()
+
+            return JsonResponse({'order_id': orderData['id']})
+        
+        except Exception as e:
+            print(str(e))
+            return JsonResponse({'error': 'An error occurred. Please try again.'}, status=500)
+        
+def checkout(request):
+    cart_items = CartItem.objects.filter(cart=request.user.cart)
+    total_amount = sum(item.product.price * item.quantity for item in cart_items)
+
+    cart_count = get_cart_count(request)
+    email = request.user.email
+    full_name = request.user.username
+
+    context = {
+        'cart_count': cart_count,
+        'cart_items': cart_items,
+        'total_amount': total_amount,
+        'email':email,
+        'full_name': full_name
+    }
+    return render(request, 'checkot.html', context)
+
+def handle_payment(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        razorpay_order_id = data.get('order_id')
+        payment_id = data.get('payment_id')
+
+        try:
+            order = Order.objects.get(payment_id=razorpay_order_id)
+
+            client = razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
+            payment = client.payment.fetch(payment_id)
+
+            if payment['status'] == 'captured':
+                order.payment_status = True
+                order.save()
+                user = request.user
+                user.cart.cartitem_set.all().delete()
+                return JsonResponse({'message': 'Payment successful'})
+            else:
+                return JsonResponse({'message': 'Payment failed'})
+
+        except Order.DoesNotExist:
+            return JsonResponse({'message': 'Invalid Order ID'})
+        except Exception as e:
+
+            print(str(e))
+            return JsonResponse({'message': 'Server error, please try again later.'})

@@ -4,72 +4,86 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-            background-image: url('/static/images/booking1.jpg'); /* Add your background image URL here */
-            background-size: cover;
-        }
-
-        header, footer {
-            background-color: #003300;
-            color: white;
-            text-align: center;
-            padding: 10px;
-        }
-
-        main {
-            max-width: 800px;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        input, select, textarea, button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        button {
-            background-color: #003300;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #001a00;
-        }
-
-        #calendar {
-            display: none;
-            position: absolute;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            z-index: 1;
-        }
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f0f0f0;
+                margin: 0;
+                padding: 0;
+                background-image: url('/static/images/booking1.jpg'); /* Add your background image URL here */
+                background-size: cover;
+            }
+        
+            header, footer {
+                background-color: #003300;
+                color: white;
+                text-align: center;
+                padding: 10px;
+            }
+        
+            main {
+                max-width: 800px;
+                margin: 20px auto;
+                background-color: #fff;
+                padding: 20px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+        
+            label {
+                display: block;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+        
+            input, select, textarea, button {
+                width: 100%;
+                padding: 10px;
+                margin-top: 5px;
+                margin-bottom: 15px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+        
+            button {
+                background-color: #003300;
+                color: #fff;
+                border: none;
+                cursor: pointer;
+            }
+        
+            button:hover {
+                background-color: #001a00;
+            }
+        
+            #calendar {
+                display: none;
+                position: absolute;
+                background-color: #fff;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                z-index: 1;
+            }
+        
+            .logout-icon {
+                position: absolute;
+                right: 10px; /* Adjust the right position as needed */
+                top: 10px; /* Adjust the top position as needed */
+                text-decoration: none;
+                color: #fff;
+            }
+        </style>
+        
     </style>
 </head>
 <body>
 
 <header>
     <h1></h1>
+    <a href="/home" class="logout-icon">
+        <img src="/static/images/log4.png" alt="Logout">
+    </a>
 </header>
 
 <main>
@@ -81,15 +95,23 @@
 
     <label for="appointment-time">Select a Time Slot:</label>
     <select id="appointment-time">
-        <option value="09:00">09:00 AM - 09:30 AM</option>
-        <option value="09:30">09:30 AM - 10:00 AM</option>
+        
+        <option value="09:00 AM - 09:30 AM">09:00 AM - 09:30 AM</option>
+        <option value="10:00 AM - 10:30 AM">10:00 AM - 10:30 AM</option>
+        <option value="11:00 AM - 11:30 AM">11:00 AM - 11:30 AM</option>
+        <option value="12:00 PM - 12:30 PM">12:00 AM - 12:30 AM</option>
+        <option value="3:00 PM - 3:30 PM">3:00  PM - 3:00 PM</option>
+        <option value="4:00 PM - 4:30 PM">4:00  PM - 4:30 PM</option>
+        <option value="5:00 PM - 5:30 PM">5:00 PM - 5:30 PM</option>
+        <option value="6:00 PM - 6:30 PM">6:00 PM - 6:30 PM</option>
+        <option value="7:00 PM - 7:30 PM">7:00 PM - 7:30 PM</option>     
         <!-- Add more time slots as needed -->
     </select>
 
     <label for="botanist">Select a Botanist:</label>
     <select id="botanist">
-        <option value="botanist1">Botanist 1</option>
-        <option value="botanist2">Botanist 2</option>
+        <option value="botanist1">Dr. P. V. Benjamin</option>
+        <option value="botanist2">Dr. Balakrishnan</option>
         <!-- Add more botanists as needed -->
     </select>
 

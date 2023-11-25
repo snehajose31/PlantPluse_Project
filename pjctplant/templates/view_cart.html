@@ -1,161 +1,104 @@
-{%load static%}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <style>
-        /* Your existing CSS styles here */
-        
-            table {
-                width: 100%;
-                border-collapse: collapse;
-            }
-        
-            table, th, td {
-                border: 1px solid #ccc;
-            }
-        
-            th, td {
-                padding: 10px;
-                text-align: center;
-            }
-        
-            th {
-                background-color: #f2f2f2;
-            }
-        
-            img {
-                max-width: 100px;
-                height: auto;
-                display: block;
-                margin: 0 auto;
-            }
-        
-            .order-summary {
-                margin-top: 20px;
-                padding: 10px;
-                border: 1px solid #ccc;
-            }
-        
-            .order-summary h3 {
-                text-align: center;
-            }
-        
-            .order-summary p {
-                text-align: left;
-            }
-        
-            .order-summary button {
-                display: block;
-                margin: 0 auto;
-            }
-        
-            input[type="number"] {
-                width: 50px;
-                text-align: center;
-            }
-            .Cart-icon{
-                position: absolute;
-                right: 0;
-                top:70px;
-    
-            }
-            .header {
-                background-color: #003300;
-                color: #fff;
-                text-align: left;
-                padding: 10px;
-                position: relative; /* Needed for absolute positioning of the logo */
-            }
-            .btn-danger {
-                background-color: #d9534f;
-                color: #fff;
-            }
-    </style>
-</head>
-<body>
+{% load static %}
+{% comment %} {% include 'includes/cartheader.html' %} {% endcomment %}
+{% block content %}
 
-<div class="header">
-    <h1><center>Shopping Cart</center></h1>
-    <a href="{% url 'home' %}"><img src="{% static 'images/log4.png' %}" alt="Cart" class="Cart-icon" style="margin-right: 10px;"></a>
-</div>
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+<header>
+    <h1>My Cart</h1>
+    <!-- Add navigation links, logo, or any other header content here -->
+</header>
 
-<!-- Inner page section -->
-<section class="inner_page_head">
-    <div class="container_fuild">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="full">
-                    <!-- <h3>Shopping Cart</h3> -->
+        {% comment %} {% for item in cart_items %}
+        <li class="cart-item">
+            <div class="cart-item-details">
+                <div class="col-md-4">
+                    <img src="{{ item.product.product_image.url }}" alt="{{ item.product.product_name }}" style="max-width: 250px; height:210px;border: 2px solid #ddd;">
+                </div>
+                <div class="cart-item-name">{{ item.product.product_name }}</div>
+                <form action="{% url 'remove-from-cart' item.product.id %}" method="post">
+                    {% csrf_token %}
+                    <button class="remove-from-cart-btn" type="submit">Remove</button>
+                </form>
+            </div>
+            <div class="cart-item-quantity">
+                <form action="{% url 'increase-cart-item' item.product.id %}" method="post">
+                    {% csrf_token %}
+                    <button class="quantity-btn increase-quantity" type="submit">+</button>
+                </form>
+                <span class="item-quantity">{{ item.quantity }}</span>
+                <form action="{% url 'decrease-cart-item' item.product.id %}" method="post">
+                    {% csrf_token %}
+                    <button class="quantity-btn decrease-quantity" type="submit">-</button>
+                </form>
+            </div>
+            <div class="cart-item-price" data-price="{{ item.product.price }}">
+                Rs.{{ item.product.price }}
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+
+    {% comment %} <p class="total-price-data"><span id="total-price"></span></p> {% endcomment %}
+   
+
+    {% comment %} <a class="checkout-button" href="{% url 'checkout' %}">Checkout</a>
+</div>  {% endcomment %}
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="product-details-container">
+                {% comment %} <h2>Your cart</h2> {% endcomment %}
+                {% for item in cart_items %}
+                <div class="product-container card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="{{ item.product.product_image.url }}" alt="{{ item.product.product_name }}" style="max-width: 250px; height:210px;border: 2px solid #ddd;">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ item.product.product_name }}</h5>
+                                <p class="card-text">Discount: {{ item.product.discount }}%</p>
+                                <p class="card-text">Sale Price: Rs.{{ item.product.price }}</p> 
+                                <p class="total-price" id="total-price-{{ item.product.id }}">Total: Rs.{{ item.total_price  }}</p>
+                                <!-- Plus-Minus quantity input -->
+                               
+                            </div>
+                            <div class="cart-item-quantity">
+                                <form action="{% url 'increase-cart-item' item.product.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button class="quantity-btn increase-quantity" type="submit">+</button>
+                                </form>
+                                <span class="item-quantity">{{ item.quantity }}</span>
+                                <form action="{% url 'decrease-cart-item' item.product.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button class="quantity-btn decrease-quantity" type="submit">-</button>
+                                </form>
+
+                                 <form method="post" action="{% url 'remove-from-cart' item.product.id  %}">
+                                    {% csrf_token %}
+                                    <button type="remove-from-cart-btn" class="btn btn-danger">Remove</button> 
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="price-details-container">
+                <div class="order-summary">
+                    <h3>Price Details</h3>
+                   <p class="total-price-data">Total amount : Rs.<span id="total-price"> {{total_amount}}</span></p>
+                 
+                   <a class="continue-shopping-link" href="">Continue Shopping</a>
+                   <a class="checkout-button" href="{% url 'checkot' %}">Checkout</a>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+        
+        
+           
+<script src="{% static 'js/cart.js' %}"></script>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Item</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                        <th>Total Price</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in cart_items %}
-                    <tr>
-                        <td>
-                            <img src="{{ item.product.product_image.url }}" alt="{{ item.product.product_name }}" width="100"> 
-                            {{ item.product.product_name }}
-                        </td>
-                        <td>
-                            <!-- Input field for quantity -->
-                            <input type="number" name="stock" max="{{ item.product.stock }}" min="1"  onchange="updateTotal({{ item.product.sale_price }}, this.value)"> 
-                        </td>
-                        <td>
-                            Rs.{{ item.product.sale_price }}
-                        </td>
-                        <td id="total_{{ item.id }}">Rs.{{ item.total_price }}</td>
-                        
-                        <td>
-                            <form method="post" action="{% url 'remove_from_cart' item.id %}"> 
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-danger">Remove</button>
-                            </form>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <div class="order-summary">
-                <h3>Total Amount: Rs.<span id="total">{{ total }}</span></h3>
-                <form method="post" action="">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-success">Place Order</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    function updateTotal(price, stock) {
-        let total = price * stock;
-        let itemId = event.target.parentNode.parentNode.id.split('_')[1];
-        document.getElementById(`total_${itemId}`).innerHTML = `Rs.${total}`;
-
-        let totalAmount = 0;
-        let allTotalElements = document.querySelectorAll('[id^="total_"]');
-        allTotalElements.forEach(element => {
-            totalAmount += parseFloat(element.innerHTML.replace('Rs.', ''));
-        });
-
-        document.getElementById('total').innerHTML = `Total Amount: Rs.${totalAmount}`;
-    }
-</script>
-</body>
-</html>
+{% endblock %}

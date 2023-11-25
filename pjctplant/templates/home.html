@@ -59,6 +59,25 @@
             text-align: right;
             color: white;
         }
+        .cart-icon {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px; 
+            right: -8px; 
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
         
         
 </style>
@@ -196,8 +215,10 @@
                         {% comment %} <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li> {% endcomment %}
                         <li class="nav-item"><a class="nav-link" href="/contact-us">HORTICULTURE EXPERT</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'view_cart'%}"><img src="{% static 'images/cart99.jpg' %}" alt="profile" class="profilr-icon"></a></li>
+                        
+                        <li class="nav-item"><a class="nav-link" href="{% url 'wish'%}"><img src="{% static 'images/love5.png' %}" alt="profile" class="profilr-icon"></a></li>
                     </ul>
-                    </ul>
+                </ul>
                 </div>
                 <!-- /.navbar-collapse -->
 

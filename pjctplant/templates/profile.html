@@ -238,7 +238,7 @@
                 <div class="content-item" onclick="loadManageAddressesForm()">Manage Address</div>
             </div>
             <div class="account-box">
-                {% comment %} <a href="{% url 'change_password' %}"> {% endcomment %}
+                <a href="{% url 'change_password' %}"> 
                     <div class="content-item">Reset Password</div>
             </div>
         </div>
@@ -263,8 +263,8 @@
                     <form  method="POST" action="{% url 'profile' %}" onsubmit="return validateProfileForm();">
                         {% csrf_token %}
                         <div class="form-group">
-                            <label for="full-name">Full Name</label>
-                            <input type="text" id="fullname" name="fullname" class="form-control" required>
+                            <label for="full-name">Full Name </label>
+                            <input type="text" id="fullname" name="fullname" class="form-control" value=" {{ user.username }}" required>
                         </div>
 
                         <!-- Add the Gender field here as radio buttons with labels -->
@@ -290,11 +290,13 @@
                                 </span>
                             </div>
                         </div>
-
-
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" id="address" name="address" class="form-control" required>
+                        </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" id="email" name="email" class="form-control" required>
+                            <input type="email" id="email" name="email" class="form-control" value="{{ user.email }}" required>
                         </div>
 
                         <div class="form-group">

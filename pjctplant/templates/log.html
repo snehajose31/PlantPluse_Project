@@ -1,0 +1,138 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        /* Your styles go here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #003300; /* Dark green color for the header */
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: #003300; /* Dark green color for the footer */
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin-top: 10px;
+            margin-left: 600px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 5px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #password-change-message {
+            margin-top: 10px;
+            text-align: center;
+            color: red;
+        }
+    </style>
+    <!-- Add your head content here -->
+</head>
+<body>
+
+    <div class="header">
+        <p>Header Content Goes Here</p>
+    </div>
+
+    <section class="inner_page_head">
+        <div class="container_fuild">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="full">
+                        <h3></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="form-container">
+        <h2>Change Password</h2>
+        <form id="password-change-form">
+            {% csrf_token %}
+            <label for="old_password">Old Password:</label>
+            <input type="password" id="old_password" name="old_password" required>
+            <br>
+            <label for="new_password">New Password:</label>
+            <input type="password" id="new_password" name="new_password" required oninput="validatePassword(this)">
+            <br>
+            <label for="confirm_password">Confirm Password:</label>
+            <input type="password" id="confirm_password" name="confirm_password" required>
+            <br>
+            <button type="button" id="change-password-button" onclick="changePasswordAndLogout()">Change Password</button>
+        </form>
+
+        <div id="password-change-message"></div>
+    </div>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <div class="footer">
+        <p>Footer Content Goes Here</p>
+    </div>
+
+    <script>
+        function validatePassword(input) {
+            var passwordInput = document.getElementsByName("password")[0];
+            var passwordError = document.getElementById("passwordError");
+            var passwordValue = passwordInput.value;
+
+            if (passwordValue.length < 8) {
+                passwordError.textContent = "Password must be at least 8 characters long";
+            } else {
+                passwordError.textContent = "";
+            }
+        }
+
+        function changePasswordAndLogout() {
+            // Your existing JavaScript code
+        }
+    </script>
+</body>
+</html>

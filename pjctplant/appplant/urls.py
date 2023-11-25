@@ -2,6 +2,7 @@ from django.contrib import admin
 from. import views
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
+from .views import change_password
 urlpatterns = [
    
     #path('index/',views.index,name="index")
@@ -15,6 +16,15 @@ urlpatterns = [
     path('accounts/login/', views.login, name='login'),
     path('adminpanel/',views.adminpanel,name="adminpanel"),
     
+    path('checkot/',views.checkout, name='checkot'),
+    
+    path('profile/', views.profile1,name='profile'),
+    
+    
+    path('log/', views.change_password,name='log'),
+    path('change_password/', change_password, name='change_password'),
+    
+    
     path('addproduct/',views.add_product,name="addproduct"),
     path('viewproduct/',views.view_product,name="viewproduct"),
     path('plants/',views.product_grid,name="plants"),
@@ -25,7 +35,7 @@ urlpatterns = [
     path('delete_product/<int:id>/', views.delete_product, name='delete_product'),
     path('product/<int:id>/', views.product_details, name='product_details'),
     path('edit_product/<int:id>/', views.edit_product, name='edit_product'),
-    path('view_cart/', views.view_cart, name='view_cart'),
+    # path('view_cart/', views.view_cart, name='view_cart'),
     path('add_to_cart/<int:id>/', views.add_to_cart, name='add_to_cart'),
     path('regibot/',views.regbot,name="regibot"),
     path('consult/',views.consult,name="consult"),
@@ -37,9 +47,11 @@ urlpatterns = [
     path('remove_from_cart/<int:item_id>/', views.remove_from_cart, name='remove_from_cart'),
     path('deactivate-user/<int:user_id>/',views.deactivate_user, name='deactivate_user'),
     path('activate-user/<int:user_id>/', views.activate_user, name='activate_user'),
-    path('add_to_wishlist/<int:item_id>/', views.add_to_wishlist, name='add_to_wishlist'),
-    
-    
+    path('add_to_wishlist/<int:id>/', views.add_to_wishlist, name='add_to_wishlist'),
+    path('wish/',views.wishs, name='wish'),
+
+    path('profile/',views.pf, name='profile'),
+    path('delete_from_wishlist/<int:id>/',views.delete_from_wishlist, name='delete_from_wishlist'),
     
     
     path('plants/flowering plant/', views.flowering_plants, name='flowering_plants'),
@@ -51,6 +63,20 @@ urlpatterns = [
     path('sucategory/seed/',views.flowering_seed,name='flowering_seed'),
     # path('remove_from_cart/<int:item_id>/', views.remove_from_cart, name='remove_from_cart'),
     path('search/', views.search_products, name='search_products'),
+    
+    
+    
+    
+    path('add-to-cart/<int:id>/',views.add_to_cart, name='add-to-cart'),
+    path('remove-from-cart/<int:id>/',views.remove_from_cart, name='remove-from-cart'),
+    path('view_cart/',views.view_cart, name='view_cart'),
+    path('increase-cart-item/<int:id>/', views.increase_cart_item, name='increase-cart-item'),
+    path('decrease-cart-item/<int:id>/', views.decrease_cart_item, name='decrease-cart-item'),
+    path('fetch-cart-count/',views.fetch_cart_count, name='fetch-cart-count'),
+    path('fetch-cart-count/', views.fetch_cart_count, name='fetch-cart-count'),
+    path('create-order/',views.create_order, name='create-order'),
+    path('handle-payment/',views.handle_payment, name='handle-payment'),
+    # path('checkot/',views.checkout, name='checkot'),
  
     
     path('reset_password/', auth_views.PasswordResetView.as_view(), name="reset_password"),

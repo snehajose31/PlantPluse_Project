@@ -1,116 +1,148 @@
 <!DOCTYPE html>
-    <html>                
-    <head>
-        <style>
-            <style>
-                /* Add this CSS to style the work boxes */
-                .botanist-works {
-                    margin-bottom: 20px;
-                }
-            
-                .work-box {
-                    background-color: #fff;
-                    border: 1px solid #ddd;
-                    padding: 10px;
-                    margin: 10px;
-                    border-radius: 5px;
-                    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-                    display: inline-block;
-                    width: 45%; /* Adjust the width as needed */
-                    text-align: center;
-                }
-            
-                .work-box img {
-                    max-width: 100%;
-                    border: 1px solid #ddd;
-                    border-radius: 5px;
-                }
-            
-                .work-box h3 {
-                    font-size: 16px;
-                    color: #003300;
-                    margin-top: 10px;
-                }
-            
-                .work-box p {
-                    font-size: 14px;
-                    color: #555;
-                    margin-top: 5px;
-                }
-            </style>
-            
-        <div class="content">
-            <h3><center>Works</center></h3>
+<html>
 
-            <!-- Botanist 1 Works -->
-            <div class="botanist-works">
-                <h2>Dr.P. V. Benjamin's Works</h2>
-                <div class="works-container" id="botanist1-works">
-                    <!-- Dynamically generate work boxes for botanist 1 here -->
-                </div>
-            </div>
+<head>
+    {% load static %}
+    <style>
+        /* Add this CSS to style the work boxes */
+        .botanist-works {
+            margin-bottom: 20px;
+        }
+        .header {
+            background-color: #006400; /* Dark green color */
+            color: #fff; /* White text color */
+            padding: 10px;
+            text-align: center;
+            position: relative;
+        }
 
-            <!-- Botanist 2 Works -->
-            <div class="botanist-works">
-                <h2>Dr. Balakrishnan's Works</h2>
-                <div class="works-container" id="botanist2-works">
-                    <!-- Dynamically generate work boxes for botanist 2 here -->
-                </div>
+        .header h1 {
+            margin: 0;
+        }
+
+        .header img {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 10px;
+            cursor: pointer;
+        }
+
+        .work-box {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            width: 45%;
+            /* Adjust the width as needed */
+            text-align: center;
+        }
+
+        .work-box img {
+            max-width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .work-box h3 {
+            font-size: 16px;
+            color: #003300;
+            margin-top: 10px;
+        }
+
+        .work-box p {
+            font-size: 14px;
+            color: #555;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Work</h1>
+        <img src="{% static 'path-to-logout-icon.png' %}" alt="Logout" onclick="logoutFunction()">
+    </header>
+
+    <div class="content">
+        <h3><center>Works</center></h3>
+
+        <!-- Botanist 1 Works -->
+        <div class="botanist-works">
+            <h2>Dr.P. V. Benjamin's Works</h2>
+            <div class="works-container" id="botanist1-works">
+                <!-- Dynamically generate work boxes for botanist 1 here -->
             </div>
         </div>
-    
 
-    // Example works for botanist 1
-    const botanist1Works = [
-        {
-            title: "",
-            description: "Plant Diseases Due to Contaminated Water",
-            imageSrc: "/static/images/plantd2.png",
-        },
-        {
-            title: "",
-            description: "Tomatoes disease",
-            imageSrc: "/static/images/plantw1.png",
-        },
-        // Add more works for botanist 1 here (up to 2)
-    ];
-
-    // Example works for botanist 2
-    const botanist2Works = [
-        {
-            title: "",
-            description: "Leaf sensors used for to identify whether crop need to be irrigated ",
-            imageSrc: "/static/images/botw1.jpg",
-        },
-        {
-            title: "",
-            description: "Sensors for plant health monitoring",
-            imageSrc: "/static/images/plant3.jpg",
-        },
-        // Add more works for botanist 2 here (up to 2)
-    ];
-
-    // Dynamically generate work boxes for botanist 1
-    const botanist1WorksContainer = document.getElementById("botanist1-works");
-    botanist1Works.forEach((work) => {
-        botanist1WorksContainer.innerHTML += 
-            <div class="work-box">
-                <img src="${work.imageSrc}" alt="${work.title}">
-                <h3>${work.title}</h3>
-                <p>${work.description}</p>
+        <!-- Botanist 2 Works -->
+        <div class="botanist-works">
+            <h2>Dr. Balakrishnan's Works</h2>
+            <div class="works-container" id="botanist2-works">
+                <!-- Dynamically generate work boxes for botanist 2 here -->
             </div>
-        
-    });
+        </div>
+    </div>
 
-    // Dynamically generate work boxes for botanist 2
-    const botanist2WorksContainer = document.getElementById("botanist2-works");
-    botanist2Works.forEach((work) => {
-        botanist2WorksContainer.innerHTML += 
-            <div class="work-box">
-                <img src="${work.imageSrc}" alt="${work.title}">
-                <h3>${work.title}</h3>
-                <p>${work.description}</p>
-            </div>
-        
-    });
+    <script>
+        // Example works for botanist 1
+        const botanist1Works = [
+            {
+                title: "Plant Disease",
+                description: "Plant Diseases Due to Contaminated Water",
+                imageSrc: "{% static 'images/plantd2.png' %}",
+            },
+            {
+                title: "Tomato Disease",
+                description: "Tomatoes disease",
+                imageSrc: "{% static 'images/plantw1.png' %}",
+            },
+            // Add more works for botanist 1 here (up to 2)
+        ];
 
+        // Example works for botanist 2
+        const botanist2Works = [
+            {
+                title: "Leaf Sensors",
+                description: "Leaf sensors used for identifying whether the crop needs to be irrigated",
+                imageSrc: "{% static 'images/botw1.jpg' %}",
+            },
+            {
+                title: "Health Monitoring",
+                description: "Sensors for plant health monitoring",
+                imageSrc: "{% static 'images/plant3.jpg' %}",
+            },
+            // Add more works for botanist 2 here (up to 2)
+        ];
+
+        // Dynamically generate work boxes for botanist 1
+        const botanist1WorksContainer = document.getElementById("botanist1-works");
+        botanist1Works.forEach((work) => {
+            botanist1WorksContainer.innerHTML += `
+                <div class="work-box">
+                    <img src="${work.imageSrc}" alt="${work.title}">
+                    <h3>${work.title}</h3>
+                    <p>${work.description}</p>
+                </div>
+            `;
+        });
+
+        // Dynamically generate work boxes for botanist 2
+        const botanist2WorksContainer = document.getElementById("botanist2-works");
+        botanist2Works.forEach((work) => {
+            botanist2WorksContainer.innerHTML += `
+                <div class="work-box">
+                    <img src="${work.imageSrc}" alt="${work.title}">
+                    <h3>${work.title}</h3>
+                    <p>${work.description}</p>
+                </div>
+            `;
+        });
+    </script>
+
+</body>
+
+</html>

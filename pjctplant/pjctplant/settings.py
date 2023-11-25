@@ -128,6 +128,13 @@ STATICFILES_DIRS=[
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+RAZOR_KEY_ID = 'rzp_test_sHE2W2x7qnm2Hh'
+RAZOR_KEY_SECRET = 'BteqnwizRDXk0cRiMFNbOkKc'
+
+
+
+
 AUTH_USER_MODEL='appplant.User'
 
 MEDIA_URL='/media/'

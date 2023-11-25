@@ -2,67 +2,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wishlist</title>
-    <link rel="stylesheet" href="{% static 'css/product_list.css' %}">
-    <!-- Add your other meta tags, stylesheets, and scripts here -->
+    <!-- Add your meta tags, stylesheets, and scripts here -->
+    <!-- ... -->
+    <!-- Add this line to include FontAwesome from a CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-eRRLGOitFZgJ1VbFJQIoN5vO8tLE0+bXB9czt5zRLOdCJGlOGkTQvEEaL5I9Thm+sUQcjt1xy6qwdQIM0lXsJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4; /* Use a light background color */
+            background-color: #f4f4f4;
             margin: 0;
             padding: 0;
         }
 
         .header {
-            background-color: #f7444e;
-            padding: 40px 0; /* Increased padding for the header */
+            background-color: #112418;
+            padding: 0.15px 0;
         }
 
         .header-buttons {
             display: flex;
-            justify-content: flex-end; /* Right-align the buttons */
+            justify-content: flex-end;
         }
 
         .header-buttons a {
             color: white;
             text-decoration: none;
-            margin-left: 20px; /* Add spacing between buttons */
+            margin-left: 20px;
             font-weight: bold;
-            font-size: 18px
+            font-size: 18px;
         }
 
         .header-buttons a:last-child {
-            margin-right: 0; /* Remove right margin for the last button */
+            margin-right: 0;
         }
 
         .container {
-            max-width: 1200px; /* Set a max-width for the product container */
+            max-width: 1200px;
             margin: 0 auto;
         }
 
         .product-container {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between; /* Center and space between product cards */
-            margin: 20px 0; /* Increased vertical margin */
+            justify-content: space-between;
+            margin: 20px 0;
         }
 
         .product-card {
-            background-color: #ffffff; /* White background for product cards */
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1); /* Softer shadow */
-            margin: 10px 0; /* Increased vertical margin */
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
             padding: 20px;
-            width: calc(15.33% - 10px); /* Adjust the width based on your layout */
+            width: calc(15.33% - 10px);
             border-radius: 5px;
             transition: transform 0.2s;
+            position: relative; /* Add relative positioning to create a stacking context */
         }
 
         .product-card:hover {
-            transform: scale(1.03); /* Slight scale effect on hover */
-            box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2); /* Shadow enhancement on hover */
+            transform: scale(1.03);
+            box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
         }
 
         .product-card img {
@@ -71,64 +71,84 @@
         }
 
         .product-details h4 {
-            font-size: 20px; /* Slightly larger font size for product names */
+            font-size: 20px;
             margin: 10px 0;
         }
 
-       
         .product-price {
-          display: flex;
-          flex-direction: column; /* Display the sale price and discount vertically */
-          margin-top: 10px;
-          
-      }
-  
-      .product-price span {
-          font-weight: ;
-      }
-  
-      .discount {
-           /* Add strikethrough to the price */
-      }
-  
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
+        }
+
+        .product-price span {
+            font-weight: bold;
+        }
+
+        .discount {
+            /* Add strikethrough to the price */
+        }
 
         .no-products {
             text-align: center;
             font-size: 18px;
             margin-top: 20px;
         }
-        .Cart-icon{
-          position: absolute;
-          right: 0;
-          top:60px;
-          width: 40px; /* Adjust the width to your desired size */
-          height: 40px;
 
-        }
+        .Cart-icon {
+            position: absolute;
+            right: 0;
+            top: 60px;
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Add styles for the buttons */
+        .product-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .add-to-cart-btn {
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            border: 1px solid #ccc;
+            background-color: #1a3b29; 
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .remove-from-wishlist-btn {
+            {% comment %} background-color: #e74c3c; {% endcomment %}
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #55cf73;
+        }
+        .Cart-icon{
+            position: absolute;
+            right: 0;
+            top:49px;
+        }
     </style>
 </head>
 <body class="sub_page">
     <div class="header">
-      <div class="header-buttons">
-        
-        <div class="container" style="background-color: #f7444e; padding: 20px 0; text-align: right; color: white;">
-          <div>
-              {% if user.is_authenticated %}
-              <strong style="font-size: 20px;">WELCOME, {{ user.fullName }}!</strong>
-              {% endif %}
-              
-                {% comment %} <img src="{% static 'images/.png' %}" alt="Logo" class="logo"> {% endcomment %}
-                
-                
+        <div class="header-buttons">
+            <div class="container" style="background-color: #112418; padding: 20px 0; text-align: left; color: white;">
+                <div>
+                    <h1><center>My Wishlist</center></h1>
+                    <a href="{% url 'home' %}"><img src="{% static 'images/log4.png' %}" alt="Cart" class="Cart-icon" style="margin-right: 10px;"></a>
+                </div>
             </div>
-              <a href="{% url 'home' %}" style="color: white; text-decoration: none; margin-left: 700px;">HOME</a>
-              <a href="{% url 'Profile' %}" style="color: white; text-decoration: none; margin-left: 20px;">PROFILE</a>
-              <a href="{% url 'adminpanel' %}"><img src="{% static 'images/cart1.png' %}" alt="Cart" class="Cart-icon" style="margin-right: 10px;"></a>
-              <a href="{% url 'logout' %}" style="color: white; text-decoration: none; margin-left: 20px;">LOGOUT</a>
-          </div>
-      </div>
-      
-      </div>
         </div>
     </div>
 
@@ -145,11 +165,17 @@
                             <span>Sale Price: Rs.{{ item.product.sale_price }}</span>
                             <span>Discount: {{ item.product.discount }}%</span>
                         </div>
-                        {% comment %} <p class="price">Price: Rs.{{ item.product.price }}</p> {% endcomment %}
+                        <div class="product-buttons">
+                            <a href="{% url 'add_to_cart' item.product.id %}" class="add-to-cart-btn">Add to Cart</a>
+                            <a href="{% url 'delete_from_wishlist' item.product.id %}" class="remove-from-wishlist-btn">
+                                <img src="{% static 'images/de10.jpg' %}" alt="Delete Icon">
+                            </a>
+                        </div>
+                        
                     </div>
                 {% endfor %}
             {% else %}
-                <p class="no-products">Your wishlist is empty.</p>
+                <p class="no-products">Your wishlist is empty!.</p>
             {% endif %}
         </div>
     </div>
