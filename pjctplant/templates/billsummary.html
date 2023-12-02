@@ -1,0 +1,87 @@
+<!-- billsummary.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Summary</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+        }
+        h1 {
+            color: #3498db;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bill Summary</h1>
+
+    {% if order %}
+        <table>
+            <tr>
+                <th>Order Number</th>
+                <td>{{ order.id }}</td>
+            </tr>
+            <tr>
+                <th>Total Amount</th>
+                <td>{{ order.total_amount }}</td>
+            </tr>
+            <tr>
+                <th>Payment Status</th>
+                <td>{% if order.payment_status %}Paid{% else %}Pending{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Order Date</th>
+                <td>{{ order.created_at }}</td>
+            </tr>
+        </table>
+
+        <h2>Order Details</h2>
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Item Total</th>
+            </tr>
+            {% for item in order.orderitem_set.all %}
+                <tr>
+                    <td>{{ item.product.product_name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.item_total }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <h2>Customer Details</h2>
+        <table>
+            <tr>
+                <th>Name</th>
+                <td>{{ order.user.username }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ order.user.email }}</td>
+            </tr>
+            <!-- Add other customer details as needed -->
+        </table>
+    {% else %}
+        <p>No order details found.</p>
+    {% endif %}
+</body>
+</html>

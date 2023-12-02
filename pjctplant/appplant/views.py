@@ -48,9 +48,7 @@ def registration(request):
      return render(request, 'registration.html')
    
 
-
-
-
+from .models import User  # Import your User model from your app
 
 def login(request):
     if request.method == 'POST':
@@ -62,37 +60,75 @@ def login(request):
         
         if user is not None:
             if user.is_authenticated:
+                klogin(request, user)
                 
-                print(user)
-                if user is not None:
-                    klogin(request, user)
-                    if user.role == User.Role.ADMIN:  # Assuming you have a 'role' field to distinguish between users and admins
-                        # Log in the admin user
-                        return redirect('/adminpanel/')  # Redirect to the admin panel URL
-                    elif user.role == User.Role.CUSTOMER:  # Assuming you have a 'role' field to distinguish between users and admins
-                        # Log in the admin user
-                        return redirect('home')
-                    elif user.role == User.Role.BOTANIST:  # Assuming you have a 'role' field to distinguish between users and admins
-                        # Log in the admin user
-                        return redirect('consult')
-                    # else:
-                    #     request.session["useremail"] = user.email
-                    #     return redirect('/home')  # Redirect to the regular user's home page
+                if user.role == User.Role.CUSTOMER:
+                    return redirect('home')
+                elif user.role == User.Role.BOTANIST:
+                    return redirect('consult')
+                elif user.role == User.Role.ADMIN:
+                    return redirect('/adminpanel/')
+                elif user.role == User.Role.HORTICULTURE:
+                    return redirect('horticulture')
                 else:
-                    messages.error(request, "Invalid credentials.")
+                    messages.error(request, "Invalid role.")
                     return redirect('/login')
-    
+
     return render(request, 'login.html')  # Render the login page
+
+
+
+# def login(request):
+#     if request.method == 'POST':
+#         email = request.POST['email']
+#         password = request.POST['password']
+        
+#         # Authenticate using email and password
+#         user = authenticate(request, username=email, password=password)
+        
+#         if user is not None:
+#             if user.is_authenticated:
+                
+#                 print(user)
+#                 if user is not None:
+#                     klogin(request, user)
+#                     if user.role == User.Role.ADMIN:  # Assuming you have a 'role' field to distinguish between users and admins
+#                         # Log in the admin user
+#                         return redirect('/adminpanel/')  # Redirect to the admin panel URL
+#                     elif user.role == User.Role.CUSTOMER:  # Assuming you have a 'role' field to distinguish between users and admins
+#                         # Log in the admin user
+#                         return redirect('home')
+#                     elif user.role == User.Role.BOTANIST:  # Assuming you have a 'role' field to distinguish between users and admins
+#                         # Log in the admin user
+#                         return redirect('consult')
+#                     # else:
+#                     #     request.session["useremail"] = user.email
+#                     #     return redirect('/home')  # Redirect to the regular user's home page
+#                 else:
+#                     messages.error(request, "Invalid credentials.")
+#                     return redirect('/login')
+    
+#     return render(request, 'login.html')  # Render the login page
 
 
 
 def about(request):
     return render(request,'about.html')
 
+
 def home(request):
-    user = request.user
-    print(user) 
-    return render(request,'home.html',{'user':user})
+    # Make sure you're not using a variable named 'user' here
+    # Instead, use a different variable name, for example, 'current_user'
+    current_user = request.user
+
+    # Your view logic here
+
+    return render(request, 'home.html', {'current_user': current_user})
+
+# def home(request):
+#     user = request.user
+#     print(user) 
+#     return render(request,'home.html',{'user':user})
 
 def contact(request):
     return render(request,'contact.html')
@@ -322,46 +358,47 @@ def edit_product(request, id):
 #     cart_item.save()
 #     print(cart_item)
 #     return redirect('view_cart') 
-
 def flowering_plants(request):
-    # Retrieve products under the "flowering plants" subcategory
     flowering_plants = Product2.objects.filter(category_id="1", subcategory_id='1')
-    print(flowering_plants)  # Add this line for debugging
-
     return render(request, 'flowering_plants.html', {'products': flowering_plants})
+
+# def flowering_plants(request):
+#     # Retrieve products under the "flowering plants" subcategory
+#     flowering_plants = Product2.objects.filter(category_id="1", subcategory_id='1')
+#     print(flowering_plants)  # Add this line for debugging
+
+#     return render(request, 'flowering_plants.html', {'products': flowering_plants})
 
 def medicinal_plants(request):
     # Retrieve all products that belong to the "Medicinal Plants" subcategory
     medicinal_plants = Product2.objects.filter(category="1", subcategory='2')
-    print(medicinal_plants)
-    
     return render(request, 'medicinal_plants.html', {'products': medicinal_plants})
 
 def organic(request):
     # Retrieve all products that belong to the "Medicinal Plants" subcategory
     organic = Product2.objects.filter(category="2", subcategory='4')
-    print(organic)
+    
     
     return render(request, 'organic.html', {'products': organic})
 
 def inorganic(request):
     # Retrieve all products that belong to the "Medicinal Plants" subcategory
     inorganic = Product2.objects.filter(category="2", subcategory='3')
-    print(inorganic)
+    
     
     return render(request, 'inorganic.html', {'products': inorganic})
 
 def vegetable_seed(request):
     # Retrieve all products that belong to the "Medicinal Plants" subcategory
     vegetable_seed = Product2.objects.filter(category="3", subcategory='5')
-    print(vegetable_seed)
+    
     
     return render(request, 'vegetable_seed.html', {'products': vegetable_seed})
 
 def flowering_seed(request):
     # Retrieve all products that belong to the "Medicinal Plants" subcategory
     flowering_seed = Product2.objects.filter(category="seed", subcategory='flowering seed')
-    print(flowering_seed)
+    
     
     return render(request, 'floweringseed.html', {'products': flowering_seed})
 
@@ -896,3 +933,102 @@ def handle_payment(request):
 
             print(str(e))
             return JsonResponse({'message': 'Server error, please try again later.'})
+        
+        
+        
+
+
+#user profile
+
+def user_profile(request):
+    # Retrieve the logged-in user's information
+    user = request.user
+
+    # You can fetch additional information from the user's profile if needed
+    # For example: profile = user.profileuser
+
+    context = {
+        'user': user,
+        # Add additional context variables as needed
+    }
+
+    return render(request, 'user_profile.html', context)
+
+
+
+
+
+
+def save_profile(request):
+    if request.method == 'POST':
+        try:
+            # Retrieve the user's profile instance or create it if it doesn't exist
+            user_profile, created = ProfileUser.objects.get_or_create(user=request.user)
+
+            # Get form data from the request
+            phone_number = request.POST.get('phone_number')
+            pincode = request.POST.get('pincode')
+            address = request.POST.get('address')
+            gender = request.POST.get('gender')
+            city = request.POST.get('city')
+            state = request.POST.get('state')
+
+            # Update the user's profile fields
+            user_profile.phone_number = phone_number
+            user_profile.pincode = pincode
+            user_profile.address = address
+            user_profile.gender = gender
+            user_profile.city = city
+            user_profile.state = state
+
+            # Save the changes
+            user_profile.save()
+
+            messages.success(request, 'Profile updated successfully.')
+            return redirect('user_profile')  # Redirect to the user profile page
+        except Exception as e:
+            messages.error(request, f'Error updating profile: {e}')
+
+    return render(request, 'user_profile.html')
+
+
+
+def order_complete(request):
+    order_id = request.GET.get('order_id')
+    transID = request.GET.get('payment_id')
+    print("Order ID from GET parameters:", order_id)
+    try:
+   
+        order = Order.objects.get(id=order_id, payment_status=True)
+        print("Retrieved Order:", order)
+        ordered_products = OrderItem.objects.filter(order_id=order.id)
+
+        subtotal = 0
+        for i in ordered_products:
+            subtotal += i.product.sale_price * i.quantity
+        
+
+        context = {
+            'order': order,
+            'ordered_products': ordered_products,
+            'order_id': order.id,
+           'transID': transID,
+           'subtotal': subtotal,
+        }
+
+        return render(request, 'order_complete.html', context)
+    except Order.DoesNotExist:
+        return redirect('order_complete')
+
+
+# def user_profile(request):
+#     # Assuming you have a template named 'userdetails.html' in the 'templates' folder
+#     return render(request, 'user_profile.html', {'user': request.user})
+
+
+def bill_invoice(request):
+    # Fetch the latest order for the logged-in user (or implement your logic)
+    order = Order.objects.filter(user=request.user).latest('created_at')
+    return render(request, 'billinvoice.html', {'order': order})
+
+

@@ -64,7 +64,17 @@ urlpatterns = [
     # path('remove_from_cart/<int:item_id>/', views.remove_from_cart, name='remove_from_cart'),
     path('search/', views.search_products, name='search_products'),
     
+    path('user_profile/',views.user_profile, name='user_profile'),
+    path('save_profile/',views.save_profile, name='save_profile'),
     
+    path('user_profile/',views.user_profile,name='user_profile'),
+    
+    path('order_complete/', views.order_complete, name='order_complete'),
+    path('billinvoice/', views.bill_invoice, name='bill_invoice'),
+
+    
+    
+
     
     
     path('add-to-cart/<int:id>/',views.add_to_cart, name='add-to-cart'),

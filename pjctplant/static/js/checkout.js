@@ -71,14 +71,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
                                     orderMessage.textContent = "Successfully placed order!";
                                     orderSection.style.display = "block";
+                                    // window.location.href = orderCompleteUrl + '?order_id=' + data.order_id + '&payment_id=' + data.transID;
+                                    // console.log('Order ID:', data.order_id);
+                                    // console.log('Payment ID:', data.transID);
+                                
                                 } else {
                                     alert('Payment failed');
                                 }
                             })
                             .catch(error => {
-                                console.error('An error occurred while processing the payment.', error);
-                                alert('There was an issue processing your payment. Please try again.');
-                            });
+                                 console.error('An error occurred while processing the payment.', error);
+                                 alert('There was an issue processing your payment. Please try again.');
+                             });
                     }
                 };
 
