@@ -16,6 +16,7 @@ import razorpay
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 import json
+from django.views.decorators.cache import *
 
 
 from .models import Product2, Cart, CartItem
@@ -115,7 +116,8 @@ def login(request):
 def about(request):
     return render(request,'about.html')
 
-
+@never_cache
+@login_required(login_url='login')
 def home(request):
     # Make sure you're not using a variable named 'user' here
     # Instead, use a different variable name, for example, 'current_user'
@@ -1031,4 +1033,9 @@ def bill_invoice(request):
     order = Order.objects.filter(user=request.user).latest('created_at')
     return render(request, 'billinvoice.html', {'order': order})
 
+
+def order_history(request):
+    user = request.user
+    orders = Order.objects.filter(user=user)
+    return render(request, 'order_history.html', {'orders': orders})
 
