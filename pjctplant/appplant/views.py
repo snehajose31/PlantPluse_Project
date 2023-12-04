@@ -1039,3 +1039,14 @@ def order_history(request):
     orders = Order.objects.filter(user=user)
     return render(request, 'order_history.html', {'orders': orders})
 
+
+def search_prod(request):
+    query = request.GET.get('q', '')
+    products = Product2.objects.filter(product_name=query)
+    
+    context = {
+        'products': products,
+        'query': query,
+    }
+    return render(request, 'viewproduct.html', context)
+
