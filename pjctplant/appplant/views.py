@@ -17,6 +17,9 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.views.decorators.cache import *
+from django.contrib.auth.decorators import *
+
+
 
 
 from .models import Product2, Cart, CartItem
@@ -228,13 +231,18 @@ def product_grid(request):
     products = Product2.objects.all()  # Fetch all products
     return render(request, 'plants.html', {'products': products})
 
+@never_cache
+@login_required(login_url='login')
 def user_r(request):
     user_s = User.objects.all()  # Fetch all products
     return render(request, 'user.html', {'user_s': user_s})
 
+@never_cache
+@login_required(login_url='login')
 def botanist_t(request):
     return render(request,'botanist.html')
-
+@never_cache
+@login_required(login_url='login')
 def bot_t(request):
     return render(request,'bot.html')
 
@@ -242,7 +250,8 @@ def custome_logout(request):
     if request.user.is_authenticated:
         logout(request)
     return redirect('index')
-
+@never_cache
+@login_required(login_url='login')
 def delete_product(request, id):
     if request.method == 'POST':
         # Delete the product from the database
@@ -360,6 +369,9 @@ def edit_product(request, id):
 #     cart_item.save()
 #     print(cart_item)
 #     return redirect('view_cart') 
+
+@never_cache
+@login_required(login_url='login')
 def flowering_plants(request):
     flowering_plants = Product2.objects.filter(category_id="1", subcategory_id='1')
     return render(request, 'flowering_plants.html', {'products': flowering_plants})
@@ -371,39 +383,46 @@ def flowering_plants(request):
 
 #     return render(request, 'flowering_plants.html', {'products': flowering_plants})
 
+@never_cache
+@login_required(login_url='login')
 def medicinal_plants(request):
     # Retrieve all products that belong to the "Medicinal Plants" subcategory
     medicinal_plants = Product2.objects.filter(category="1", subcategory='2')
     return render(request, 'medicinal_plants.html', {'products': medicinal_plants})
-
+@never_cache
+@login_required(login_url='login')
 def organic(request):
     # Retrieve all products that belong to the "Medicinal Plants" subcategory
     organic = Product2.objects.filter(category="2", subcategory='4')
     
     
     return render(request, 'organic.html', {'products': organic})
-
+@never_cache
+@login_required(login_url='login')
 def inorganic(request):
     # Retrieve all products that belong to the "Medicinal Plants" subcategory
     inorganic = Product2.objects.filter(category="2", subcategory='3')
     
     
     return render(request, 'inorganic.html', {'products': inorganic})
-
+@never_cache
+@login_required(login_url='login')
 def vegetable_seed(request):
     # Retrieve all products that belong to the "Medicinal Plants" subcategory
     vegetable_seed = Product2.objects.filter(category="3", subcategory='5')
     
     
     return render(request, 'vegetable_seed.html', {'products': vegetable_seed})
-
+@never_cache
+@login_required(login_url='login')
 def flowering_seed(request):
     # Retrieve all products that belong to the "Medicinal Plants" subcategory
     flowering_seed = Product2.objects.filter(category="seed", subcategory='flowering seed')
     
     
     return render(request, 'floweringseed.html', {'products': flowering_seed})
-
+@never_cache
+@login_required(login_url='login')
 def search_products(request):
     query = request.GET.get('q')
     if query:
@@ -995,6 +1014,7 @@ def save_profile(request):
 
 
 
+
 def order_complete(request):
     order_id = request.GET.get('order_id')
     transID = request.GET.get('payment_id')
@@ -1027,19 +1047,22 @@ def order_complete(request):
 #     # Assuming you have a template named 'userdetails.html' in the 'templates' folder
 #     return render(request, 'user_profile.html', {'user': request.user})
 
-
+@never_cache
+@login_required(login_url='login')
 def bill_invoice(request):
     # Fetch the latest order for the logged-in user (or implement your logic)
     order = Order.objects.filter(user=request.user).latest('created_at')
     return render(request, 'billinvoice.html', {'order': order})
 
-
+@never_cache
+@login_required(login_url='login')
 def order_history(request):
     user = request.user
     orders = Order.objects.filter(user=user)
     return render(request, 'order_history.html', {'orders': orders})
 
-
+@never_cache
+@login_required(login_url='login')
 def search_prod(request):
     query = request.GET.get('q', '')
     products = Product2.objects.filter(product_name=query)

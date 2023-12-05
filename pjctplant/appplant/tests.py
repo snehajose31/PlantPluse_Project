@@ -1,38 +1,38 @@
-# import unittest
-# from selenium import webdriver
-# from selenium.webdriver.common.by import By
-# from selenium.webdriver.common.keys import Keys
-# import time
+import unittest
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+import time
 
-# class LoginTest(unittest.TestCase):
-#     def setUp(self):
-#         # Start the Selenium WebDriver
-#         self.driver = webdriver.Chrome()  # Adjust based on your WebDriver configuration
-#         self.driver.get('http://127.0.0.1:3000/login/') # Replace with the actual URL of your login page
+class LoginTest(unittest.TestCase):
+    def setUp(self):
+        # Start the Selenium WebDriver
+        self.driver = webdriver.Chrome()  # Adjust based on your WebDriver configuration
+        self.driver.get('http://127.0.0.1:3000/login/') # Replace with the actual URL of your login page
 
-#     def test_login_successful(self):
-#         # Find the username, password, and login button elements
-#         email_input = self.driver.find_element(By.NAME, 'email')  # Use By.NAME for the name attribute
-#         password_input = self.driver.find_element(By.NAME, 'password')
-#         login_button = self.driver.find_element(By.XPATH, "//button[text()='Login']")
+    def test_login_successful(self):
+        # Find the username, password, and login button elements
+        email_input = self.driver.find_element(By.NAME, 'email')  # Use By.NAME for the name attribute
+        password_input = self.driver.find_element(By.NAME, 'password')
+        login_button = self.driver.find_element(By.XPATH, "//button[text()='Login']")
 
-#         # Enter valid credentials
-#         email_input.send_keys("Sanjo31@gmail.com")
-#         password_input.send_keys("Sanjo@31")
+        # Enter valid credentials
+        email_input.send_keys("Sanjo31@gmail.com")
+        password_input.send_keys("Sanjo@31")
 
-#         # Click the login button
-#         login_button.click()
+        # Click the login button
+        login_button.click()
 
-#         # Wait for a while to see the result (you can adjust this based on your application's response time)
-#         time.sleep(2)
-#         self.assertEqual(self.driver.current_url, 'http://127.0.0.1:3000/home/')
+        # Wait for a while to see the result (you can adjust this based on your application's response time)
+        time.sleep(2)
+        self.assertEqual(self.driver.current_url, 'http://127.0.0.1:3000/home/')
     
-#     def tearDown(self):
-#         # Close the browser window
-#         self.driver.close()
+    def tearDown(self):
+        # Close the browser window
+        self.driver.close()
 
-# if __name__ == "_main_":
-#     unittest.main()
+if __name__ == "_main_":
+    unittest.main()
 
 
 ######addproduct
@@ -87,45 +87,109 @@
 # if __name__ == "__main__":
 #     unittest.main()
     
-from django.test import TestCase
+
+
+#####Search product#######
+import unittest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
+import time
 
-class SeleniumTest(TestCase):
+class LoginAndSearchTest(unittest.TestCase):
     def setUp(self):
-        # Set up the WebDriver in the setUp method
-        self.driver = webdriver.Chrome()
+        # Start the Selenium WebDriver
+        self.driver = webdriver.Chrome()  # Adjust based on your WebDriver configuration
+        self.driver.get('http://127.0.0.1:3000/login/')  # Replace with the actual URL of your login page
+
+    def test_login_and_search_successful(self):
+        # Find the username, password, and login button elements for the login page
+        email_input = self.driver.find_element(By.NAME, 'email')  # Use By.NAME for the name attribute
+        password_input = self.driver.find_element(By.NAME, 'password')
+        login_button = self.driver.find_element(By.XPATH, "//button[text()='Login']")
+
+        # Enter valid credentials and click login
+        email_input.send_keys("Sanjo31@gmail.com")
+        password_input.send_keys("Sanjo@31")
+        login_button.click()
+
+        # Wait for a while to ensure the login process completes (you can adjust this based on your application's response time)
+        time.sleep(2)
+
+        # Assert that the login was successful by checking the current URL
+        self.assertEqual(self.driver.current_url, 'http://127.0.0.1:3000/home/')
+
+        # Now, navigate to the product search page
+        self.driver.get('http://127.0.0.1:3000/subcategory/flowering-plants/')
+
+        # Find the search input field and enter the search term 'jasmin'
+        search_input = self.driver.find_element(By.CLASS_NAME, 'search-input')
+        search_input.send_keys('jasmin')
+
+        # Submit the search form
+        search_input.submit()
+
+        # Wait for a while to see the result (you can adjust this based on your application's response time)
+        time.sleep(2)
+
+        # Now, you can perform additional assertions based on the search results or other criteria
 
     def tearDown(self):
-        # Close the WebDriver in the tearDown method
-        self.driver.quit()
+        # Close the browser window
+        self.driver.close()
 
-    def test_add_to_cart_and_redirect_to_view_cart(self):
-        # Navigate to the Flowering Plants page
-        self.driver.get('http://127.0.0.1:3000/subcategory/flowering-plants/')  # Update the URL as needed
+if __name__ == "__main__":
+    unittest.main()
 
-        # Wait for the 'Add to Cart' button on the product page
-        add_to_cart_button = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable((By.CLASS_NAME, 'add-to-cart-btn'))
-        )
-        print("Found 'Add to Cart' button")
 
-        # Click on the "Add to Cart" button
+
+import unittest
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+import time
+
+class LoginAndAddToCartTest(unittest.TestCase):
+    def setUp(self):
+        # Start the Selenium WebDriver
+        self.driver = webdriver.Chrome()  # Adjust based on your WebDriver configuration
+        self.driver.get('http://127.0.0.1:3000/login/')  # Replace with the actual URL of your login page
+
+    def test_login_add_to_cart_and_view_cart(self):
+        # Find the username, password, and login button elements for the login page
+        email_input = self.driver.find_element(By.NAME, 'email')  # Use By.NAME for the name attribute
+        password_input = self.driver.find_element(By.NAME, 'password')
+        login_button = self.driver.find_element(By.XPATH, "//button[text()='Login']")
+
+        # Enter valid credentials and click login
+        email_input.send_keys("Sanjo31@gmail.com")
+        password_input.send_keys("Sanjo@31")
+        login_button.click()
+
+        # Wait for a while to ensure the login process completes (you can adjust this based on your application's response time)
+        time.sleep(2)
+
+        # Now, navigate to the product search page
+        self.driver.get('http://127.0.0.1:3000/subcategory/flowering-plants/')
+
+        # Find the 'Add to Cart' button and click it
+        add_to_cart_button = self.driver.find_element(By.XPATH, "//button[text()='Add to Cart']")
         add_to_cart_button.click()
-        print("Clicked on 'Add to Cart' button")
 
-        # Wait for the confirmation message on the View Cart page
-        confirmation_message = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.CLASS_NAME, 'confirmation-message'))
-        )
-        print(f"Confirmation message: {confirmation_message.text}")
+        # Wait for a while to ensure the product is added to the cart (you can adjust this based on your application's response time)
+        time.sleep(2)
 
-        # Check if the URL is redirected to the view cart page
-        current_url = self.driver.current_url
-        self.assertTrue(current_url.endswith('/view_cart/'))
+        # Now, navigate to the view cart page
+        self.driver.get('http://127.0.0.1:3000/view_cart/')
 
-        # Add assertions to check if the product was added to the cart successfully
-        # For example, check if the confirmation message is displayed
-        self.assertIn('successfully added to your cart', confirmation_message.text.lower())
+        # Wait for a while to see the result (you can adjust this based on your application's response time)
+        time.sleep(2)
+
+        # Now, you can perform additional assertions based on the content of the view cart page
+
+    def tearDown(self):
+        # Close the browser window
+        self.driver.close()
+
+if __name__ == "__main__":
+    unittest.main()
