@@ -209,6 +209,17 @@ class Botanist(models.Model):
 
     def __str__(self):
         return self.name
+    
+    
+    
+#appointment
+class DoctorSchedule(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateField()
+    time_slot = models.CharField(max_length=100)
+
+    def _str_(self):
+        return f"{self.user.username} - {self.date} - {self.time_slot}"
 
 class Appointment(models.Model):
     appointment_date = models.DateField()

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            background-size: cover;
+            background-image: url('/static/images/reg3.jpg');
+        }
+
+        /* Header styles */
+        header {
+            background: linear-gradient(to right,#09241c,#158c35);
+            color: #fff;
+            padding: 0.5px;
+            text-align: center;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #15421c;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f4f4f4;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .schedule-form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .schedule-form input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        .schedule-form select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        .schedule-form button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .schedule-form button:hover {
+            background-color: #45a049;
+        }
+
+        .schedules-table {
+            margin-top: 20px;
+        }
+
+        .schedules-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .schedules-table th,
+        .schedules-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .schedules-table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .logout-icon{
+            margin-left: 1500px;
+        }
+    </style>
+    <title>Scheduling Form</title>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>Botanist Schedule</h1>
+        <a href="/consult" class="logout-icon">
+            <img src="/static/images/log4.png" alt="Logout">
+        </a>
+    </header>
+
+    <div class="container">
+        <div class="form-container">
+            <form class="schedule-form" method="post" action="{% url 'scheduling' %}">
+                {% csrf_token %}
+
+                <label for="date">Date:</label>
+                <input type="date" name="date" required>
+
+                <label for="time_slot">Time slot:</label>
+                <select name="time_slot" required>
+                    <option value="08:00 AM - 08:30 AM">08:00 AM - 08:30 AM</option>
+                    <option value="09:00 AM - 09:30 AM">09:00 AM - 09:30 AM</option>
+                    <option value="10:00 AM - 10:30 AM">10:00 AM - 10:30 AM</option>
+                    <option value="11:00 AM - 11:30 AM">11:00 AM - 11:30 AM</option>
+                    <option value="12:00 PM - 12:30 PM">12:00 AM - 12:30 AM</option>
+                    <option value="3:00 PM - 3:30 PM">3:00 PM - 3:00 PM</option>
+                    <option value="4:00 PM - 4:30 PM">4:00 PM - 4:30 PM</option>
+                    <option value="5:00 PM - 5:30 PM">5:00 PM - 5:30 PM</option>
+                    <option value="6:00 PM - 6:30 PM">6:00 PM - 6:30 PM</option>
+                    <option value="7:00 PM - 7:30 PM">7:00 PM - 7:30 PM</option>
+                    <!-- Add more options as needed -->
+                </select>
+
+                <button type="submit">Add Schedule</button>
+            </form>
+        </div>
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li>
+                {% comment %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endcomment %}
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <!-- Display existing schedules in a table -->
+        <div class="schedules-table">
+            <h2>Existing Schedules</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Start Time</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for schedule in doctor_schedules %}
+                    <tr>
+                        <td>{{ schedule.date|date }}</td>
+                        <td>{{ schedule.time_slot }}</td>
+                        <td>
+                            
+                            <form method="post" action="{% url 'delete_schedule' schedule.id %}">
+                                {% csrf_token %}
+                                <button type="submit">Delete</button>
+                            </form>
+                            {% comment %} <button type="button" onclick="deleteSchedule('{{ schedule.id }}')">Delete</button> {% endcomment %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    {% comment %} <footer>
+        &copy; 2024 Botanist Schedule App
+    </footer> {% endcomment %}
+</body>
+
+</html>

@@ -19,6 +19,7 @@ urlpatterns = [
     path('checkot/',views.checkout, name='checkot'),
     
     path('profile/', views.profile1,name='profile'),
+    path('horti/', views.horti,name='horti'),
     
     
     path('log/', views.change_password,name='log'),
@@ -30,7 +31,10 @@ urlpatterns = [
     path('plants/',views.product_grid,name="plants"),
     path('user/',views.user_r,name="user"),
     path('botanist/',views.botanist_t,name="botanist"),
+    path('hort/',views.hort,name="hort"),
     path('bot/',views.bot_t,name="bot"),
+    path('book/',views.book,name="book"),
+    
     path('logout/',views.custome_logout,name="logout"),
     path('delete_product/<int:id>/', views.delete_product, name='delete_product'),
     path('product/<int:id>/', views.product_details, name='product_details'),
@@ -38,6 +42,7 @@ urlpatterns = [
     # path('view_cart/', views.view_cart, name='view_cart'),
     path('add_to_cart/<int:id>/', views.add_to_cart, name='add_to_cart'),
     path('regibot/',views.regbot,name="regibot"),
+    path('reghorti/',views.reghorti,name="reghorti"),
     path('consult/',views.consult,name="consult"),
     path('book-appointment/',views.consultation_form, name='book-appointment'),
     path('botdetail/',views.botdetail,name="botdetail"),
@@ -73,6 +78,11 @@ urlpatterns = [
     path('billinvoice/', views.bill_invoice, name='bill_invoice'),
     path('order_history/', views.order_history, name='order_history'),
     path('search/',views.search_prod, name='search_prod'),
+    
+    #appointment
+    path('appoint/', views.scheduling, name='scheduling'),
+    path('appoint/', views.scheduling, name='appoint'),
+    path('delete_schedule/<int:schedule_id>/', views.delete_schedule, name='delete_schedule'),
 
     
     

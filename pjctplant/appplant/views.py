@@ -18,6 +18,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.views.decorators.cache import *
 from django.contrib.auth.decorators import *
+from .forms import AppointmentForm
 
 
 
@@ -241,6 +242,11 @@ def user_r(request):
 @login_required(login_url='login')
 def botanist_t(request):
     return render(request,'botanist.html')
+
+
+def hort(request):
+    return render(request,'hort.html')
+
 @never_cache
 @login_required(login_url='login')
 def bot_t(request):
@@ -453,10 +459,34 @@ def regbot(request):
                 return redirect('login')  
      return render(request, 'regibot.html')
  
+def reghorti(request):
+     if request.method == 'POST':
+        #name = request.POST.get('name', None)
+        username = request.POST['username']
+        email = request.POST['email']
+        #phone = request.POST.get('phone', None)
+        password = request.POST['password']
+        confirm_password = request.POST['confirmPassword']
+        role='HORTICULTURE'
+        if username and email  and password:
+            if User.objects.filter(email=email,username=username).exists():
+                messages.success(request,("Email is already registered."))
+            
+            elif password!=confirm_password:
+                messages.success(request,("Password's Don't Match, Enter correct Password"))
+            else:
+                User.objects.create_user(username=username, email=email, password=password,role=role)
+                return redirect('login')  
+     return render(request, 'reghorti.html')
+ 
  
  
 def consult(request):
     return render(request,'consult.html')
+
+
+def book(request):
+    return render(request,'book.html')
 
 # def book_appointment(request):
 #     return render(request, 'book-appointment.html')
@@ -470,44 +500,51 @@ def botdetail(request):
 from .models import Botanist, Appointment
 from django.http import HttpResponse
 
+# def consultation_form(request):
+#     if request.method == 'POST':
+#         selected_date = request.POST.get('appointment-date')
+#         selected_time = request.POST.get('appointment-time')
+#         selected_botanist_id = request.POST.get('botanist')
+#         subject = request.POST.get('subject')
+
+#         # Validate the form data
+#         if selected_date and selected_time and selected_botanist_id and subject:
+#             try:
+#                 selected_botanist = Botanist.objects.get(pk=selected_botanist_id)
+
+#                 # Save the appointment to the database
+#                 appointment = Appointment(
+#                     appointment_date=selected_date,
+#                     appointment_time=selected_time,
+#                     botanist=selected_botanist,
+#                     subject=subject
+#                 )
+#                 appointment.save()
+
+#                 # Redirect to the botanist.html page
+#                 return redirect('botanist_page')  # Replace 'botanist_page' with the actual name or URL pattern of your botanist.html page
+#             except Botanist.DoesNotExist:
+#                 # Handle the case where the selected botanist does not exist
+#                 return HttpResponse("Invalid botanist selected.")
+#         else:
+#             # Handle the case where form data is incomplete
+#             return HttpResponse("Please fill out all fields before scheduling the appointment.")
+#     else:
+#         # Retrieve botanists from the database to populate the form
+#         botanists = Botanist.objects.all()
+
+#         context = {
+#             'botanists': botanists,
+#         }
+
+#         return render(request, 'book-appointment.html', context)
 def consultation_form(request):
     if request.method == 'POST':
-        selected_date = request.POST.get('appointment-date')
-        selected_time = request.POST.get('appointment-time')
-        selected_botanist_id = request.POST.get('botanist')
-        subject = request.POST.get('subject')
-
-        # Validate the form data
-        if selected_date and selected_time and selected_botanist_id and subject:
-            try:
-                selected_botanist = Botanist.objects.get(pk=selected_botanist_id)
-
-                # Save the appointment to the database
-                appointment = Appointment(
-                    appointment_date=selected_date,
-                    appointment_time=selected_time,
-                    botanist=selected_botanist,
-                    subject=subject
-                )
-                appointment.save()
-
-                # Redirect to the botanist.html page
-                return redirect('botanist_page')  # Replace 'botanist_page' with the actual name or URL pattern of your botanist.html page
-            except Botanist.DoesNotExist:
-                # Handle the case where the selected botanist does not exist
-                return HttpResponse("Invalid botanist selected.")
-        else:
-            # Handle the case where form data is incomplete
-            return HttpResponse("Please fill out all fields before scheduling the appointment.")
-    else:
-        # Retrieve botanists from the database to populate the form
-        botanists = Botanist.objects.all()
-
-        context = {
-            'botanists': botanists,
-        }
-
-        return render(request, 'book-appointment.html', context)
+        form = AppointmentForm(request.POST)
+    else :
+        form = AppointmentForm()
+    context = {'form' :form}
+    return render(request, 'book-appointment.html', context)
 
 def search_user(request):
     query = request.GET.get('query')
@@ -1073,3 +1110,41 @@ def search_prod(request):
     }
     return render(request, 'viewproduct.html', context)
 
+def horti(request):
+    return render(request,'horti.html')
+
+#appointment
+
+def scheduling(request):
+    if request.method == 'POST':
+        date = request.POST.get('date')
+        time_slot = request.POST.get('time_slot')
+        
+
+        # Check if the date and time slot are present in the POST request
+        if not date or not time_slot:
+            messages.error(request, 'Please select a date and time slot.')
+        else:
+            # Check if the user is a doctor
+            if request.user.role == 'BOTANIST':
+                # Check if the schedule already exists for the given date and time slot
+                existing_schedule = DoctorSchedule.objects.filter(user=request.user, date=date, time_slot=time_slot)
+                if existing_schedule.exists():
+                    messages.error(request, 'Schedule already exists for this date and time slot.')
+                else:
+                    # If not, create and save the schedule
+                    schedule = DoctorSchedule.objects.create(user=request.user, date=date, time_slot=time_slot)
+                    schedule.save()
+            else:
+                # Handle the case when the user is not a doctor
+                messages.error(request, 'You are not a registered doctor.')
+
+    # Fetch existing schedules for the current doctor
+    doctor_schedules = DoctorSchedule.objects.filter(user=request.user)
+
+    return render(request, 'appoint.html', {'doctor_schedules': doctor_schedules})
+
+def delete_schedule(request, schedule_id):
+    schedule = get_object_or_404(DoctorSchedule, id=schedule_id)
+    schedule.delete()
+    return redirect('scheduling')

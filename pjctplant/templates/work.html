@@ -8,12 +8,11 @@
         .botanist-works {
             margin-bottom: 20px;
         }
-        .header {
-            background-color: #006400; /* Dark green color */
-            color: #fff; /* White text color */
-            padding: 10px;
+        header {
+            background-color: #003300;
+            color: white;
             text-align: center;
-            position: relative;
+            padding: 2px;
         }
 
         .header h1 {
@@ -52,6 +51,14 @@
             color: #003300;
             margin-top: 10px;
         }
+        .logout-icon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 10px;
+            cursor: pointer;
+        }
+
 
         .work-box p {
             font-size: 14px;
@@ -63,12 +70,14 @@
 
 <body>
     <header>
-        <h1>Work</h1>
-        <img src="{% static 'path-to-logout-icon.png' %}" alt="Logout" onclick="logoutFunction()">
+        <h1>WORK</h1>
+        <a href="/home" class="logout-icon">
+            <img src="/static/images/log4.png" alt="Logout">
+        </a>
     </header>
 
     <div class="content">
-        <h3><center>Works</center></h3>
+        {% comment %} <h3><center>Works</center></h3> {% endcomment %}
 
         <!-- Botanist 1 Works -->
         <div class="botanist-works">
@@ -108,7 +117,7 @@
             {
                 title: "Leaf Sensors",
                 description: "Leaf sensors used for identifying whether the crop needs to be irrigated",
-                imageSrc: "{% static 'images/botw1.jpg' %}",
+                imageSrc: "{% static 'images/botw3.jpg' %}",
             },
             {
                 title: "Health Monitoring",

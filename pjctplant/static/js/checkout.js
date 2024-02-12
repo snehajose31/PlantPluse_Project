@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(data => {
                 var options = {
-                    "key": "rzp_test_sHE2W2x7qnm2Hh",
+                    "key": "rzp_test_kObQawA2F9cpKp",
                     "amount": totalPrice * 100,
                     "currency": "INR",
                     "name": "Ecommerce",

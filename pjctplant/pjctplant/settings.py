@@ -129,8 +129,8 @@ STATICFILES_DIRS=[
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-RAZOR_KEY_ID = 'rzp_test_sHE2W2x7qnm2Hh'
-RAZOR_KEY_SECRET = 'BteqnwizRDXk0cRiMFNbOkKc'
+RAZOR_KEY_ID = 'rzp_test_kObQawA2F9cpKp'
+RAZOR_KEY_SECRET = 'Qnd8YnI3YC45wVLjR3Ej7WKn'
 
 
 

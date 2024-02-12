@@ -16,7 +16,7 @@
         
 
         header {
-            background-color: #15421c;
+            background: linear-gradient(to right,#164f25,#158c35);
             color: #fff;
             padding: 10px;
             display: flex;
@@ -38,7 +38,7 @@
         }
 
         aside {
-            background-color: #15421c;
+            background: linear-gradient(to right,#09241c,#158c35);
             padding: 20px;
             width: 200px;
         }
@@ -85,17 +85,18 @@
             text-decoration: none;
             color: white;
             margin-top: 10px; /* Add margin to separate it from the welcome text */
-            margin-right: 10px;
+            margin-left: 1450px; /* Updated to left-align the logout button */
         }
     
     </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
     <!-- Header Section -->
     <header>
         <div class="doctor-info">
-            <div class="doctor-name">Hello, Dr. {% if user.is_authenticated %}{{ user.username }}{% endif %}</div>
+            <div class="doctor-name">Hello,  {% if user.is_authenticated %}{{ user.username }}{% endif %}</div>
             <a href="{% url 'logout' %}" class="logout-button">Logout</a>
             {% comment %} <a href="{% url 'logout' %}" class="float-right"><img src="{% static 'images/logout2.png' %}" alt="Logout" class="logout-icon" style="margin-right: 10px;"></a> {% endcomment %}
         </div>
@@ -105,183 +106,84 @@
     <div class="dashboard-container">
         <!-- Sidebar -->
         <aside>
-            <a href="#" class="sidebar-link" onclick="showDashboard()">Dashboard</a>
-            {% comment %} <a href="#" class="sidebar-link" onclick="showPatients()">Patients</a> {% endcomment %}
-            <a href="#" class="sidebar-link" onclick="showAppointments()">Appointments</a>
-            <a href="#" class="sidebar-link" onclick="showScheduling()">Scheduling</a>
+            <div class="row mt-3">
+                <div class="col">
+                    <a href="#" class="btn btn-outline-success btn-block " onclick="showDashboard()">Dashboard</a>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    <a href="#" class="btn btn-outline-success btn-block" onclick="showAppointments()">Appointments</a>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    <a href="{% url 'appoint' %}" class="btn btn-outline-success btn-block">Scheduling</a>
+                </div>
+            </div>
         </aside>
+        
 
         <!-- Main Content -->
         <main id="dashboard-content">
             <!-- Default content or dynamically loaded content goes here -->
-            <h2>Welcome to the Dashboard!</h2>
-        </main>
-    </div>
-
-    <script>
-        // Your JavaScript functions for handling sidebar clicks and changing content
-        function showDashboard() {
-            document.getElementById('dashboard-content').innerHTML = '<h2>Dashboard Content Goes Here</h2>';
-        }
-
-        function showPatients() {
-            document.getElementById('dashboard-content').innerHTML = '<h2>Patients Content Goes Here</h2>';
-        }
-
-        function showAppointments() {
-            document.getElementById('dashboard-content').innerHTML = '<h2>Appointments Content Goes Here</h2>';
-        }
-
-        function showScheduling() {
-            document.getElementById('dashboard-content').innerHTML = `
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <style>
-                    body {
-                        font-family: Arial, sans-serif;
-                        background-color: #f4f4f4;
-                        margin: 0;
-                        padding: 0;
-                    }
-
-                    .container {
-                        max-width: 600px;
-                        margin: 20px auto;
-                        padding: 20px;
-                        border: 1px solid #ccc;
-                        border-radius: 8px;
-                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                    }
-
-                    .schedule-form label {
-                        display: block;
-                        margin-bottom: 8px;
-                    }
-
-                    .schedule-form input {
-                        width: 100%;
-                        padding: 8px;
-                        margin-bottom: 16px;
-                        box-sizing: border-box;
-                    }
-
-                    .schedule-form select {
-                        width: 100%;
-                        padding: 8px;
-                        margin-bottom: 16px;
-                        box-sizing: border-box;
-                    }
-
-                    .schedule-form button {
-                        padding: 10px 15px;
-                        background-color: #4CAF50;
-                        color: #fff;
-                        border: none;
-                        border-radius: 4px;
-                        cursor: pointer;
-                    }
-
-                    .schedule-form button:hover {
-                        background-color: #45a049;
-                    }
-
-                    .schedules-table {
-                        margin-top: 20px;
-                    }
-
-                    .schedules-table table {
-                        width: 100%;
-                        border-collapse: collapse;
-                    }
-
-                    .schedules-table th, .schedules-table td {
-                        border: 1px solid #ddd;
-                        padding: 8px;
-                        text-align: left;
-                    }
-
-                    .schedules-table th {
-                        background-color: #4CAF50;
-                        color: white;
-                    }
-                </style>
-                <title>Scheduling Form</title>
-            </head>
-            <body>
-                <div class="container">
-                    <div class="form-container">
-                        <h1>Botanist Schedule</h1>
-                        {% comment %} <form class="schedule-form" method="post" action="{% url 'scheduling' %}"> {% endcomment %}
-                            {% csrf_token %}
-
-                            <label for="date">Date:</label>
-                            <input type="date" name="date" required>
-
-                            <label for="time_slot">Time slot:</label>
-                            <select name="time_slot" required>
-                                <option value="08:00 AM - 08:30 AM">08:00 AM - 08:30 AM</option>
-                                <option value="09:00 AM - 09:30 AM">09:00 AM - 09:30 AM</option>
-                                <option value="10:00 AM - 10:30 AM">10:00 AM - 10:30 AM</option>
-                                <option value="11:00 AM - 11:30 AM">11:00 AM - 11:30 AM</option>
-                                <option value="12:00 PM - 12:30 PM">12:00 AM - 12:30 AM</option>
-                                <option value="3:00 PM - 3:30 PM">3:00  PM - 3:00 PM</option>
-                                <option value="4:00 PM - 4:30 PM">4:00  PM - 4:30 PM</option>
-                                <option value="5:00 PM - 5:30 PM">5:00 PM - 5:30 PM</option>
-                                <option value="6:00 PM - 6:30 PM">6:00 PM - 6:30 PM</option>
-                                <option value="7:00 PM - 7:30 PM">7:00 PM - 7:30 PM</option>
-                                <!-- Add more options as needed -->
-                            </select>
-
-                            <button type="submit">Add Schedule</button>
-                        </form>
+            <h2><center>Welcome to the Botanist Dashboard!</center></h2>
+            <br>
+            <div class="container">
+                <div class="row">
+                    <!-- First column -->
+                    <div class="col-md-3">
+                        <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+                            <img class="card-img-top" src="/static/images/pla7.jpg" alt="Card image cap">
+                            {% comment %} <div class="card-header">Header</div> {% endcomment %}
+                            <div class="card-body">
+                              <h5 class="card-title">Comprehensive Plant Care</h5>
+                              {% comment %} <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> {% endcomment %}
+                            </div>
+                          </div>
                     </div>
-                    
-                    {% if messages %}
-                        <ul class="messages">
-                            {% for message in messages %}
-                                {% comment %} <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li> {% endcomment %}
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                
-                    <!-- Display existing schedules in a table -->
-                    <div class="schedules-table">
-                        <h2>Existing Schedules</h2>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Start Time</th>
-                                    <th>Delete</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for schedule in doctor_schedules %}
-                                    <tr>
-                                        <td>{{ schedule.date|date }}</td>
-                                        <td>{{ schedule.time_slot }}</td>
-                                        <td>
-                                            <form method="post" action="{% url 'delete_schedule' schedule.id %}">
-                                                {% csrf_token %}
-                                                <button type="submit">Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+        
+                    <!-- Second column -->
+                    <div class="col-md-3">
+                        <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+                            <img class="card-img-top" src="/static/images/pla3.jpg" alt="Card image cap">
+                            {% comment %} <div class="card-header">Header</div> {% endcomment %}
+                            <div class="card-body">
+                              <h5 class="card-title">Plant Selection and Procurement</h5>
+                              {% comment %} <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> {% endcomment %}
+                            </div>
+                          </div>
+                    </div>
+        
+                    <!-- Third column -->
+                    <div class="col-md-3">
+                        <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+                            <img class="card-img-top" src="/static/images/pla2.jpg" alt="Card image cap">
+                            {% comment %} <div class="card-header">Header</div> {% endcomment %}
+                            <div class="card-body">
+                              <h5 class="card-title">Customer Support and Satisfaction</h5>
+                              {% comment %} <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> {% endcomment %}
+                            </div>
+                          </div>
+                    </div>
+        
+                    <!-- Fourth column -->
+                    <div class="col-md-3 rounded">
+                        <div class="card text-white bg-success mb-3 " style="max-width: 18rem;">
+                            <img class="card-img-top" src="/static/images/pla8.jpg" alt="Card image cap">
+                            {% comment %} <div class="card-header">Header</div> {% endcomment %}
+                            <div class="card-body">
+                              <h5 class="card-title">Seasonal Rotations and Updates</h5>
+                              {% comment %} <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> {% endcomment %}
+                            </div>
+                          </div>
+                        </div>
                     </div>
                 </div>
-            </body>
-            </html>
-
-            
-            `;
-        }
-    </script>
+            </div>
+        </main>
+    </div>
 </body>
 
 </html>
+

@@ -85,7 +85,7 @@
 </style>
 <body>
     <div class="container">
-        <h2> Botanist Registration </h2>
+        <h2> horticulturist Registration </h2>
         <form id="registrationForm" action="#" method="post">
             {% csrf_token %}
             <div class="form-group">
@@ -116,7 +116,7 @@
         function validateUsername() {
             const username = document.getElementById('username').value;
             const usernameError = document.getElementById('usernameError');
-            const usernameRegex = /^[a-zA-Z.]+$/;
+            const usernameRegex = /^[a-zA-Z]+$/;
         
             if (!username.match(usernameRegex) || username.length < 6) {
                 usernameError.textContent = 'Username must contain at least 6 alphabetic characters.';

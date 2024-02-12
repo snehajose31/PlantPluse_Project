@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Booking</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header, footer {
+            background: linear-gradient(to right,#09241c,#158c35);
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        main {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 20px;
+            background-color: #ffff;
+            min-height: 70vh;
+        }
+
+        .doctor-box {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(to right,#132b19,#91ab33);
+            border: 1px solid #003300;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            width: 45%;
+        }
+
+        .doctor-box img {
+            max-width: 100%;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #003300;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #006400;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Doctor Booking</h1>
+    </header>
+
+    <main>
+        <div class="doctor-box">
+            <img src="/static/images/botanist1.jpg" alt="Doctor 1">
+            <h2>Dr.PV Benjamin</h2>
+            <h4>Botanist</h4>
+            <p>Ph.D. in Botany</p>
+            <a href="{% url 'book-appointment' %}">
+                <button>Book Now</button>
+            </a>
+        </div>
+    
+        <div class="doctor-box">
+            <img src="/static/images/Botanist21.jpg" alt="Doctor 2">
+            <h2>Dr.Balakrishnan</h2>
+            <p>Botanist</p>
+            <p>Ph.D. in Plant Physiology</p>
+            <a href="{% url 'book-appointment' %}">
+                <button>Book Now</button>
+            </a>
+        </div>
+    </main>
+
+    {% comment %} <footer>
+        <p>&copy; 2024 Doctor Booking System</p>
+    </footer> {% endcomment %}
+</body>
+
+</html>
