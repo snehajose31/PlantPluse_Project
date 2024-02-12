@@ -1113,6 +1113,10 @@ def search_prod(request):
 def horti(request):
     return render(request,'horti.html')
 
+
+def horticulture(request):
+    return render(request,'horticulture.html')
+
 #appointment
 
 def scheduling(request):

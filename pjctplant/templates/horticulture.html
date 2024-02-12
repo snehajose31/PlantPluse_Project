@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        /* Your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+
+        header {
+            background: linear-gradient(to right,#164f25,#158c35);
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .doctor-info {
+            text-align: right;
+        }
+
+        .doctor-name {
+            font-weight: bold;
+        }
+
+        .dashboard-container {
+            display: flex;
+            height: calc(100vh - 40px); /* Adjust height based on your header size */
+        }
+
+        aside {
+            background: linear-gradient(to right,#09241c,#158c35);
+            padding: 20px;
+            width: 200px;
+        }
+
+        main {
+            flex: 1;
+            padding: 20px;
+        }
+
+        /* Style for sidebar links */
+        .sidebar-link {
+            display: block;
+            padding: 10px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: #333;
+            background-color: #ddd;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .sidebar-link:hover {
+            background-color: #ccc;
+        }
+
+        /* Style for scheduling form */
+        .schedule-form {
+            margin-top: 20px;
+        }
+
+        .schedule-list {
+            margin-top: 20px;
+        }
+        .doctor-info {
+            text-align: left; /* Updated to left-align */
+            margin-right: 10px;
+        }
+        .dashboard-container {
+            display: flex;
+            height: calc(100vh - 40px); /* Adjust height based on your header size */
+        }
+        .logout-button {
+            text-decoration: none;
+            color: white;
+            margin-top: 10px; /* Add margin to separate it from the welcome text */
+            margin-left: 1450px; /* Updated to left-align the logout button */
+        }
+    
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="doctor-info">
+            <div class="doctor-name">Hello,  {% if user.is_authenticated %}{{ user.username }}{% endif %}</div>
+            <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+            {% comment %} <a href="{% url 'logout' %}" class="float-right"><img src="{% static 'images/logout2.png' %}" alt="Logout" class="logout-icon" style="margin-right: 10px;"></a> {% endcomment %}
+        </div>
+    </header>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside>
+            <div class="row mt-3">
+                <div class="col">
+                    <a href="#" class="btn btn-outline-success btn-block " onclick="showDashboard()">Dashboard</a>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    <a href="#" class="btn btn-outline-success btn-block" onclick="showAppointments()">Appointments</a>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    <a href="{% url 'appoint' %}" class="btn btn-outline-success btn-block">Scheduling</a>
+                </div>
+            </div>
+        </aside>
+        
+
+        <!-- Main Content -->
+        <main id="dashboard-content">
+            <!-- Default content or dynamically loaded content goes here -->
+            <h2><center>Welcome to the horticulturist Expert Dashboard!</center></h2>
+            <br>
+            <div class="container">
+                <div class="row">
+                    <!-- First column -->
+                    <div class="col-md-3">
+                        <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+                            <img class="card-img-top" src="/static/images/pla7.jpg" alt="Card image cap">
+                            {% comment %} <div class="card-header">Header</div> {% endcomment %}
+                            <div class="card-body">
+                              <h5 class="card-title">Comprehensive Plant Care</h5>
+                              {% comment %} <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> {% endcomment %}
+                            </div>
+                          </div>
+                    </div>
+        
+                    <!-- Second column -->
+                    <div class="col-md-3">
+                        <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+                            <img class="card-img-top" src="/static/images/pla3.jpg" alt="Card image cap">
+                            {% comment %} <div class="card-header">Header</div> {% endcomment %}
+                            <div class="card-body">
+                              <h5 class="card-title">Plant Selection and Procurement</h5>
+                              {% comment %} <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> {% endcomment %}
+                            </div>
+                          </div>
+                    </div>
+        
+                    <!-- Third column -->
+                    <div class="col-md-3">
+                        <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+                            <img class="card-img-top" src="/static/images/pla2.jpg" alt="Card image cap">
+                            {% comment %} <div class="card-header">Header</div> {% endcomment %}
+                            <div class="card-body">
+                              <h5 class="card-title">Customer Support and Satisfaction</h5>
+                              {% comment %} <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> {% endcomment %}
+                            </div>
+                          </div>
+                    </div>
+        
+                    <!-- Fourth column -->
+                    <div class="col-md-3 rounded">
+                        <div class="card text-white bg-success mb-3 " style="max-width: 18rem;">
+                            <img class="card-img-top" src="/static/images/pla8.jpg" alt="Card image cap">
+                            {% comment %} <div class="card-header">Header</div> {% endcomment %}
+                            <div class="card-body">
+                              <h5 class="card-title">Seasonal Rotations and Updates</h5>
+                              {% comment %} <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> {% endcomment %}
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>
+

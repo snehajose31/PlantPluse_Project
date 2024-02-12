@@ -99,6 +99,18 @@
         .logout-icon{
             margin-left: 1500px;
         }
+        .delete-button {
+            padding: 10px 15px;
+            background-color: #ff0000; /* Red color */
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    
+        .delete-button:hover {
+            background-color: #ff3333; /* Lighter shade of red on hover */
+        }
     </style>
     <title>Scheduling Form</title>
 </head>
@@ -172,7 +184,7 @@
                             
                             <form method="post" action="{% url 'delete_schedule' schedule.id %}">
                                 {% csrf_token %}
-                                <button type="submit">Delete</button>
+                                <button type="submit"  class="delete-button" >Delete</button>
                             </form>
                             {% comment %} <button type="button" onclick="deleteSchedule('{{ schedule.id }}')">Delete</button> {% endcomment %}
                         </td>

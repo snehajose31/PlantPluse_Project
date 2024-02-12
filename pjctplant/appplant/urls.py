@@ -44,6 +44,8 @@ urlpatterns = [
     path('regibot/',views.regbot,name="regibot"),
     path('reghorti/',views.reghorti,name="reghorti"),
     path('consult/',views.consult,name="consult"),
+    
+     path('horticulture/',views.horticulture,name="horticulture"),
     path('book-appointment/',views.consultation_form, name='book-appointment'),
     path('botdetail/',views.botdetail,name="botdetail"),
     # path('consultation/',views.consultation_form, name='consultation_form'),
