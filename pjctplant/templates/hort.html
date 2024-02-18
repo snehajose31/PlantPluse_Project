@@ -50,7 +50,7 @@
 
         /* Colors for each box */
         .box:nth-child(1) {
-            background-color: #497034; /* Blue */
+            background: linear-gradient(to right,#09241c,#158c35);
         }
 
         .box:nth-child(2) {
@@ -82,12 +82,12 @@
 
 <div class="box-container">
     <div class="box" onclick="redirectTo('{% url 'book-appointment' %}')">
-        <img src="{% static 'images/appo1.png' %}" alt="Book Appointment">
+        <img src="{% static 'images/live1.png' %}" alt="Book Appointment">
         <span>live interact</span>
     </div>
-    <div class="box" onclick="redirectTo('{% url 'work' %}')">
-        <img src="{% static 'images/work1.png' %}" alt="Work">
-        <span>Work</span>
+    <div class="box" onclick="redirectTo('{% url 'display_videos' %}')">
+        <img src="{% static 'images/vid1.png' %}" alt="Work">
+        <span>video tutorial</span>
     </div>
 </div>
 

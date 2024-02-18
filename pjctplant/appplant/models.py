@@ -307,3 +307,14 @@ class BotProfile(models.Model):
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
     specification = models.CharField(max_length=100) 
+    
+    
+    
+class Video(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()  # Add a description field
+    video_file = models.FileField(upload_to='videos/')
+    # Add any other fields you need, such as tags, etc.
+
+    def _str_(self):
+        return self.title

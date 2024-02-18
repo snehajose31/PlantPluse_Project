@@ -3,6 +3,8 @@ from. import views
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from .views import change_password
+from .views import upload_video
+# from .views import display_videos
 urlpatterns = [
    
     #path('index/',views.index,name="index")
@@ -112,6 +114,11 @@ urlpatterns = [
     path('bot_profile/', views.bot_profile, name='bot_profile'),
     path('save_profile1/', views.save_profile1, name='save_profile1'),
     path('user_profil/',views.user_profil, name='user_profil'),
+    
+    #video
+    path('upload_video/', upload_video, name='upload_video'),
+    path('display_videos/',views.display_videos, name='display_videos'),
+
 
  
     

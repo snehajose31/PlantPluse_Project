@@ -1230,3 +1230,24 @@ def user_profil(request):
 def botanist_list(request):
     botanists = BotProfile.objects.all()
     return render(request, 'botanist_list.html', {'botanists': botanists})
+
+
+
+from .forms import VideoForm
+
+def upload_video(request):
+    if request.method == 'POST':
+        form = VideoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('horticulture')  # Update with your template name
+    else:
+        form = VideoForm()
+    
+    return render(request, 'upload_video.html', {'form': form})
+
+from .models import Video
+
+def display_videos(request):
+    videos = Video.objects.all()
+    return render(request, 'display_videos.html', {'videos': videos})

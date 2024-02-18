@@ -15,3 +15,11 @@ class AppointmentForm(forms.ModelForm):
 #             'date': forms.DateInput(attrs={'type': 'date', 'style': 'width: 50%;'}),
 #             'reason': forms.Textarea(attrs={'rows': 5, 'cols': 30, 'style': 'resize: none; padding: 8px; box-sizing: border-box;'}),
 #         }
+
+
+from .models import Video
+
+class VideoForm(forms.ModelForm):
+    class Meta:
+        model = Video
+        fields = ['title','description','video_file']
