@@ -1152,3 +1152,81 @@ def delete_schedule(request, schedule_id):
     schedule = get_object_or_404(DoctorSchedule, id=schedule_id)
     schedule.delete()
     return redirect('scheduling')
+
+
+def get_time_slots(request, selected_date):
+    doctor_id = request.GET.get('user_id')
+    doctor = get_object_or_404(User, id=doctor_id, role='Doctor')
+
+    # Fetch available and booked time slots for the selected date and doctor
+    available_time_slots = DoctorSchedule.objects.filter(user=doctor, date=selected_date).values_list('time_slot', flat=True)
+    booked_time_slots = Appointment.objects.filter(doctor=doctor, date=selected_date).values_list('time_slot', flat=True)
+
+    # Convert the QuerySets to lists and return as JSON
+    return JsonResponse({'available': list(available_time_slots), 'booked': list(booked_time_slots)})
+
+
+#bot profile
+def save_profile(request):
+    if request.method == 'POST':
+        user = request.user
+        user.profile.phone_number = request.POST.get('phone_number')
+        user.profile.pincode = request.POST.get('pincode')
+        user.profile.address = request.POST.get('address')
+        user.profile.gender = request.POST.get('gender')
+        user.profile.city = request.POST.get('city')
+        user.profile.state = request.POST.get('state')
+        user.profile.specification = request.POST.get('specification')  # Add this line
+        user.profile.save()
+        return redirect('bot_profile')
+    else:
+        return redirect('bot_profile')
+
+
+def bot_profile(request):
+    return render(request,'bot_profile.html')
+
+
+def save_profile1(request):
+    if request.method == 'POST':
+        try:
+            # Retrieve the user's profile instance or create it if it doesn't exist
+            user_profil, created = BotProfile.objects.get_or_create(user=request.user)
+
+            # Get form data from the request
+            phone_number = request.POST.get('phone_number')
+            pincode = request.POST.get('pincode')
+            address = request.POST.get('address')
+            gender = request.POST.get('gender')
+            city = request.POST.get('city')
+            state = request.POST.get('state')
+            specification = request.POST.get('specification') 
+
+            # Update the user's profile fields
+            user_profil.phone_number = phone_number
+            user_profil.pincode = pincode
+            user_profil.address = address
+            user_profil.gender = gender
+            user_profil.city = city
+            user_profil.state = state
+            user_profil.specification = specification
+
+            # Save the changes
+            user_profil.save()
+
+            messages.success(request, 'Profile updated successfully.')
+            return redirect('user_profil')  # Redirect to the user profile page
+        except Exception as e:
+            messages.error(request, f'Error updating profile: {e}')
+
+    return render(request, 'user_profil.html')
+
+
+def user_profil(request):
+    user = request.user
+    print(user)
+    return render(request,'user_profil.html')
+
+def botanist_list(request):
+    botanists = BotProfile.objects.all()
+    return render(request, 'botanist_list.html', {'botanists': botanists})

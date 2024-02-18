@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botanist List</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background: linear-gradient(to right,#09241c,#158c35);
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .footer {
+            background-color: #006400; /* Dark green color */
+            color: white;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .botanist-container {
+            display: flex;
+            flex-wrap: wrap; /* Wrap elements to next row */
+            justify-content: center; /* Horizontally center align content */
+        }
+        
+        .botanist-box {
+            border: 1px solid #ccc;
+            padding: 20px 20px 20px 40px;
+            margin-bottom: 40px;
+            margin-top: 40px;
+            margin: 10px; /* Adjust margin */
+            width: 500px; /* Adjust width as needed */
+            height: 300px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Vertically center align content */
+            align-items: center; /* Horizontally center align content */
+            background: linear-gradient(to right, #09241c, #158c35);
+            color: white;
+        }
+
+        .botanist-detail {
+            margin-bottom: 10px;
+            text-align: center;
+            color: white; 
+        }
+
+        .botanist-name {
+            font-weight: bold;
+            font-size: 2em; /* Increase font size if needed */
+            color: white; 
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px; /* Adjust margin as needed */
+        }
+
+        .book-now-button {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .book-now-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Botanist List</h1>
+    </div>
+
+    <div class="botanist-container">
+        {% for botanist in botanists %}
+        <div class="botanist-box">
+            <div class="botanist-name">
+                <strong>{{ botanist.user.username }}</strong>
+            </div>
+            <br>
+            <div class="botanist-detail">
+                <strong>Specification:</strong> {{ botanist.specification }}
+            </div>
+            <div class="botanist-detail">
+                <strong>Ph:</strong> {{ botanist.phone_number }}
+            </div>
+            <div class="button-container">
+                <a href="{% url 'book-appointment' %}" class="book-now-button">Book Now</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Footer if needed -->
+</body>
+
+</html>

@@ -131,7 +131,7 @@
 
     <div id="container">
         <h2>Book Now</h2>
-        {% comment %} <h2>Book Appointment with Dr {{ doctor.first_name }} {{ doctor.last_name }}</h2> {% endcomment %}
+        <h2>Book Appointment with  {{ botprofile.username }} </h2> 
         <form id="appointment-form" method="post" action="">
             {% csrf_token %}
 

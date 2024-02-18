@@ -296,3 +296,14 @@ class ProfileUser(models.Model):
 
     def __str__(self):
         return self.user.username    
+    
+    
+class BotProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    phone_number = models.CharField(max_length=15)
+    pincode = models.CharField(max_length=6)
+    address = models.CharField(max_length=100)
+    gender = models.CharField(max_length=10)
+    city = models.CharField(max_length=50)
+    state = models.CharField(max_length=50)
+    specification = models.CharField(max_length=100) 

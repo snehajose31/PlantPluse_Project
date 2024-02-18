@@ -73,8 +73,10 @@ urlpatterns = [
     
     path('user_profile/',views.user_profile, name='user_profile'),
     path('save_profile/',views.save_profile, name='save_profile'),
+    path('save_profile1/',views.save_profile1, name='save_profile1'),
     
     path('user_profile/',views.user_profile,name='user_profile'),
+    
     
     path('order_complete/', views.order_complete, name='order_complete'),
     path('billinvoice/', views.bill_invoice, name='bill_invoice'),
@@ -85,7 +87,7 @@ urlpatterns = [
     path('appoint/', views.scheduling, name='scheduling'),
     path('appoint/', views.scheduling, name='appoint'),
     path('delete_schedule/<int:schedule_id>/', views.delete_schedule, name='delete_schedule'),
-
+     path('botanist_list/', views.botanist_list, name='botanist_list'),
     
     
 
@@ -101,6 +103,16 @@ urlpatterns = [
     path('create-order/',views.create_order, name='create-order'),
     path('handle-payment/',views.handle_payment, name='handle-payment'),
     # path('checkot/',views.checkout, name='checkot'),
+    
+    
+    #time_slot
+    path('get_time_slots/<str:selected_date>/',views.get_time_slots, name='get_time_slots'),
+    
+    
+    path('bot_profile/', views.bot_profile, name='bot_profile'),
+    path('save_profile1/', views.save_profile1, name='save_profile1'),
+    path('user_profil/',views.user_profil, name='user_profil'),
+
  
     
     path('reset_password/', auth_views.PasswordResetView.as_view(), name="reset_password"),
