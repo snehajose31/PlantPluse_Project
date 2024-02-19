@@ -120,10 +120,8 @@
     </style>
 
     <script>
-        // Add your custom JavaScript code here
-
+        // Initialize datepicker
         $(function () {
-            // Initialize datepicker
             $("#dob").datepicker({
                 dateFormat: "yy-mm-dd",
                 changeMonth: true,
@@ -131,18 +129,19 @@
                 yearRange: "-100:+0" // Allow selection of the last 100 years
             });
         });
-        
+
         function validatePhoneNumber(input) {
-            // Remove any non-numeric characters
-            var phoneNumber = input.value.replace(/\D/g, '');
-            
-            // Check if the phone number has exactly 10 digits
-            if (/^\d{10}$/.test(phoneNumber)) {
-                // Valid phone number
-                input.setCustomValidity('');
+            const phoneNumberError = document.getElementById("phone-number-error");
+            const phoneNumberRegex = /^\d{10}$/; // Regular expression to match 10 digits
+
+            if (!phoneNumberRegex.test(input.value)) {
+                phoneNumberError.textContent = "Please enter a 10-digit phone number.";
+                phoneNumberError.style.color = "red"; // Set error message color to red
+            } else if (!/^\d+$/.test(input.value)) {
+                phoneNumberError.textContent = "Please enter only numeric characters.";
+                phoneNumberError.style.color = "red"; // Set error message color to red
             } else {
-                // Invalid phone number, set custom error message
-                input.setCustomValidity('Please enter a 10-digit phone number (numeric only)');
+                phoneNumberError.textContent = ""; // Clear error message
             }
         }
     </script>
@@ -175,28 +174,26 @@
                 <!-- Add other profile fields here -->
 
                 <label for="specification">Specification:</label>
-                <select id="specification" name="specification" required>
-                    <option value="plant_pathology" {% if user.profile.specification == 'plant_pathology' %}selected{% endif %}>Plant Pathology</option>
-                    <option value="plant_pathology" {% if user.profile.specification == 'plant_pathology' %}selected{% endif %}>Plant Nutrition</option>
-                    <option value="other" {% if user.profile.specification == 'other' %}selected{% endif %}>Other</option>
+                <select id="specificationSelect" name="specification" required>
+                    <option value="plant_pathology">Plant Pathology</option>
+                    <option value="plant_nutrition">Plant Nutrition</option>
+                    <option value="other">Other</option>
                 </select>
-
 
                 <div class="form-group">
                     <label for="phone-number">Phone Number</label>
                     <input type="text" id="phone-number" name="phone-number" class="form-control" required onblur="validatePhoneNumber(this)">
                     <span id="phone-number-error" class="error-text"></span>
                 </div>
-                
 
                 <label for="pincode">Pincode:</label>
                 <input type="text" id="pincode" name="pincode" value="{{ user.profile.pincode|default:'' }}"
-                       pattern="\d{6}" title="Please enter a 6-digit pincode (numeric only)" required>
+                    pattern="\d{6}" title="Please enter a 6-digit pincode (numeric only)" required>
 
                 <label for="address">Address:</label>
                 <textarea id="address" name="address"
-                          oninput="this.value = this.value.substring(0, 50)"
-                          title="Maximum 50 characters allowed">{{ user.profile.address|default:'' }}</textarea>
+                    oninput="this.value = this.value.substring(0, 50)"
+                    title="Maximum 50 characters allowed">{{ user.profile.address|default:'' }}</textarea>
 
                 <label for="gender">Gender:</label>
                 <select id="gender" name="gender" required>
@@ -217,22 +214,5 @@
         </div>
     </div>
 </body>
-<script>
-    function validatePhoneNumber(input) {
-        const phoneNumberError = document.getElementById("phone-number-error");
-        const phoneNumberRegex = /^\d{10}$/; // Regular expression to match 10 digits
-
-        if (!phoneNumberRegex.test(input.value)) {
-            phoneNumberError.textContent = "Please enter a 10-digit phone number.";
-            phoneNumberError.style.color = "red"; // Set error message color to red
-        } else if (!/^\d+$/.test(input.value)) {
-            phoneNumberError.textContent = "Please enter only numeric characters.";
-            phoneNumberError.style.color = "red"; // Set error message color to red
-        } else {
-            phoneNumberError.textContent = ""; // Clear error message
-        }
-    }
-</script>
-
 
 </html>
