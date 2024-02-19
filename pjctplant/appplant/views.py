@@ -1251,3 +1251,66 @@ from .models import Video
 def display_videos(request):
     videos = Video.objects.all()
     return render(request, 'display_videos.html', {'videos': videos})
+
+
+#chatgpt nrs
+    # chatapp/views.py
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render
+from transformers import GPT2LMHeadModel, GPT2Tokenizer
+
+model_name = "gpt2"
+tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+model = GPT2LMHeadModel.from_pretrained(model_name)
+
+@csrf_exempt
+def chatgpt(request):
+    return render(request, 'chatgpt.html')
+
+@csrf_exempt
+def generate_response(request):
+    if request.method == 'POST':
+        user_input = request.POST.get('user_input')
+        response = generate_gpt2_response(user_input)
+        return JsonResponse({'response': response})
+    else:
+        return JsonResponse({'error': 'Invalid request method'})
+
+def generate_response(request):
+    if request.method == 'POST':
+
+        user_input = request.POST.get('user_input').lower()
+        if 'plantpulse' in user_input:
+            response_data = {'response': "Plantpulse is an innovative web-based forum designed to cater to the diverse needs and interests of plant enthusiasts, including gardeners, product purchasers, and experts! How can I assist you today?"}
+        elif 'products' in user_input:
+            response_data = {'response': "We offer a wide range of vegetable seed, medicinal plant, flowering plant, and more. Browse our collection online!"}
+        elif 'hi' in user_input:
+            response_data = {'response': "hellooo"}
+        elif 'servies' in user_input:
+            response_data = {'response': "Plantpulse provides e-commerce, consultations,  plant development assistance, knowledge sharing, and disease management services. "}
+        elif 'botanist' in user_input:
+            response_data = {'response': "Expert advice on plant care, pest management, and disease prevention."}
+        elif 'How do Botanists ensure plant quality?' in user_input:
+            response_data = {'response': "Utilizing advanced features such as automated disease detection "}
+        elif ' Horticulture Experts' in user_input:
+            response_data = {'response': "Assistance in plant development, tutorials, blogs, and live alerts."}
+        elif 'offers' in user_input or 'discounts' in user_input:
+            response_data = {'response': "Check out our latest offers and discounts on premium beauty products. Don't miss out on great deals!"}
+        elif 'order' in user_input or 'delivery' in user_input:
+            response_data = {'response': "For information about your order or delivery, please contact our customer support at support@beautecart.com."}
+        else:
+            
+            response_data = {'response': "Sorry Idk"}
+            # response = generate_gpt2_response(user_input)
+            # response_data = {'response': response}
+
+        return JsonResponse(response_data)
+    else:
+        return JsonResponse({'error': 'Invalid request method'})
+
+def generate_gpt2_response(user_input, max_length=100):
+    input_ids = tokenizer.encode(user_input, return_tensors="pt")
+    output = model.generate(input_ids, max_length=max_length, num_beams=5, no_repeat_ngram_size=2, top_k=50, top_p=0.95)
+    response = tokenizer.decode(output[0], skip_special_tokens=True)
+    return response

@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,29 +38,35 @@
             bottom: 0;
             width: 100%;
         }
+
+        /* Style for box */
+        .form-box {
+            border: 1px solid #ccc;
+            background: #a4bda0;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 
 <body>
     <header>
         <h1>Upload Video</h1>
-        <a href="{% url 'horticulture' %}"><img src="{% static 'images/log4.png' %}" alt="Cart" class="Cart-icon" style="margin-left: 1500px;"></a>
+        <a href="{% url 'horticulture' %}"><img src="{% static 'images/log4.png' %}" alt="Cart" class="Cart-icon"></a>
     </header>
 
     <div class="container">
         <div class="content">
-            <h2>Upload Video</h2>
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn btn-danger upload-button">Upload Video</button>
-            </form>
+            <div class="form-box">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-danger upload-button">Upload Video</button>
+                </form>
+            </div>
         </div>
     </div>
-
-    {% comment %} <footer>
-        <p>Footer Content Goes Here</p>
-    </footer> {% endcomment %}
 
     <!-- Include Bootstrap JavaScript (optional) -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

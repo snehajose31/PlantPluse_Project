@@ -5,6 +5,7 @@ from django.contrib.auth import views as auth_views
 from .views import change_password
 from .views import upload_video
 # from .views import display_videos
+from .views import chatgpt, generate_response
 urlpatterns = [
    
     #path('index/',views.index,name="index")
@@ -118,6 +119,11 @@ urlpatterns = [
     #video
     path('upload_video/', upload_video, name='upload_video'),
     path('display_videos/',views.display_videos, name='display_videos'),
+    
+    #chatgpt nrs
+
+    path('chatgpt/', chatgpt, name='chatgpt'),
+    path('generate-response/', generate_response, name='generate_response'),
 
 
  

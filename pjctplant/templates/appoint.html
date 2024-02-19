@@ -16,7 +16,7 @@
 
         /* Header styles */
         header {
-            background: linear-gradient(to right,#09241c,#158c35);
+            background: linear-gradient(to right, #09241c, #158c35);
             color: #fff;
             padding: 0.5px;
             text-align: center;
@@ -96,20 +96,24 @@
             background-color: #4CAF50;
             color: white;
         }
-        .logout-icon{
+
+        .logout-icon {
             margin-left: 1500px;
         }
+
         .delete-button {
             padding: 10px 15px;
-            background-color: #ff0000; /* Red color */
+            background-color: #ff0000;
+            /* Red color */
             color: #fff;
             border: none;
             border-radius: 4px;
             cursor: pointer;
         }
-    
+
         .delete-button:hover {
-            background-color: #ff3333; /* Lighter shade of red on hover */
+            background-color: #ff3333;
+            /* Lighter shade of red on hover */
         }
     </style>
     <title>Scheduling Form</title>
@@ -130,7 +134,7 @@
                 {% csrf_token %}
 
                 <label for="date">Date:</label>
-                <input type="date" name="date" required>
+                <input type="date" name="date" id="date" required>
 
                 <label for="time_slot">Time slot:</label>
                 <select name="time_slot" required>
@@ -181,12 +185,10 @@
                         <td>{{ schedule.date|date }}</td>
                         <td>{{ schedule.time_slot }}</td>
                         <td>
-                            
                             <form method="post" action="{% url 'delete_schedule' schedule.id %}">
                                 {% csrf_token %}
-                                <button type="submit"  class="delete-button" >Delete</button>
+                                <button type="submit" class="delete-button">Delete</button>
                             </form>
-                            {% comment %} <button type="button" onclick="deleteSchedule('{{ schedule.id }}')">Delete</button> {% endcomment %}
                         </td>
                     </tr>
                     {% endfor %}
@@ -199,6 +201,20 @@
     {% comment %} <footer>
         &copy; 2024 Botanist Schedule App
     </footer> {% endcomment %}
+
+    <script>
+        // JavaScript for date validation
+        const dateInput = document.getElementById('date');
+        dateInput.addEventListener('input', function () {
+            const selectedDate = new Date(this.value);
+            const currentDate = new Date();
+            if (selectedDate < currentDate) {
+                alert('Please select a future date.');
+                this.value = ''; // Clear the input field
+                this.focus(); // Keep focus on the input field
+            }
+        });
+    </script>
 </body>
 
 </html>

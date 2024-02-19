@@ -32,22 +32,27 @@
 
   <!-- Header -->
   <header class="mb-4">
-    <h1>Available Video</h1>
-    <a href="{% url 'hort' %}"><img src="{% static 'images/log4.png' %}" alt="Cart" class="Cart-icon" style="margin-left: 1500px;"></a>
+    <h1>Available Videos</h1>
+    <a href="{% url 'hort' %}"><img src="{% static 'images/log4.png' %}" alt="Cart" class="Cart-icon" style="margin-left: 1450px;"></a>
   </header>
 
   <!-- Video Display Section -->
   <div class="container">
-    {% comment %} <h2>Available Videos</h2> {% endcomment %}
-    {% for video in videos %}
-      <div class="mb-4">
-        <h3>{{ video.title }}</h3>
-        <video width="640" height="360" controls>
-          <source src="{{ video.video_file.url }}" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-      </div>
-    {% endfor %}
+    <div class="row">
+      {% for video in videos %}
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ video.title }}</h5>
+              <video width="100%" controls>
+                <source src="{{ video.video_file.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
   </div>
 
   <!-- Footer -->
