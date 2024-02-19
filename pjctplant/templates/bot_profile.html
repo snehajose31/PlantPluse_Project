@@ -177,7 +177,7 @@
                 <label for="specification">Specification:</label>
                 <select id="specification" name="specification" required>
                     <option value="plant_pathology" {% if user.profile.specification == 'plant_pathology' %}selected{% endif %}>Plant Pathology</option>
-                    <option value="plant_nutrition" {% if user.profile.specification == 'plant_nutrition' %}selected{% endif %}>Plant Nutrition</option>
+                    <option value="plant_pathology" {% if user.profile.specification == 'plant_pathology' %}selected{% endif %}>Plant Nutrition</option>
                     <option value="other" {% if user.profile.specification == 'other' %}selected{% endif %}>Other</option>
                 </select>
 

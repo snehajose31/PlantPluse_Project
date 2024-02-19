@@ -103,7 +103,8 @@
                 <strong>Ph:</strong> {{ botanist.phone_number }}
             </div>
             <div class="button-container">
-                <a href="{% url 'book-appointment' %}" class="book-now-button">Book Now</a>
+                <a href="{% url 'book-appointment' id=botanist.user_id%}" class="book-now-button">Book Now</a>
+                {% comment %} <a href="{% url 'book-appointment'  %}" class="book-now-button">Book Now</a> {% endcomment %}
             </div>
         </div>
         {% endfor %}

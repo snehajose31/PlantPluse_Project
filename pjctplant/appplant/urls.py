@@ -48,8 +48,8 @@ urlpatterns = [
     path('reghorti/',views.reghorti,name="reghorti"),
     path('consult/',views.consult,name="consult"),
     
-     path('horticulture/',views.horticulture,name="horticulture"),
-    path('book-appointment/',views.consultation_form, name='book-appointment'),
+    path('horticulture/',views.horticulture,name="horticulture"),
+    path('book-appointment/<int:id>/',views.consultation_form, name='book-appointment'),
     path('botdetail/',views.botdetail,name="botdetail"),
     # path('consultation/',views.consultation_form, name='consultation_form'),
     path('search_user/',views.search_user, name='search_user'),

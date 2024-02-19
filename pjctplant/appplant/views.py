@@ -538,12 +538,15 @@ from django.http import HttpResponse
 #         }
 
 #         return render(request, 'book-appointment.html', context)
-def consultation_form(request):
+def consultation_form(request,id):
+    schedule = DoctorSchedule.objects.filter(user_id = id)
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
     else :
         form = AppointmentForm()
-    context = {'form' :form}
+    context = {'form' :form,
+               'schedules' : schedule
+               }
     return render(request, 'book-appointment.html', context)
 
 def search_user(request):
