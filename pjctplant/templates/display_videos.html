@@ -26,6 +26,16 @@
             bottom: 0;
             width: 100%;
         }
+
+        /* Style for video cards */
+        .video-card {
+            height: auto;
+            overflow: hidden;
+        }
+
+        .video-card video {
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -41,10 +51,10 @@
     <div class="row">
       {% for video in videos %}
         <div class="col-md-4 mb-4">
-          <div class="card">
+          <div class="card video-card">
             <div class="card-body">
               <h5 class="card-title">{{ video.title }}</h5>
-              <video width="100%" controls>
+              <video controls>
                 <source src="{{ video.video_file.url }}" type="video/mp4">
                 Your browser does not support the video tag.
               </video>

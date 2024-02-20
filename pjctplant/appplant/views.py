@@ -1317,3 +1317,35 @@ def generate_gpt2_response(user_input, max_length=100):
     output = model.generate(input_ids, max_length=max_length, num_beams=5, no_repeat_ngram_size=2, top_k=50, top_p=0.95)
     response = tokenizer.decode(output[0], skip_special_tokens=True)
     return response
+
+
+
+#botanist list
+def user_list(request):
+    botprofiles = BotProfile.objects.all()
+    return render(request, 'user_list.html', {'botprofiles': botprofiles})
+
+def delete_user(request, username):
+    user = get_object_or_404(User, username=username)
+    user.delete()
+    return redirect('user_list')
+
+#video
+from .models import Video
+
+def video_list(request):
+    videos = Video.objects.all()
+    return render(request, 'videos.html', {'videos': videos})
+
+def delete_video(request, video_id):
+    video = get_object_or_404(Video, id=video_id)
+    if request.method == 'POST':
+        video.delete()
+        return redirect('video_list')
+    return redirect('video_list')  # Redirect to video list page
+
+from .models import Video
+
+def video_list(request):
+    videos = Video.objects.all()
+    return render(request, 'videos.html', {'videos': videos})

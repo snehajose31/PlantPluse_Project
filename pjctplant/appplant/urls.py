@@ -124,7 +124,12 @@ urlpatterns = [
 
     path('chatgpt/', chatgpt, name='chatgpt'),
     path('generate-response/', generate_response, name='generate_response'),
-
+    path('user-list/', views.user_list, name='user_list'),  # Use 'user_list' instead of 'user-list'
+    path('delete-user/<str:username>/', views.delete_user, name='delete_user'),
+    
+    path('videos/', views.video_list, name='video_list'),
+    path('videos/delete/<int:video_id>/',views.delete_video, name='delete_video'),
+    path('videos/', views.video_list, name='videos'),
 
  
     
