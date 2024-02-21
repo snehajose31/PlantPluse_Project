@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            background-size: cover;
+            background-image: url('/static/images/reg3.jpg');
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f4f4f4;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .schedule-form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .schedule-form input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        .schedule-form select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        .schedule-form button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .schedule-form button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <title>Reschedule</title>
+</head>
+
+<body>
+    <div class="form-container">
+        <form class="schedule-form" method="post" action="{% url 'reschedule' %}">
+            {% csrf_token %}
+
+            <label for="reschedule_schedule">Select schedule to reschedule:</label>
+            <select name="reschedule_schedule" required>
+                {% for schedule in doctor_schedules %}
+                <option value="{{ schedule.id }}">{{ schedule.date|date }} - {{ schedule.time_slot }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="new_date">New Date:</label>
+            <input type="date" name="new_date" id="new_date" required>
+
+            <label for="new_time_slot">New Time slot:</label>
+            <select name="new_time_slot" required>
+                <option value="08:00 AM - 08:30 AM">08:00 AM - 08:30 AM</option>
+                <option value="09:00 AM - 09:30 AM">09:00 AM - 09:30 AM</option>
+                <option value="10:00 AM - 10:30 AM">10:00 AM - 10:30 AM</option>
+                <option value="11:00 AM - 11:30 AM">11:00 AM - 11:30 AM</option>
+                <option value="12:00 PM - 12:30 PM">12:00 AM - 12:30 AM</option>
+                <option value="3:00 PM - 3:30 PM">3:00 PM - 3:00 PM</option>
+                <option value="4:00 PM - 4:30 PM">4:00 PM - 4:30 PM</option>
+                <option value="5:00 PM - 5:30 PM">5:00 PM - 5:30 PM</option>
+                <option value="6:00 PM - 6:30 PM">6:00 PM - 6:30 PM</option>
+                <option value="7:00 PM - 7:30 PM">7:00 PM - 7:30 PM</option>
+                <!-- Add more options as needed -->
+            </select>
+
+            <button type="submit">Reschedule</button>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -23,3 +23,9 @@ class VideoForm(forms.ModelForm):
     class Meta:
         model = Video
         fields = ['title','description','video_file']
+        
+from .models import Post       
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'content']

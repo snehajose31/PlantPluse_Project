@@ -15,7 +15,7 @@
         .header {
             background: linear-gradient(to right,#09241c,#158c35);
             color: white;
-            padding: 10px;
+            padding: 5px;
             text-align: center;
         }
 
@@ -77,15 +77,41 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        .header-left {
+            /* Adjust the styles for the left side of the header */
+            display: flex; /* Use flexbox to align items */
+            align-items: center; /* Center items vertically */
+            margin-left: 5px; /* Adjust the margin as needed */
+        }
+        
 
         .book-now-button:hover {
             background-color: #45a049;
+        }
+        .header-left button {
+            /* Add color to the button */
+            background-color: #4caf50; /* Green color */
+            color: white; /* Text color */
+            padding: 10px 20px; /* Padding */
+            border: none; /* Remove border */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Show pointer on hover */
+        }
+        
+        .header-left button:hover {
+            background-color: #45a049; /* Darker green color on hover */
         }
     </style>
 </head>
 
 <body>
     <div class="header">
+        <div class="header-left">
+            <a href="{% url 'botdetail' %}">
+                <button>Details</button>
+            </a>
+        </div>
+        
         <h1>Botanist List</h1>
     </div>
 

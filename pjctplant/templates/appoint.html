@@ -115,6 +115,16 @@
             background-color: #ff3333;
             /* Lighter shade of red on hover */
         }
+
+        .schedule-form button.reschedule-button:hover {
+            background-color: #ff8c00;
+            /* Lighter shade of orange on hover */
+        }
+
+        /* Hide the reschedule form initially */
+        #reschedule-form {
+            display: none;
+        }
     </style>
     <title>Scheduling Form</title>
 </head>
@@ -152,6 +162,10 @@
                 </select>
 
                 <button type="submit">Add Schedule</button>
+                <a href="#" onclick="toggleRescheduleForm()">
+                    <button type="button" class="reschedule-button">Reschedule</button>
+                </a>
+                
             </form>
         </div>
 
@@ -195,6 +209,40 @@
                 </tbody>
             </table>
         </div>
+        <br><br>
+        <!-- Reschedule Form -->
+        <div class="form-container" id="reschedule-form">
+            <form class="schedule-form" method="post" action="{% url 'reschedule' %}">
+                {% csrf_token %}
+
+                <label for="reschedule_schedule">Select schedule to reschedule:</label>
+                <select name="reschedule_schedule" required>
+                    {% for schedule in doctor_schedules %}
+                    <option value="{{ schedule.id }}">{{ schedule.date|date }} - {{ schedule.time_slot }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="new_date">New Date:</label>
+                <input type="date" name="new_date" id="new_date" required>
+
+                <label for="new_time_slot">New Time slot:</label>
+                <select name="new_time_slot" required>
+                    <option value="08:00 AM - 08:30 AM">08:00 AM - 08:30 AM</option>
+                    <option value="09:00 AM - 09:30 AM">09:00 AM - 09:30 AM</option>
+                    <option value="10:00 AM - 10:30 AM">10:00 AM - 10:30 AM</option>
+                    <option value="11:00 AM - 11:30 AM">11:00 AM - 11:30 AM</option>
+                    <option value="12:00 PM - 12:30 PM">12:00 AM - 12:30 AM</option>
+                    <option value="3:00 PM - 3:30 PM">3:00 PM - 3:00 PM</option>
+                    <option value="4:00 PM - 4:30 PM">4:00 PM - 4:30 PM</option>
+                    <option value="5:00 PM - 5:30 PM">5:00 PM - 5:30 PM</option>
+                    <option value="6:00 PM - 6:30 PM">6:00 PM - 6:30 PM</option>
+                    <option value="7:00 PM - 7:30 PM">7:00 PM - 7:30 PM</option>
+                    <!-- Add more options as needed -->
+                </select>
+
+                <button type="submit">Reschedule</button>
+            </form>
+        </div>
     </div>
 
     <!-- Footer Section -->
@@ -203,17 +251,27 @@
     </footer> {% endcomment %}
 
     <script>
-        // JavaScript for date validation
-        const dateInput = document.getElementById('date');
-        dateInput.addEventListener('input', function () {
-            const selectedDate = new Date(this.value);
-            const currentDate = new Date();
-            if (selectedDate < currentDate) {
-                alert('Please select a future date.');
-                this.value = ''; // Clear the input field
-                this.focus(); // Keep focus on the input field
+        // JavaScript function to toggle the visibility of the reschedule form
+        function toggleRescheduleForm() {
+            var rescheduleForm = document.getElementById("reschedule-form");
+            if (rescheduleForm.style.display === "none") {
+                rescheduleForm.style.display = "block";
+            } else {
+                rescheduleForm.style.display = "none";
             }
-        });
+        }
+         // JavaScript for date validation
+         const dateInput = document.getElementById('date');
+         dateInput.addEventListener('input', function () {
+             const selectedDate = new Date(this.value);
+             const currentDate = new Date();
+             if (selectedDate < currentDate) {
+                 alert('Please select a future date.');
+                 this.value = ''; // Clear the input field
+                 this.focus(); // Keep focus on the input field
+             }
+         });
+         
     </script>
 </body>
 

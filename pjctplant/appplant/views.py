@@ -1383,3 +1383,54 @@ def save_edits(request, video_id):
 
         # Redirect back to the videos page
         return redirect('videos')
+
+from .forms import PostForm
+
+def post_create(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('consult')
+    else:
+        form = PostForm()
+    return render(request, 'post_create.html', {'form': form})
+
+from .models import Post
+
+def post_list(request):
+    posts = Post.objects.all().order_by('-created_at')
+    return render(request, 'post_list.html', {'posts': posts})
+
+
+from .models import Post
+
+def post(request):
+    posts = Post.objects.all()
+    return render(request, 'post.html', {'posts': posts})
+
+def delete_post(request, post_id):
+    if request.method == 'POST':
+        post = Post.objects.get(pk=post_id)
+        post.delete()
+    return redirect('post')
+
+from .models import DoctorSchedule
+
+def reschedule(request):
+    if request.method == 'POST':
+        schedule_id = request.POST.get('reschedule_schedule')
+        new_date = request.POST.get('new_date')
+        new_time_slot = request.POST.get('new_time_slot')
+        
+        # Update the schedule with the new date and time slot
+        schedule = DoctorSchedule.objects.get(id=schedule_id)
+        schedule.date = new_date
+        schedule.time_slot = new_time_slot
+        schedule.save()
+        
+        return redirect('consult')  # Redirect to the home page or any other appropriate page after rescheduling
+        
+    # If not a POST request, render the reschedule form
+    doctor_schedules = DoctorSchedule.objects.all()
+    return render(request, 'reschedule.html', {'doctor_schedules': doctor_schedules})

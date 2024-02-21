@@ -133,8 +133,13 @@ urlpatterns = [
     path('edit/<int:video_id>/', views.edit_video, name='edit_video'),
     path('save_edits/<int:video_id>/', views.save_edits, name='save_edits'),
    
+    #blog
+    path('post/create/', views.post_create, name='post_create'),
+    path('post_list/', views.post_list, name='post_list'),
+    path('post/', views.post, name='post'),
+    path('delete/<int:post_id>/', views.delete_post, name='delete_post'),
+    path('reschedule/', views.reschedule, name='reschedule'),
 
- 
     
     path('reset_password/', auth_views.PasswordResetView.as_view(), name="reset_password"),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),
