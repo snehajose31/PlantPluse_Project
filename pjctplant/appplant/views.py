@@ -1349,3 +1349,37 @@ from .models import Video
 def video_list(request):
     videos = Video.objects.all()
     return render(request, 'videos.html', {'videos': videos})
+
+
+def edit_video(request, video_id):
+    # Fetch video details based on video_id and pass it to the template
+    video = Video.objects.get(id=video_id)
+    return render(request, 'edit_video.html', {'video': video})
+
+from django.core.files.base import ContentFile
+import os
+
+def save_edits(request, video_id):
+    if request.method == 'POST':
+        # Fetch the video instance
+        video = Video.objects.get(id=video_id)
+
+        # Update title and description
+        video.title = request.POST.get('title')
+        video.description = request.POST.get('description')
+
+        # Handle video file upload
+        if 'video_file' in request.FILES:
+            # Delete the existing video file if it exists
+            if video.video_file:
+                os.remove(video.video_file.path)
+            # Get the new video file from the request
+            video_file = request.FILES['video_file']
+            # Save the new video file
+            video.video_file.save(video_file.name, video_file)
+
+        # Save the updated video
+        video.save()
+
+        # Redirect back to the videos page
+        return redirect('videos')

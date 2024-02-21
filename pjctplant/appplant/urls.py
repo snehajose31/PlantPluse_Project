@@ -130,6 +130,9 @@ urlpatterns = [
     path('videos/', views.video_list, name='video_list'),
     path('videos/delete/<int:video_id>/',views.delete_video, name='delete_video'),
     path('videos/', views.video_list, name='videos'),
+    path('edit/<int:video_id>/', views.edit_video, name='edit_video'),
+    path('save_edits/<int:video_id>/', views.save_edits, name='save_edits'),
+   
 
  
     

@@ -83,15 +83,46 @@
             text-align: center;
             padding: 10px;
         }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #003300;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .back-button {
+            margin-right: auto;
+            padding: 5px 10px;
+            background-color: #003300;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+        }
+
+        h1 {
+            margin: 0 auto; /* Center the text */
+            
+        }
     </style>
 </head>
 
 <body>
 
     <div class="header">
+        <a href="javascript:history.back()" class="back-button">Back</a>
         <h1>Botanist Details</h1>
+        <div style="width: 310px;"></div>
     </div>
-
+    
+    
     <div class="content-container">
 
         <!-- Botanist 1 -->
