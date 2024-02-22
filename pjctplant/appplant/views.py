@@ -1434,3 +1434,41 @@ def reschedule(request):
     # If not a POST request, render the reschedule form
     doctor_schedules = DoctorSchedule.objects.all()
     return render(request, 'reschedule.html', {'doctor_schedules': doctor_schedules})
+
+# from .models import DoctorSchedule
+
+# def scheduling(request):
+#     if request.method == 'POST':
+#         date = request.POST.get('date')
+#         time_slots = request.POST.getlist('time_slots[]')
+
+#         # Save the schedule to the database
+#         for slot in time_slots:
+#             schedule = DoctorSchedule(date=date, time_slot=slot)
+#             schedule.save()
+
+#         return JsonResponse({'success': True})
+
+#     # Handle GET request if needed
+#     return render(request, 'scheduling_form.html', context={})
+
+
+from django.shortcuts import render, redirect
+from .models import DoctorSchedule
+from django.http import HttpResponse
+
+def scheduling_view(request):
+    if request.method == 'POST':
+        date = request.POST.get('date')
+        time_slots = request.POST.getlist('time_slot')
+        
+        # Create DoctorSchedule objects for each selected time slot
+        for time_slot in time_slots:
+            schedule = DoctorSchedule(date=date, time_slot=time_slot)
+            schedule.save()
+        
+        return HttpResponse('Schedules added successfully!')
+    else:
+        return HttpResponse('Invalid request method.')
+
+# Define your other views here...

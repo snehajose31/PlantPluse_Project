@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            background-size: cover;
+            background-image: url('/static/images/reg3.jpg');
+        }
+
+        /* Header styles */
+        header {
+            background: linear-gradient(to right, #09241c, #158c35);
+            color: #fff;
+            padding: 0.5px;
+            text-align: center;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #15421c;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f4f4f4;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .schedule-form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .schedule-form input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .schedule-form button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .schedules-table {
+            margin-top: 20px;
+        }
+
+        .schedules-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .schedules-table th,
+        .schedules-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .schedules-table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+    <title>Scheduling Form</title>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>Botanist Schedule</h1>
+    </header>
+
+    <div class="container">
+        <div class="form-container">
+            <form class="schedule-form" id="schedule-form" method="post" action="{% url 'scheduling' %}">
+                {% csrf_token %}
+
+                <label for="date">Date:</label>
+                <input type="date" name="date" id="date" required>
+
+                <!-- Select three time slots as checkboxes -->
+                <label>Time Slot 1:</label>
+                <input type="checkbox" name="time_slot" value="08:00 AM - 08:30 AM">
+                <label>08:00 AM - 08:30 AM</label><br>
+                <label>Time Slot 2:</label>
+                <input type="checkbox" name="time_slot" value="09:00 AM - 09:30 AM">
+                <label>09:00 AM - 09:30 AM</label><br>
+                <label>Time Slot 3:</label>
+                <input type="checkbox" name="time_slot" value="10:00 AM - 10:30 AM">
+                <label>10:00 AM - 10:30 AM</label><br>
+
+                <button type="button" onclick="addSchedule()">Add Schedule</button>
+            </form>
+        </div>
+
+        <!-- Display existing schedules in a table -->
+        <div class="schedules-table">
+            <h2>Existing Schedules</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Start Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for schedule in doctor_schedules %}
+                    <tr>
+                        <td>{{ schedule.date|date }}</td>
+                        <td>{{ schedule.time_slot }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript function to handle form submission and add schedules
+        function addSchedule() {
+            // Get the form element
+            var form = document.getElementById('schedule-form');
+
+            // Check if at least one checkbox is checked
+            var checkboxes = form.querySelectorAll('input[type="checkbox"]:checked');
+            if (checkboxes.length === 0) {
+                alert('Please select at least one time slot.');
+                return;
+            }
+
+            // Submit the form
+            form.submit();
+        }
+    </script>
+</body>
+
+</html>

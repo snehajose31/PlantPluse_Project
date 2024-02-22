@@ -139,6 +139,8 @@ urlpatterns = [
     path('post/', views.post, name='post'),
     path('delete/<int:post_id>/', views.delete_post, name='delete_post'),
     path('reschedule/', views.reschedule, name='reschedule'),
+    path('scheduling/', views.scheduling, name='scheduling'),
+
 
     
     path('reset_password/', auth_views.PasswordResetView.as_view(), name="reset_password"),
