@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Request Form</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        header {
+            background: linear-gradient(to right,#6fed64,#158c35);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .back-button {
+            float: right;
+            background: #546354;
+            margin-right: 20px;
+            margin-top: -60px;
+        }
+    </style>
+    <script>
+        function showAlert() {
+            alert("Service request submitted successfully!");
+        }
+    </script>
+</head>
+<body>
+    <header>Service Request Form</header>
+    <a class="btn btn-primary back-button" href="{% url 'home' %}">Back</a>
+
+    
+    {% if success_message %}
+        <script>
+            showAlert();
+        </script>
+    {% endif %}
+    
+    <div class="container">
+        <form method="POST" enctype="multipart/form-data" onsubmit="showAlert()">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Request</button>
+        </form>
+    </div>
+    
+    <!-- Bootstrap JS (Optional) - If you need Bootstrap JavaScript functionality -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

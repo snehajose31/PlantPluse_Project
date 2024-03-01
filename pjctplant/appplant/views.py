@@ -1472,3 +1472,113 @@ def scheduling_view(request):
         return HttpResponse('Invalid request method.')
 
 # Define your other views here...
+
+
+
+from .models import Service
+from .forms import ServiceForm
+
+def service_list(request):
+    services = Service.objects.all()
+    form = ServiceForm()
+    if request.method == 'POST':
+        form = ServiceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('service_list')
+    return render(request, 'service_list.html', {'services': services, 'form': form})
+
+
+def edit_service(request, service_id):
+    service = get_object_or_404(Service, id=service_id)
+    if request.method == 'POST':
+        form = ServiceForm(request.POST, instance=service)
+        if form.is_valid():
+            form.save()
+            return redirect('service_list')
+    else:
+        form = ServiceForm(instance=service)
+    return render(request, 'edit_service.html', {'form': form})
+
+def delete_service(request, service_id):
+    service = get_object_or_404(Service, id=service_id)
+    if request.method == 'POST':
+        service.delete()
+        return redirect('service_list')
+
+from .forms import ServiceRequestsForm
+
+from .forms import ServiceRequestsForm
+
+def service_request_form(request):
+    if request.method == 'POST':
+        form = ServiceRequestsForm(request.POST)
+        if form.is_valid():
+            service_request = form.save(commit=False)
+            service_request.user = request.user
+            service_request.save()
+            messages.success(request, 'Service request submitted successfully!')
+            return redirect('service_request_form')  # Redirect to the same page
+    else:
+        form = ServiceRequestsForm()
+    return render(request, 'service_request_form.html', {'form': form})
+
+
+from .models import ServiceRequests
+
+def user_req(request):
+    bot=BotProfile.objects.all()
+    print(bot)
+    service_requests = ServiceRequests.objects.all()
+    return render(request, 'user_req.html', {'service_requests': service_requests,'bot':bot})
+
+
+
+from django.http import JsonResponse
+from django.shortcuts import render
+from .models import BotProfile, ServiceRequest
+
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
+from .models import ServiceRequests, BotProfile
+
+def req_approve(request):
+    if request.method == 'POST':
+        botanist_id = request.POST.get('botanist')
+        service_id = request.POST.get('service')
+        user_id = request.POST.get('user')  # assuming user_id is passed in the request
+        print(service_id)
+
+        botanist = BotProfile.objects.get(id=botanist_id)
+        service_requests = ServiceRequests.objects.get(id=service_id)
+        service_requests.bot_profile = botanist
+        service_requests.status = 'pending'
+        service_requests.save()
+
+        # Fetch the associated user details
+        user_details = {
+            'username': service_requests.user.username,
+            'email': service_requests.user.email,
+            # add more user details as needed
+        }
+
+        return JsonResponse({'message': 'Service request approved successfully.', 'user_details': user_details})
+
+    # If the request method is GET, render the approval form
+    botanists = BotProfile.objects.all()
+    service_requests = ServiceRequests.objects.all()
+    return render(request, 'req_approve.html', {'bot': botanists, 'service_requests': service_requests})
+
+
+
+from .models import ServiceRequests
+
+def service_requests_view(request):
+    # Fetch all service requests
+    bot=BotProfile.objects.get(user=request.user)
+    print(bot)
+    service_requests = ServiceRequests.objects.filter(bot_profile_id=bot.id)
+    return render(request, 'service_requests.html', {'service_requests': service_requests})
+
+
+

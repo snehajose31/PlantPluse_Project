@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Requests</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Styling for header */
+        header {
+            background-color: green;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between; /* Align items to the start and end of the header */
+        }
+        /* Styling for footer */
+        footer {
+            background-color: green;
+            color: white;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        /* Styling for table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: green;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Service Requests</h1>
+        <!-- Back button -->
+        <a href="{% url 'consult' %}" class="btn btn-primary">Back</a>
+    </header>
+
+    <div class="container">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>User</th>
+                    <th>Service</th>
+                    <th>Status</th>
+                    <th>Action</th> <!-- New column for buttons -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for request in service_requests %}
+                <tr>
+                    <td>{{ request.user }}</td>
+                    <td>{{ request.service }}</td>
+                    <td>{{ request.status }}</td>
+                    <td>
+                        <!-- Approve button -->
+                        <button type="button" class="btn btn-success">Approve</button>
+                        <!-- Reject button -->
+                        <button type="button" class="btn btn-danger">Reject</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JS and jQuery (Optional, for Bootstrap components that require JavaScript) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -140,8 +140,16 @@ urlpatterns = [
     path('delete/<int:post_id>/', views.delete_post, name='delete_post'),
     path('reschedule/', views.reschedule, name='reschedule'),
     path('scheduling/', views.scheduling, name='scheduling'),
-
-
+    
+    path('services/', views.service_list, name='service_list'),
+    path('services/edit/<int:service_id>/',views.edit_service, name='edit_service'),
+    path('services/delete/<int:service_id>/', views.delete_service, name='delete_service'),
+    path('request/', views.service_request_form, name='service_request_form'),
+    # path('request/success/', views.service_request_success, name='service_request_success'),
+    path('user_req/', views.user_req, name='user_req'),
+    path('req-approve/', views.req_approve, name='req_approve'),
+    
+    path('service-requests/', views.service_requests_view, name='service_requests'),
     
     path('reset_password/', auth_views.PasswordResetView.as_view(), name="reset_password"),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),

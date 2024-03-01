@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Requests</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom styles */
+        .header {
+            background-color: #28a745; /* Green color */
+            color: #fff; /* Text color */
+            padding: 10px 0; /* Padding for top and bottom */
+            text-align: center; /* Center align text */
+            margin-bottom: 20px; /* Add margin below header */
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>Service Requests</h1>
+    </div>
+
+    <div class="container">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>User</th>
+                    <th>Service</th>
+                    <th>Status</th>
+                    <th>Actions</th> <!-- Add Actions column -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for request in service_requests %}
+                <tr>
+                    <td>{{ request.user.username }}</td>
+                    <td>{{ request.service }}</td>
+                    <td>{{ request.status }}</td>
+                    <td>
+                        <a href="{% url 'req_approve' %}" class="btn btn-primary">Add</a> <!-- Replace 'redirect_view_name' with your actual view name -->
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% comment %} {%for b in bot%}
+    {{b.user}}
+{% endfor %} {% endcomment %}
+    <!-- Bootstrap JS and jQuery (for optional features) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

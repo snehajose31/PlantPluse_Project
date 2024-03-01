@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service List</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* CSS for header and footer */
+        header {
+            background: linear-gradient(to right,#a6cf40,#0f2915);
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        .back-button {
+            position: absolute;
+            right: 10px; /* Change left to right */
+            top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="back-button-box">
+            <a href="{% url 'regibot' %}" class="back-button">Back</a>
+        </div>
+        <h1>Service List</h1>
+    </header>
+    <div class="container" style="margin-top: 60px;">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h2>Add New Service</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Add Service</button>
+                </form>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6 offset-md-3">
+                <h2>Service List</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for service in services %}
+                            <tr>
+                                <td>{{ service.name }}</td>
+                                <td>
+                                    <a href="{% url 'edit_service' service.id %}" class="btn btn-info btn-sm">Edit</a>
+                                    <form method="post" action="{% url 'delete_service' service.id %}" style="display: inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% comment %} <footer>
+        &copy; 2024 Your Company Name
+    </footer> {% endcomment %}
+
+    <!-- Include Bootstrap JS (optional, for Bootstrap features that require JavaScript) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Request Approval</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <header class="bg-dark text-light py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1>Service Request Approval</h1>
+                    
+                </div>
+                <div class="col-md-6 text-right"> <!-- This column aligns to the right -->
+                    <a href="{% url 'adminpanel' %}" class="btn btn-primary">Back</a>
+                </div>
+                
+            </div>
+        </div>
+    </header>
+
+    <div class="container mt-5">
+        <form id="approvalForm" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="botanist">Select Botanist:</label>
+                <select class="form-control" id="botanist" name="botanist">
+                    {% for b in bot %}
+                        <option value="{{ b.id }}">{{ b.user }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% for request in service_requests %}
+            <input type="hidden" value="{{ request.id}}" name="service">
+            {% endfor %}
+            <div class="form-group">
+                <label for="services">Service Request Details:</label>
+                <textarea class="form-control" id="services" name="services" rows="5" readonly>
+                    {% for request in service_requests %}
+                        User: {{ request.user.username }}
+                        Service: {{ request.service }}
+                        Status: {{ request.status }}
+                        
+                    {% endfor %}
+                </textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Approve</button>
+        </form>
+    </div>
+
+    {% comment %} <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    Footer Content Goes Here
+                </div>
+            </div>
+        </div>
+    </footer> {% endcomment %}
+
+    <!-- Bootstrap JS and jQuery (for optional features) -->
+    {% comment %} <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#approvalForm').submit(function(event) {
+                event.preventDefault(); // Prevent the form from submitting normally
+
+                // Serialize the form data
+                var formData = $(this).serialize();
+
+                // Send a POST request to the server
+                $.ajax({
+                    type: 'POST',
+                    
+                    data: formData,
+                    success: function(response) {
+                        // Show an alert message with the response message
+                        alert(response.message);
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        // Show an alert message if an error occurs
+                        alert('Error: ' + errorThrown);
+                    }
+                });
+            });
+        });
+    </script> {% endcomment %}
+</body>
+</html>

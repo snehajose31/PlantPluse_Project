@@ -327,3 +327,40 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+
+class Service(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+    
+    
+    
+class ServiceRequest(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('confirm', 'Confirmed'),
+        ('complete', 'Complete'),
+    ]
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+
+    def __str__(self):
+        return f"{self.user} - {self.service} - {self.status}"
+    
+class ServiceRequests(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    bot_profile = models.OneToOneField(BotProfile, on_delete=models.CASCADE, null=True, blank=True)
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('confirm', 'Confirmed'),
+        ('complete', 'Complete'),
+    ]
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+
+    def __str__(self):
+        return f"{self.user} - {self.service} - {self.status}"

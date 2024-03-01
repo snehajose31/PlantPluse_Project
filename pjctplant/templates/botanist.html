@@ -97,10 +97,32 @@
         <span>Greenery Guru Blog</span>
     </div>
     <div class="box" onclick="redirectTo('{% url 'home' %}')">
+        <img src="{% static 'images/servies.png' %}" alt="Chat with Doctor">
+        <span>Servies</span>
+    </div>
+</div>
+
+<div class="box-container">
+    <div class="box" onclick="redirectTo('{% url 'post_list' %}')">
+        <img src="{% static 'images/det1.png' %}" alt="Details">
+        <span>Greenery Guru Blog</span>
+    </div>
+    <div class="box" onclick="redirectTo('{% url 'home' %}')">
         <img src="{% static 'images/test.jpg' %}" alt="Chat with Doctor">
         <span>AgriAlert</span>
     </div>
 </div>
+
+{% comment %} <div class="box-container">
+    <div class="box" onclick="redirectTo('{% url 'post_list' %}')">
+        <img src="{% static 'images/det1.png' %}" alt="Details">
+        <span>Greenery Guru Blog</span>
+    </div>
+    <div class="box" onclick="redirectTo('{% url 'home' %}')">
+        <img src="{% static 'images/test.jpg' %}" alt="Chat with Doctor">
+        <span>AgriAlert</span>
+    </div>
+</div> {% endcomment %}
 
 <script>
     // Function to redirect to a specified page

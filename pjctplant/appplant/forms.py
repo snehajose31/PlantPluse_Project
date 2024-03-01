@@ -29,3 +29,22 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['title', 'content']
+        
+        
+# requests/forms.py
+
+
+from .models import Service
+
+class ServiceForm(forms.ModelForm):
+    class Meta:
+        model = Service
+        fields = ['name']
+        
+        
+from .models import ServiceRequests
+
+class ServiceRequestsForm(forms.ModelForm):
+    class Meta:
+        model = ServiceRequests
+        fields = ['service']
