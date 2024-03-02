@@ -3,50 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Service Request Form</title>
+    <title>Service Request Form!</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/htmx.org/dist/htmx.min.js"></script>
     <style>
         header {
-            background: linear-gradient(to right,#6fed64,#158c35);
+            background: linear-gradient(to right,#123615,#194f1f);
             color: white;
-            padding: 10px;
+            padding: 30px;
             text-align: center;
             font-size: 24px;
             margin-bottom: 20px;
         }
+        body {
+            background-image: url('/static/images/plant10.jpg'); /* Specify the path to your image */
+            background-size: cover; /* Ensure the image covers the entire background */
+            background-position: center; /* Center the background image */
+            background-repeat: no-repeat; /* Prevent the background image from repeating */
+        }
+        
         
         .back-button {
             float: right;
-            background: #546354;
+            background: #26d426;
             margin-right: 20px;
             margin-top: -60px;
         }
+        .sidebar h2 {
+            color: white; /* Text color */
+        }
+
+        /* Style for the sidebar */
+        .sidebar {
+            float: left;
+            width: 15%; /* Adjust the width as needed */
+            height: 270vh; /* Set the sidebar height to match the viewport height */
+            background: linear-gradient(to right,#1e5724,#162918);
+            padding: 20px;
+        }
+
+        /* Style for the sidebar boxes */
+        .sidebar-box {
+            background-color: #fff; /* White color */
+            padding: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .sidebar-box:hover {
+            background-color: #f0f0f0; /* Light gray on hover */
+        }
+
+        /* Style for the content box */
+        .content-box {
+            display: none; /* Initially hide all content boxes */
+            background-color: white; /* White background */
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .active {
+            display: block; /* Display the active content box */
+        }
     </style>
     <script>
-        function showAlert() {
-            alert("Service request submitted successfully!");
+        function displayContent(contentId) {
+            // Hide all content boxes
+            var contentBoxes = document.querySelectorAll('.content-box');
+            contentBoxes.forEach(function(box) {
+                box.classList.remove('active');
+            });
+
+            // Show the selected content box
+            var selectedContent = document.getElementById(contentId);
+            selectedContent.classList.add('active');
         }
     </script>
 </head>
 <body>
-    <header>Service Request Form</header>
-    <a class="btn btn-primary back-button" href="{% url 'home' %}">Back</a>
-
-    
-    {% if success_message %}
-        <script>
-            showAlert();
-        </script>
-    {% endif %}
-    
-    <div class="container">
-        <form method="POST" enctype="multipart/form-data" onsubmit="showAlert()">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Request</button>
-        </form>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar content goes here -->
+        <h2>Service Request</h2>
+        <!-- Boxes in columns -->
+        <div class="row">
+            <div class="col">
+                <div class="sidebar-box" onclick="displayContent('content1')">Service Request</div>
+                <div class="sidebar-box" onclick="displayContent('content2')">Soil pH</div>
+                <div class="sidebar-box" onclick="displayContent('content3')">Water pH</div>
+                <div class="sidebar-box" onclick="displayContent('content4')">Box 4</div>
+                <div class="sidebar-box" onclick="displayContent('content5')">Box 5</div>
+                <div class="sidebar-box" onclick="displayContent('content6')">Box 6</div>
+            </div>
+        </div>
     </div>
+
+    <!-- Main content -->
+    <div class="main-content" id="main-content">
+        <header></header>
+        <a class="btn btn-primary back-button" href="{% url 'home' %}">Back</a>
+    
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8"> <!-- Adjust the width as needed -->
+                    <!-- Content Boxes -->
+                    <div id="content1" class="content-box active">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-primary">Request</button>
+                        </form>
+                    </div>
+                    <div id="content2" class="content-box">
+                        <h2> Soil pH</h2>
+                        <p>The pH of soil refers to its acidity or alkalinity. Most plants prefer a pH between 6 and 7, which is slightly acidic to neutral. However, the ideal pH level can vary depending on the type of plant. Testing the soil pH is important for determining which plants will thrive in a particular environment.Soil pH, often referred to as the measure of soil acidity or alkalinity, is a critical factor influencing the health and productivity of plants. Understanding soil pH is essential for gardeners, farmers, and environmental scientists alike, as it directly impacts nutrient availability, microbial activity, and overall soil fertility.</p>
+                        <img src="/static/images/soilph2.png" alt="Image Description">
+                        <p>The pH scale ranges from 0 to 14, with 7 being neutral. Values below 7 indicate acidic soil, while values above 7 indicate alkaline soil. Soil pH is measured logarithmically, meaning each whole number change represents a tenfold change in acidity or alkalinity. For example, a soil with a pH of 5 is ten times more acidic than a soil with a pH of 6.</p>
+                        <p>Acidity or alkalinity affects the availability of essential nutrients to plants. In acidic soils, elements like aluminum, manganese, and iron can become more soluble and toxic to plants, while phosphorus, calcium, and magnesium become less available. Conversely, in alkaline soils, micronutrients such as iron, zinc, and manganese may become less accessible. Thus, maintaining an optimal pH level is crucial for ensuring plants receive the necessary nutrients for growth and development.</p>
+                        <h5> Soil pH influences</h5>
+                        <ul>
+                            <li>Amount and availability of plant nutrients; some plant nutrients are more available under acidic conditions, while others are more available under basic or alkaline conditions</li>
+                            <li>The activity of soil microorganisms responsible for residue decomposition</li>
+                            <li>Charges on soil organic matter and on some mineral surfaces, influencing the soil’s cation exchange capacity</li>
+                        </ul>
+                        <p>Soil pH also influences microbial activity in the soil. Soil microorganisms, such as bacteria and fungi, play vital roles in nutrient cycling, decomposition, and soil structure formation. Different microbial species thrive in specific pH ranges, with some preferring acidic conditions while others prefer alkaline conditions. Thus, maintaining a suitable pH level promotes a diverse and healthy soil microbiome, which in turn supports plant growth and resilience.</p>
+                        
+                        <div>
+                            <object width="560" height="315" data="https://www.youtube.com/watch?v=LBzzG6_hMNA">
+                                <param name="movie" value="https://www.youtube.com/watch?v=LBzzG6_hMNA">
+                                <param name="allowFullScreen" value="true">
+                            </object>
+                        </div>
+                        <p>In conclusion, soil pH is a fundamental aspect of soil health and plant nutrition. Understanding its importance and how it affects plant growth is essential for sustainable agriculture, gardening, and environmental stewardship. By managing soil pH effectively, growers can optimize nutrient availability, enhance microbial activity, and promote healthy and productive plant growth.</p>
+                        <img src="/static/images/soilph1.png" alt="Image Description">
+                    </div>
+                    
+                    <div id="content3" class="content-box">
+                        <h2>Water pH</h2>
+                        <p>Water pH refers to the measurement of the acidity or alkalinity of water. It is a crucial parameter in various fields, including environmental science, agriculture, and public health. The pH scale ranges from 0 to 14, with 7 being neutral. Values below 7 indicate acidic water, while values above 7 indicate alkaline (basic) water.
+                        <img src="/static/images/phwater3.jpg" alt="Image Description">
+                        <p>Maintaining the pH of water within a certain range is important for different purposes. In aquaculture, for example, the pH of water directly affects the health and growth of aquatic organisms. Most freshwater fish species prefer water with a pH range of 6.5 to 8.5. Fluctuations in pH can stress or harm fish, leading to diseases or reduced productivity.
+                        <img src="/static/images/phwater1.png" alt="Image Description">
+                        <p>In agriculture, irrigation water pH influences soil pH when used for watering crops. Water with high pH (alkaline water) can increase soil pH over time, affecting nutrient availability to plants. Acidic water, on the other hand, may lower soil pH, potentially causing aluminum toxicity in certain plants.</p>
+
+                        Monitoring the pH of drinking water is essential for ensuring its safety for human consumption. While most drinking water falls within the neutral range, variations can occur due to natural factors like mineral content or human activities such as pollution.
+                        The pH of water can be measured using pH meters, test kits, or indicators. Regular monitoring and adjustment of water pH are essential for maintaining water quality and ensuring its suitability for various uses. Additionally, understanding the factors influencing water pH helps in managing ecosystems, protecting aquatic life, and supporting human well-being.</p>
+                    </div>
+                    <div id="content4" class="content-box">
+                        <!-- Add your content for Box 3 here -->
+                    </div>
+                    <div id="content5" class="content-box">
+                        <!-- Add your content for Box 4 here -->
+                    </div>
+                    <div id="content6" class="content-box">
+                        <!-- Add your content for Box 5 here -->
+                    </div>
+                    
+                    <!-- End of Additional Content -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
     
     <!-- Bootstrap JS (Optional) - If you need Bootstrap JavaScript functionality -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
