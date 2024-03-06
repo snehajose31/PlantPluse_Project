@@ -104,7 +104,7 @@
 <body>
 
     <div class="card">
-        <img src="{% static 'images/bot_reg.jpg' %}" alt="{% trans 'User Image' %}">
+        {% comment %} <img src="{% static 'images/bot_reg.jpg' %}" alt="{% trans 'User Image' %}"> {% endcomment %}
         <div class="card-content">
             <h1>{% trans "User Details" %}</h1>
 
@@ -144,6 +144,10 @@
                 <li>
                     <label>{% trans "Gender" %}</label>
                     <p>{{ user.botprofile.gender }}</p>
+                </li>
+                <li>
+                    <label>{% trans "fee" %}</label>
+                    <p>{{ user.botprofile.fee }}</p>
                 </li>
             </ul>
 

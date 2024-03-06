@@ -306,9 +306,11 @@ class BotProfile(models.Model):
     gender = models.CharField(max_length=10)
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
-    specification = models.CharField(max_length=100) 
+    specification = models.CharField(max_length=100)
+    fee = models.DecimalField(max_digits=8, decimal_places=2) 
     
-    
+    def __str__(self):
+        return self.user.username  
     
 class Video(models.Model):
     title = models.CharField(max_length=255)
@@ -355,13 +357,24 @@ class ServiceRequest(models.Model):
 class ServiceRequests(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
-    bot_profile = models.OneToOneField(BotProfile, on_delete=models.CASCADE, null=True, blank=True)
+    bot_profile = models.ForeignKey(BotProfile, on_delete=models.CASCADE, null=True, blank=True)
     STATUS_CHOICES = [
         ('pending', 'Pending'),
         ('confirm', 'Confirmed'),
         ('complete', 'Complete'),
+        ('reject', 'reject'),
     ]
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
 
     def __str__(self):
         return f"{self.user} - {self.service} - {self.status}"
+    
+    
+class Book(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    doctor_schedule = models.ForeignKey(DoctorSchedule, on_delete=models.CASCADE)
+    method = models.CharField(max_length=50, choices=(("online", "Online"), ("offline", "Offline")))
+    reason = models.TextField()
+
+    def __str__(self):
+        return f"{self.user.username} - {self.doctor_schedule.date} - {self.doctor_schedule.time_slot}"

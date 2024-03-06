@@ -64,12 +64,18 @@
                     <td>{{ request.user }}</td>
                     <td>{{ request.service }}</td>
                     <td>{{ request.status }}</td>
+                    <!-- Inside the <td> where the buttons are located -->
                     <td>
-                        <!-- Approve button -->
-                        <button type="button" class="btn btn-success">Approve</button>
-                        <!-- Reject button -->
-                        <button type="button" class="btn btn-danger">Reject</button>
+                        <form action="{% url 'approve_request' request.id %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success">Approve</button>
+                        </form>
+                        <form action="{% url 'reject_request' request.id %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Reject</button>
+                        </form>
                     </td>
+
                 </tr>
                 {% endfor %}
             </tbody>

@@ -94,9 +94,9 @@
                 <div class="sidebar-box" onclick="displayContent('content1')">Service Request</div>
                 <div class="sidebar-box" onclick="displayContent('content2')">Soil pH</div>
                 <div class="sidebar-box" onclick="displayContent('content3')">Water pH</div>
-                <div class="sidebar-box" onclick="displayContent('content4')">Box 4</div>
-                <div class="sidebar-box" onclick="displayContent('content5')">Box 5</div>
-                <div class="sidebar-box" onclick="displayContent('content6')">Box 6</div>
+                <div class="sidebar-box" onclick="displayContent('content4')">Salt level</div>
+                <div class="sidebar-box" onclick="displayContent('content5')">Porosity Of Soil</div>
+                <div class="sidebar-box" onclick="displayContent('content6')">NPK Of Soil</div>
             </div>
         </div>
     </div>
@@ -106,17 +106,49 @@
         <header></header>
         <a class="btn btn-primary back-button" href="{% url 'home' %}">Back</a>
     
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8"> <!-- Adjust the width as needed -->
-                    <!-- Content Boxes -->
-                    <div id="content1" class="content-box active">
-                        <form method="POST" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            {{ form.as_p }}
-                            <button type="submit" class="btn btn-primary">Request</button>
-                        </form>
+                <div class="container">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div id="content1" class="content-box active">
+                                    <form id="serviceRequestForm" method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        {{ form.as_p }}
+                                        <button type="submit" class="btn btn-primary">Request</button>
+                                    </form>
+                                    <div id="submitted_details">
+                                        <br>
+                                        <h2>Submitted Service Requests</h2>
+                                        <table id="serviceRequestsTable" style="border-collapse: collapse; width: 100%;">
+                                            <thead>
+                                                <tr style="border-bottom: 1px solid #ddd;">
+                                                    
+                                                    <th style="border: 1px solid #ddd; padding: 8px;">Service</th>
+                                                    <th style="border: 1px solid #ddd; padding: 8px;">Bot Profile</th>
+                                                    <th style="border: 1px solid #ddd; padding: 8px;">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for request in sir %}
+                                                <tr style="border-bottom: 1px solid #ddd;">
+                                                    
+                                                    <td style="border: 1px solid #ddd; padding: 8px;">{{ request.service }}</td>
+                                                    <td style="border: 1px solid #ddd; padding: 8px;">{{ request.bot_profile }}</td>
+                                                    <td style="border: 1px solid #ddd; padding: 8px;">{{ request.status }}</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    
+
+                    
                     <div id="content2" class="content-box">
                         <h2> Soil pH</h2>
                         <p>The pH of soil refers to its acidity or alkalinity. Most plants prefer a pH between 6 and 7, which is slightly acidic to neutral. However, the ideal pH level can vary depending on the type of plant. Testing the soil pH is important for determining which plants will thrive in a particular environment.Soil pH, often referred to as the measure of soil acidity or alkalinity, is a critical factor influencing the health and productivity of plants. Understanding soil pH is essential for gardeners, farmers, and environmental scientists alike, as it directly impacts nutrient availability, microbial activity, and overall soil fertility.</p>
@@ -153,13 +185,68 @@
                         The pH of water can be measured using pH meters, test kits, or indicators. Regular monitoring and adjustment of water pH are essential for maintaining water quality and ensuring its suitability for various uses. Additionally, understanding the factors influencing water pH helps in managing ecosystems, protecting aquatic life, and supporting human well-being.</p>
                     </div>
                     <div id="content4" class="content-box">
-                        <!-- Add your content for Box 3 here -->
+                        <h2>Salt Level</h2>
+                        <p>The salt level in irrigation water plays a critical role in agricultural productivity and crop health.</p>
+                        <img src="/static/images/nacl1.jpg" alt="Image Description">
+                        <p> Effective irrigation management requires careful consideration of the salt content, typically measured by electrical conductivity (EC) or total dissolved solids (TDS) concentration. For most crops, maintaining a low salt level is crucial, with recommended EC levels below 0.7 decisiemens per meter (dS/m) or 700 parts per million (ppm) of TDS. Excessive salt in irrigation water can lead to soil salinity buildup, negatively impacting plant growth, water uptake, and overall yield. 
+                        </p><p>However, certain salt-tolerant crops, such as halophytes, can withstand higher salinity levels. Regular monitoring of soil salinity and water quality is essential to prevent salt accumulation in the root zone. Proper irrigation management practices, including leaching excess salts from the soil, are vital strategies to mitigate the adverse effects of salinity on crop production.
+                        </p><p> By carefully managing salt levels in irrigation water, farmers can optimize crop growth and ensure sustainable agricultural practices.</p>
+                        <h5>Remedies :</h5>
+                            <ul>
+                            
+                            <li><u>Water Management:</u> Implement efficient irrigation techniques such as drip irrigation or precision irrigation to apply water directly to the root zone of plants, minimizing evaporation and reducing salt buildup on the soil surface.</li>
+                            
+                            <li><u>Leaching:</u> Leaching involves applying excess water to flush out salts from the root zone. Controlled leaching can help reduce soil salinity over time. However, it's crucial to manage water application carefully to avoid waterlogging and nutrient leaching.</li>
+                            
+                            <li><u>Improving Drainage:</u> Enhance soil drainage to prevent water stagnation and salt accumulation. Installing drainage systems like subsurface drains or tile drains can help remove excess water and salts from the soil profile.</li>
+                            
+                            <li><u>Selecting Salt-Tolerant Crops:</u> Consider planting crops that are more tolerant to saline conditions. Some crops, known as halophytes, can thrive in salty environments and are suitable for cultivation in saline-affected areas.</li>
+                            
+                            <li><u>Soil Amendments:</u> Incorporate soil amendments such as gypsum (calcium sulfate) to displace sodium ions and improve soil structure, reducing the effects of salinity on crop growth.</li>
+                            
+                            <li><u>Desalination:</u> In areas with severe salinity issues, desalination technologies such as reverse osmosis or electrodialysis can be employed to treat saline water before irrigation. However, desalination can be costly and energy-intensive.</li>
+                            
+                            <li><u>Water Quality Monitoring:</u> Regularly monitor the quality of irrigation water and soil salinity levels to assess the effectiveness of management practices and make necessary adjustments.</li>
+                            <img src="/static/images/salt.jpg" alt="Image Description">
+                            
+                            
                     </div>
                     <div id="content5" class="content-box">
-                        <!-- Add your content for Box 4 here -->
+                        <h2>Porosity Of Soil</h2>
+                        <p>The porosity of soil refers to the volume of open spaces or voids within the soil matrix that can hold air and water. It is a critical factor influencing soil fertility, drainage, and plant growth. Porosity is typically expressed as a percentage of the total soil volume and can vary depending on factors such as soil texture, structure, compaction, and organic matter content.</p>
+                        <img src="/static/images/pore1.jpg" alt="Image Description">
+                        <h6>Soil porosity is important for several reasons:</h6>
+                        <ul>
+                            
+
+                        <li>Water Retention: Porous spaces in the soil allow water to infiltrate and be stored for plant uptake. Adequate porosity ensures proper water retention, reducing the risk of drought stress while also preventing waterlogging.</li>
+
+                        <li>Air Exchange: Porosity facilitates the movement of air within the soil, providing oxygen to plant roots and soil organisms. Oxygen is essential for root respiration and the aerobic metabolism of soil microbes.</li>
+
+                        <li>Root Growth: Soil porosity influences root penetration and development. Adequate porosity allows roots to expand easily through the soil profile, accessing water, nutrients, and anchorage.</li>
+
+                        <li>Nutrient Availability: Porous spaces serve as reservoirs for essential nutrients, allowing for their retention and exchange with plant roots. Optimal porosity promotes nutrient availability and uptake by plants.</li>
+
+                        <p>Soil porosity can be affected by various management practices such as tillage, compaction, and organic matter addition. Balancing porosity through appropriate soil management techniques is essential for maintaining soil health and promoting sustainable agriculture.</p>
+                        <img src="/static/images/pore2.png" alt="Image Description">
                     </div>
                     <div id="content6" class="content-box">
-                        <!-- Add your content for Box 5 here -->
+                        <h2>NPK</h2>
+                        <p>Nitrogen (N), phosphorus (P), and potassium (K) are the three primary macronutrients essential for plant growth and are commonly referred to as NPK. The ideal NPK requirements for soil depend on factors such as soil type, crop type, stage of growth, and nutrient availability. </p>
+                        <img src="/static/images/npk4.png" alt="Image Description">
+                    <ul>
+
+                    <li>Nitrogen (N): Nitrogen is crucial for plant growth, as it is a major component of chlorophyll, which is responsible for photosynthesis. It is also essential for the synthesis of proteins, enzymes, and nucleic acids. Nitrogen deficiency can result in stunted growth, yellowing of leaves (chlorosis), and reduced yield. Nitrogen is typically needed in relatively high quantities compared to phosphorus and potassium, especially during the early stages of plant growth.</li>
+
+                    <li>Phosphorus (P): Phosphorus plays a vital role in energy transfer within plants, as well as in the formation of DNA, RNA, and ATP (adenosine triphosphate). It is essential for root development, flowering, and fruiting. Phosphorus deficiency can lead to poor root growth, delayed maturity, and decreased yield. Phosphorus requirements are relatively high during the early stages of plant growth and decrease as the plant matures.</li>
+
+                    <li>Potassium (K): Potassium is involved in various physiological processes, including photosynthesis, protein synthesis, and water regulation. It helps improve plant tolerance to environmental stresses such as drought, disease, and cold temperatures. Potassium deficiency can result in weak stems, poor fruit quality, and increased susceptibility to pests and diseases. Potassium requirements are relatively high throughout the plant's growth stages.</li>
+
+                    <p>To determine the specific NPK requirements for your soil and crops, it is advisable to conduct a soil test. Soil testing can assess the nutrient levels in the soil and provide recommendations for fertilizer application based on the specific needs of the crops being grown. This allows for precise nutrient management, optimizing plant growth, and minimizing environmental impact.</p>
+                    </lu>
+
+                    <h5><u>Soil Sensor NPK Detection Meter JXBS-3001-NPK-RS</u></h5>
+                    <img src="/static/images/npk2.jpg" alt="Image Description">
                     </div>
                     
                     <!-- End of Additional Content -->
@@ -168,6 +255,33 @@
         </div>
     </div>
     
+    <script>
+        document.getElementById('serviceRequestForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            var formData = new FormData(this); // Get form data
+            fetch(window.location.href, { // Submit the form to the same URL
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Update the table with the new service request data
+                var tableBody = document.querySelector('#serviceRequestsTable tbody');
+                tableBody.innerHTML = ''; // Clear existing table rows
+                data.forEach(function(request) {
+                    var row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${request.user}</td>
+                        <td>${request.service}</td>
+                        <td>${request.bot_profile}</td>
+                        <td>${request.status}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
     
     <!-- Bootstrap JS (Optional) - If you need Bootstrap JavaScript functionality -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

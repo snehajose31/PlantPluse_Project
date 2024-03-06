@@ -47,4 +47,12 @@ from .models import ServiceRequests
 class ServiceRequestsForm(forms.ModelForm):
     class Meta:
         model = ServiceRequests
-        fields = ['service']
+        fields = ['service', 'bot_profile']
+        
+        
+from .models import Book
+
+class BookForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ['method', 'reason']

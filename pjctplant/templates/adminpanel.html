@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         /* Reset some default styles */
         body, html {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-			background-image: url('/static/images/dp4.jpg'); /* Add your background image URL here */
+            background-image: url('/static/images/dp4.jpg'); /* Add your background image URL here */
             background-size: cover;
         }
 
@@ -21,7 +23,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            background-color: rgb(0, 51, 0);
+            background: linear-gradient(to right,#123615,#3be016);
             padding-top: 20px;
             opacity: 0.9;
         }
@@ -35,7 +37,7 @@
         }
 
         .sidebar a:hover {
-            background-color: #8aeb8a;
+            background: linear-gradient(to right,#123615,#f8fc03);
         }
 
         /* Content Styles */
@@ -48,8 +50,8 @@
 
         /* Header Styles */
         .header {
-            background-color: rgb(0, 51, 0);
-            padding: 3px;
+            background: linear-gradient(to right,#123615,#3be016);
+            padding: 6px;
             color: white;
             text-align: right;
             width: 100%; /* Take the full width of the content area */
@@ -155,17 +157,16 @@
             <canvas id="userStatsChart"></canvas>
         </div>
 
+        <!-- Pie Chart for User Numbers -->
         <div class="small-box">
-            <h2>Add product Here</h2>
-            <a href="{% url 'addproduct' %}">Add Product</a>
-
- 
+            <h2>User Distribution</h2>
+            <canvas id="userPieChart"></canvas>
         </div>
+
         <!-- Recent Orders Small Box -->
         <div class="small-box">
             <h2>Recent Orders</h2>
             <p> new Arrivals</p>
-
         </div>
         
     </div>
@@ -184,13 +185,32 @@
                 borderWidth: 1
             }]
         };
-    
+
+        // Sample user distribution data (replace with your actual data)
+        var userDistributionData = {
+            labels: ["Active Users", "Inactive Users"],
+            datasets: [{
+                label: "User Distribution",
+                data: [80, 20], // Example data - 80 active, 20 inactive
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 99, 132, 0.5)'
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
         // Get the canvas element by id
-        var ctx = document.getElementById('userStatsChart').getContext('2d');
-    
-        // Create a new chart using Chart.js
-        var userStatsChart = new Chart(ctx, {
-            type: 'bar', // You can choose the chart type (bar, line, pie, etc.)
+        var ctx1 = document.getElementById('userStatsChart').getContext('2d');
+        var ctx2 = document.getElementById('userPieChart').getContext('2d');
+
+        // Create a new chart using Chart.js for user statistics
+        var userStatsChart = new Chart(ctx1, {
+            type: 'bar',
             data: userData,
             options: {
                 scales: {
@@ -199,6 +219,12 @@
                     }
                 }
             }
+        });
+
+        // Create a new chart using Chart.js for user distribution
+        var userPieChart = new Chart(ctx2, {
+            type: 'pie',
+            data: userDistributionData
         });
     </script>
 </body>

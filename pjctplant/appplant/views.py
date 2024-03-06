@@ -549,6 +549,28 @@ def consultation_form(request,id):
                }
     return render(request, 'book-appointment.html', context)
 
+from .forms import BookForm
+
+def confirm(request,id):
+    doctorSchedule = DoctorSchedule.objects.get(id =id)
+    if request.method == 'POST':
+        user = request.user
+        form = BookForm(request.POST)
+        if form.is_valid():
+            method =request.POST['method']
+            reason =request.POST['reason']
+            book_instance = Book.objects.create(
+                user=user,
+                doctor_schedule=doctorSchedule,
+                method=method,
+                reason=reason
+            )
+            
+            return redirect('home')  # Redirect to a success page after form submission
+    else:
+        form = BookForm()
+    return render(request, 'confirm.html', {'form': form,'doctorSchedule': doctorSchedule})
+
 def search_user(request):
     query = request.GET.get('query')
     if query:
@@ -1180,6 +1202,9 @@ def save_profile(request):
         user.profile.city = request.POST.get('city')
         user.profile.state = request.POST.get('state')
         user.profile.specification = request.POST.get('specification')  # Add this line
+        user.profile.fee = request.POST.get('fee')
+        print(request.POST.get('fee')) 
+        
         user.profile.save()
         return redirect('bot_profile')
     else:
@@ -1191,38 +1216,38 @@ def bot_profile(request):
 
 
 def save_profile1(request):
+    # print('///////////////////////////////////////////////////////////////////////////////')
     if request.method == 'POST':
-        try:
             # Retrieve the user's profile instance or create it if it doesn't exist
-            user_profil, created = BotProfile.objects.get_or_create(user=request.user)
+            user_profile =BotProfile.objects.get(user=request.user)
+            
 
             # Get form data from the request
-            phone_number = request.POST.get('phone_number')
+            phone_number = request.POST.get('phone-number')
             pincode = request.POST.get('pincode')
             address = request.POST.get('address')
             gender = request.POST.get('gender')
             city = request.POST.get('city')
             state = request.POST.get('state')
-            specification = request.POST.get('specification') 
-
+            specification = request.POST.get('specification')
+            fee = request.POST.get('fee')  # Add this line for the fee field
+            print( phone_number )
             # Update the user's profile fields
-            user_profil.phone_number = phone_number
-            user_profil.pincode = pincode
-            user_profil.address = address
-            user_profil.gender = gender
-            user_profil.city = city
-            user_profil.state = state
-            user_profil.specification = specification
+            user_profile.phone_number = phone_number
+            user_profile.pincode = pincode
+            user_profile.address = address
+            user_profile.gender = gender
+            user_profile.city = city
+            user_profile.state = state
+            user_profile.specification = specification
+            user_profile.fee = fee
 
             # Save the changes
-            user_profil.save()
+            user_profile.save()
 
             messages.success(request, 'Profile updated successfully.')
-            return redirect('user_profil')  # Redirect to the user profile page
-        except Exception as e:
-            messages.error(request, f'Error updating profile: {e}')
-
     return render(request, 'user_profil.html')
+
 
 
 def user_profil(request):
@@ -1511,6 +1536,7 @@ from .forms import ServiceRequestsForm
 from .forms import ServiceRequestsForm
 
 def service_request_form(request):
+    
     if request.method == 'POST':
         form = ServiceRequestsForm(request.POST)
         if form.is_valid():
@@ -1520,8 +1546,17 @@ def service_request_form(request):
             messages.success(request, 'Service request submitted successfully!')
             return redirect('service_request_form')  # Redirect to the same page
     else:
+        
         form = ServiceRequestsForm()
-    return render(request, 'service_request_form.html', {'form': form})
+    user=request.user
+    print(user.id)
+    sir=ServiceRequests.objects.filter(user=user)
+    context={
+        'form': form,
+        'sir':sir
+        }
+    
+    return render(request, 'service_request_form.html', context)
 
 
 from .models import ServiceRequests
@@ -1578,7 +1613,43 @@ def service_requests_view(request):
     bot=BotProfile.objects.get(user=request.user)
     print(bot)
     service_requests = ServiceRequests.objects.filter(bot_profile_id=bot.id)
+    print(service_requests)
+    print('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
     return render(request, 'service_requests.html', {'service_requests': service_requests})
+
+
+# views.py
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
+from django.urls import reverse
+from django.http import HttpResponse
+from .models import ServiceRequests
+
+def approve_request(request, request_id):
+    service_request = get_object_or_404(ServiceRequests, id=request_id)
+    # Logic to send an approval message to the user
+    service_request.status ='confirm'
+    service_request.save()
+    messages.success(request, 'Request approved. Message sent to the user.')
+    return redirect('service_requests')
+
+def reject_request(request, request_id):
+    service_request = get_object_or_404(ServiceRequests, id=request_id)
+    service_request.status ='reject'
+    service_request.save()
+    messages.warning(request, 'Request rejected. Message sent to the user.')
+    return redirect('service_requests')
+
+def agri(request):
+    return render(request,'agri.html')
+
+
+
+
+
+
+
+
 
 
 

@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     "key": "rzp_test_kObQawA2F9cpKp",
                     "amount": totalPrice * 100,
                     "currency": "INR",
-                    "name": "Ecommerce",
+                    "name": "PlantPulse",
                     "description": "Order Payment",
                     "order_id": data['order_id'],
                     "prefill": {

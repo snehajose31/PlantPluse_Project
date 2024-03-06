@@ -49,7 +49,9 @@ urlpatterns = [
     path('consult/',views.consult,name="consult"),
     
     path('horticulture/',views.horticulture,name="horticulture"),
+    
     path('book-appointment/<int:id>/',views.consultation_form, name='book-appointment'),
+    path('confirm/<int:id>/',views.confirm, name='confirm'),
     path('botdetail/',views.botdetail,name="botdetail"),
     # path('consultation/',views.consultation_form, name='consultation_form'),
     path('search_user/',views.search_user, name='search_user'),
@@ -141,6 +143,10 @@ urlpatterns = [
     path('reschedule/', views.reschedule, name='reschedule'),
     path('scheduling/', views.scheduling, name='scheduling'),
     
+    #sevies
+    path('approve/<int:request_id>/', views.approve_request, name='approve_request'),
+    path('reject/<int:request_id>/', views.reject_request, name='reject_request'),
+    
     path('services/', views.service_list, name='service_list'),
     path('services/edit/<int:service_id>/',views.edit_service, name='edit_service'),
     path('services/delete/<int:service_id>/', views.delete_service, name='delete_service'),
@@ -150,6 +156,9 @@ urlpatterns = [
     path('req-approve/', views.req_approve, name='req_approve'),
     
     path('service-requests/', views.service_requests_view, name='service_requests'),
+    
+    
+    path('agri/', views.agri, name='agri'),
     
     path('reset_password/', auth_views.PasswordResetView.as_view(), name="reset_password"),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),
