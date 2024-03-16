@@ -85,7 +85,7 @@
         <img src="{% static 'images/appo1.png' %}" alt="Book Appointment">
         <span>Book Appointment</span>
     </div>
-    <div class="box" onclick="redirectTo('{% url 'work' %}')">
+    <div class="box" onclick="redirectTo('{% url 'display_botanist_work' %}')">
         <img src="{% static 'images/work1.png' %}" alt="Work">
         <span>Work</span>
     </div>
@@ -103,8 +103,8 @@
 </div>
 
 <div class="box-container">
-    <div class="box" onclick="redirectTo('{% url 'post_list' %}')">
-        <img src="{% static 'images/det1.png' %}" alt="Details">
+    <div class="box" onclick="redirectTo('{% url 'upload_photo' %}')">
+        <img src="{% static 'images/po.png' %}" alt="Details">
         <span>Post</span>
     </div>
     <div class="box" onclick="redirectTo('{% url 'agri' %}')">

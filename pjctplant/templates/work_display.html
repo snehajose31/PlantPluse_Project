@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Botanist Works</title>
+</head>
+<body>
+    <h2>Botanist Works</h2>
+    {% for work in works %}
+        <div>
+            <h3>{{ work.title }}</h3>
+            <p>{{ work.description }}</p>
+            <p>By: {{ work.botanist_name }}</p>
+            <p>Created at: {{ work.created_at }}</p>
+            {% if work.photo %}
+                <img src="{{ work.photo.url }}" alt="{{ work.title }}">
+            {% endif %}
+        </div>
+    {% endfor %}
+</body>
+</html>

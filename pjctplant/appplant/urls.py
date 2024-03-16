@@ -156,6 +156,19 @@ urlpatterns = [
     path('req-approve/', views.req_approve, name='req_approve'),
     
     path('service-requests/', views.service_requests_view, name='service_requests'),
+    #work
+    
+    path('add_botanist_work/', views.add_botanist_work, name='add_botanist_work'),
+    path('display_botanist_work/', views.display_botanist_work, name='display_botanist_work'),
+    path('works/', views.botanist_work_list, name='botanist_work_list'),
+    path('work/<int:pk>/edit/', views.edit_work, name='edit_work'),
+    path('work/<int:pk>/delete/', views.delete_work, name='delete_work'),
+    path('upload/', views.upload_photo, name='upload_photo'),
+    path('photos/', views.customer_photos_view, name='customer_photos'),
+    #subsidy
+    path('subsidy/', views.subsidy, name='subsidy'),
+    path('subsidy_list/', views.subsidy_list, name='subsidy_list'),
+    path('items/', views.items, name='items'),
     
     
     path('agri/', views.agri, name='agri'),

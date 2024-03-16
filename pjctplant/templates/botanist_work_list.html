@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botanist Works</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Header styles */
+        header {
+            background: linear-gradient(to right,#164f25,#158c35);
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        /* Container styles */
+        .container {
+            margin-top: 80px; /* Adjusted to accommodate header height */
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Table styles */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th, .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        /* Button styles */
+        .btn {
+            padding: 8px 12px;
+            text-decoration: none;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Botanist Works</h1>
+        <a href="{% url 'consult'%}" class="btn btn-primary">Back</a>
+    </header>
+
+    <!-- Main content -->
+    <div class="container mt-4">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Preparation</th>
+                    <th>Photo</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for work in botanist_works %}
+                    <tr>
+                        <td>{{ work.title }}</td>
+                        <td>{{ work.description }}</td>
+                        <td>
+                            {% if work.photo %}
+                                <img src="{{ work.photo.url }}" alt="Photo" style="max-width: 100px;">
+                            {% else %}
+                                No photo available
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="{% url 'edit_work' work.pk %}" class="btn btn-primary">Edit</a>
+                                <a href="{% url 'delete_work' work.pk %}" class="btn btn-danger">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer -->
+    
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Botanist Works</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Header styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            background: linear-gradient(to right,#164f25,#158c35);
+            color: white; /* Text color for the header */
+            padding: 10px 20px; /* Padding for the header */
+        }
+
+        /* Container styles */
+        .work-container {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px; /* Adjust margin to create spacing between items */
+        }
+        /* Box styles */
+        .work-box {
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            padding: 10px; /* Adjust padding as needed */
+            margin-bottom: 20px;
+            width: calc(33.33% - 20px); /* Adjust width for 3 columns with spacing */
+            box-sizing: border-box;
+        }
+        /* Title styles */
+        .work-title {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+        /* Description styles */
+        .work-description {
+            margin-bottom: 10px;
+            
+        }
+        /* Image styles */
+        .work-image {
+            max-width: 100%; /* Ensure image resizes within container */
+            height: auto;
+            margin-bottom: 10px;
+        }
+        /* Botanist styles */
+        .work-botanist {
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <span>Botanist Works</span>
+        <a href="{% url 'home'%}" class="btn btn-light">Back</a>
+    </div>
+    
+    <div class="work-container">
+        {% for work in botanist_works %}
+        <div class="work-box">
+            <center><h2 class="work-title">{{ work.title }}</h2></center>
+            
+            {% if work.photo %}
+            <img src="{{ work.photo.url }}" alt="{{ work.title }}" class="work-image">
+            {% endif %}
+            <p class="work-description"><b>Preparation:</b> {{ work.description }}</p>
+            <p class="work-botanist"><b>Botanist:</b> {{ work.botanist.user.username }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

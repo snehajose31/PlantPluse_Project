@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Photos</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Style for the header */
+        header {
+            background: linear-gradient(to right,#164f25,#158c35);
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Style for the footer */
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Style for the container holding the photos */
+        .photo-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 80px; /* Adjust to make space for the header */
+            margin-bottom: 40px; /* Adjust to make space for the footer */
+        }
+
+        /* Style for each photo card */
+        .photo-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            width: 363px; /* Set the width of each photo card */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+            position: relative; /* Ensure relative positioning for absolute link button */
+        }
+
+        /* Style for the image inside the photo card */
+        .photo-img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Style for the link button */
+        .link-button {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #007bff;
+            color: #fff;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .btn-primary {
+            --bs-btn-color: #fff;
+            --bs-btn-bg: #146c43;
+            --bs-btn-border-color: #0d613b;
+            --bs-btn-hover-color: #fff;
+            --bs-btn-hover-bg: #146c43;
+            --bs-btn-hover-border-color: #146c43;
+            --bs-btn-focus-shadow-rgb: 49, 132, 253;
+            --bs-btn-active-color: #fff;
+            --bs-btn-active-bg: #146c43;
+            --bs-btn-active-border-color: #146c43;
+            --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+            --bs-btn-disabled-color: #fff;
+            --bs-btn-disabled-bg: #146c43;
+            --bs-btn-disabled-border-color: #146c43;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Customer Photos</h1>
+        <div>
+            <a href="{% url 'consult'%}" class="btn btn-primary">Back</a>
+        </div>
+    </header>
+
+    <div class="photo-container">
+        {% for photo in photos %}
+        <div class="photo-card">
+            {% comment %} <h2>Photo Details</h2> {% endcomment %}
+            <img src="{{ photo.photo.url }}" alt="Customer Photo" class="photo-img">
+            <p>Submitted by: {{ photo.submitted_by.username }}</p>
+            <p>Submitted at: {{ photo.submitted_at }}</p>
+            <!-- <p>Chosen Botanist: {{ photo.chosen_botanist.name }}</p> -->
+            <br><br>
+            <a href=" https://www.instagram.com/plantpulse2024?utm_source=qr&igsh=anpoeHliOTBvbXNh" class="link-button">Share with Instagram</a>
+        </div>
+        {% empty %}
+        <p>No photos available.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Bootstrap JS (Optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

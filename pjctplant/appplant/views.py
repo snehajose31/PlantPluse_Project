@@ -1643,13 +1643,127 @@ def reject_request(request, request_id):
 def agri(request):
     return render(request,'agri.html')
 
+#work
+
+# from django.shortcuts import render, redirect
+# from .forms import BotanistWorksForm
+# from .models import BotanistWorks
+
+# def add_work(request):
+#     if request.method == 'POST':
+#         form = BotanistWorksForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('work_display')  # Redirect to a success page after form submission
+#     else:
+#         form = BotanistWorksForm()
+#     return render(request, 'add_work.html', {'form': form})
+
+# def work_display(request):
+#     return render(request, 'work_display.html')
+
+from django.shortcuts import render, redirect
+from .forms import BotanistWorForm
+
+def add_botanist_work(request):
+    if request.method == 'POST':
+        form = BotanistWorForm(request.POST, request.FILES)
+        if form.is_valid():
+            work = form.save(commit=False)
+            work.botanist = request.user.botprofile  # Assuming user is authenticated and has a botprofile
+            work.save()
+            return redirect('consult')  # Redirect to a success page after successful form submission
+    else:
+        form = BotanistWorForm()
+    return render(request, 'add_botanist_work.html', {'form': form})
 
 
 
 
+from django.shortcuts import render
+from .models import BotanistWorkk
+
+def display_botanist_work(request):
+    botanist_works = BotanistWorkk.objects.all()
+    return render(request, 'display_botanist_work.html', {'botanist_works': botanist_works})
+
+# views.py
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import BotanistWorkk
+from .forms import BotanistWorForm
+
+def botanist_work_list(request):
+    botanist_works = BotanistWorkk.objects.all()
+    return render(request, 'botanist_work_list.html', {'botanist_works': botanist_works})
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import BotanistWorkk
+from .forms import BotanistWorForm
+
+def edit_work(request, pk):
+    work = get_object_or_404(BotanistWorkk, pk=pk)
+    if request.method == 'POST':
+        form = BotanistWorForm(request.POST, request.FILES, instance=work)
+        if form.is_valid():
+            form.save()
+            return redirect('botanist_work_list')  # Redirect to the list of works
+    else:
+        form = BotanistWorForm(instance=work)
+    return render(request, 'edit_work.html', {'form': form})
+
+def delete_work(request, pk):
+    work = get_object_or_404(BotanistWorkk, pk=pk)
+    if request.method == 'POST':
+        work.delete()
+        return redirect('botanist_work_list')  # Redirect to the list of works
+    # If the request method is not POST (e.g., GET), simply redirect to the list of works
+    return redirect('botanist_work_list')
 
 
+# views.py
+
+from django.shortcuts import render, redirect
+from .models import CustomerPhoto
+from .forms import CustomerPhotoForm
+
+def upload_photo(request):
+    if request.method == 'POST':
+        form = CustomerPhotoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')  # Redirect to success page or wherever you want
+    else:
+        form = CustomerPhotoForm()
+    return render(request, 'upload_photo.html', {'form': form})
+
+from .models import CustomerPhoto
+
+def customer_photos_view(request):
+    photos = CustomerPhoto.objects.all()
+    return render(request, 'customer_photos.html', {'photos': photos})
 
 
+def subsidy(request):
+    return render(request,'subsidy.html')
 
+from django.shortcuts import render, redirect
+from .forms import ItemForm
 
+def subsidy_list(request):
+    if request.method == 'POST':
+        form = ItemForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('horticulture')  # Redirect to the subsidy list view after saving the item
+        # If the form is not valid, render the create_item.html template with the form containing validation errors
+
+    form = ItemForm()
+    return render(request, 'subsidy_list.html', {'form': form})
+
+from django.shortcuts import render
+from .models import Itemss
+
+def items(request):
+    # Fetch items from the Itemss model
+    items = Itemss.objects.all()
+    return render(request, 'items.html', {'items': items})

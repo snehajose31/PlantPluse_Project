@@ -56,3 +56,34 @@ class BookForm(forms.ModelForm):
     class Meta:
         model = Book
         fields = ['method', 'reason']
+        
+        
+from .models import BotanistWorks
+
+class BotanistWorksForm(forms.ModelForm):
+    class Meta:
+        model = BotanistWorks
+        fields = [ 'title', 'description', 'photo']
+        
+from .models import BotanistWorkk
+
+class BotanistWorForm(forms.ModelForm):
+    class Meta:
+        model = BotanistWorkk
+        fields = ['title', 'description', 'photo']
+        
+        
+from .models import CustomerPhoto
+
+class CustomerPhotoForm(forms.ModelForm):
+    class Meta:
+        model = CustomerPhoto
+        fields = ['photo', 'submitted_by', 'chosen_botanist']
+        
+        
+from .models import Itemss
+
+class ItemForm(forms.ModelForm):
+    class Meta:
+        model = Itemss
+        fields = ['title', 'link', 'image']

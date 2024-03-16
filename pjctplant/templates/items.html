@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Items List</title>
+    <style>
+        /* Global styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-size: cover;
+            background-image: url('/static/images/ii.jpg');
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .header {
+            background: linear-gradient(to right,#164f25,#158c35);
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .back-button {
+            padding: 5px 10px;
+            background-color: #113713;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: auto; /* Move the button to the right */
+        }
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        /* Main content styles */
+        .content {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap; /* Ensure items wrap to the next line */
+            
+            gap: 20px; /* Add spacing between items */
+        }
+        .item-box {
+            border: 1px solid #ccc;
+            padding: 5px; /* Reduced padding */
+            width: calc(33.33% - 20px); /* Adjust width for 3 items per row with spacing */
+            max-width: 800px; /* Maximum width for each item */
+            height: 350px; /* Adjust the height as needed */
+            box-sizing: border-box; /* Include padding and border in the width */
+        }
+        .item-box img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            max-height: 150px; /* Adjust the max-height of the image */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Subsidies</h1>
+            <button class="back-button" onclick="history.back()">Back</button>
+        </div>
+        <div class="content">
+            {% for item in items %}
+                <div class="item-box">
+                    <center><h2>{{ item.title }}</h2></center>
+                    <img src="{{ item.image.url }}" alt="{{ item.title }}">
+                    <p><b>Link:</b> <a href="{{ item.link }}" target="_blank">{{ item.link }}</a></p>
+                </div>
+            {% endfor %}
+        </div>
+        
+    </div>
+</body>
+</html>

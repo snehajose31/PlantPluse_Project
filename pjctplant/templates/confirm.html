@@ -114,6 +114,9 @@
             <label for="doctor_name">Doctor Email:</label>
             <input type="text" id="doctor_name" name="doctor_name" value="{{ doctorSchedule.user }}" readonly>
 
+            <label for="doctor_fee">Doctor Fee:</label>
+            <input type="text" id="doctor_fee" name="doctor_fee" value="{{ BotProfile.fee }}" readonly>
+
             {{ form.as_p }}
 
             <button type="submit" class="btn btn-primary"> Payment</button>

@@ -375,6 +375,49 @@ class Book(models.Model):
     doctor_schedule = models.ForeignKey(DoctorSchedule, on_delete=models.CASCADE)
     method = models.CharField(max_length=50, choices=(("online", "Online"), ("offline", "Offline")))
     reason = models.TextField()
+    
 
     def __str__(self):
         return f"{self.user.username} - {self.doctor_schedule.date} - {self.doctor_schedule.time_slot}"
+    
+class BotanistWork(models.Model):
+    botanist_name = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    photo = models.ImageField(upload_to='botanist_work_photos/')
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    
+class BotanistWorks(models.Model):
+   
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    photo = models.ImageField(upload_to='botanist_work_photos/')
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+class BotanistWorkk(models.Model):
+    botanist = models.ForeignKey(BotProfile, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    photo = models.ImageField(upload_to='botanist_work/', blank=True)
+    
+    def __str__(self):
+        return f"{self.botanist.user.username}'s Work: {self.title}"
+
+class CustomerPhoto(models.Model):
+    photo = models.ImageField(upload_to='customer_photos/')
+    submitted_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+    chosen_botanist = models.ForeignKey(BotProfile, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'Photo submitted by {self.submitted_by.username} at {self.submitted_at}'
+   
+    
+class Itemss(models.Model):
+    title = models.CharField(max_length=100)
+    link = models.URLField()
+    image = models.ImageField(upload_to='images1/')
+
+    def __str__(self):
+        return self.title

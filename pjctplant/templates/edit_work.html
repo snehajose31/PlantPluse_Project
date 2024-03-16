@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Botanist Work</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Add your CSS styles here */
+        .container {
+            margin-top: 40px;
+            max-width: 600px;
+        }
+        .btn {
+            margin-top: 10px;
+        }
+        header {
+            background: linear-gradient(to right,#164f25,#158c35);
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between; /* Align items horizontally */
+            align-items: center; /* Align items vertically */
+        }
+        h1{
+            text-align:left;
+            margin: 0; /* Remove default margin */
+        }
+        .btn-secondary {
+            color: #fff;
+            background-color: #063d13;
+            border-color: #0c4e1b;
+        }
+    </style>
+</head>
+<body>
+    <!-- Add your header here -->
+    <header>
+        <h1>Edit Botanist Work</h1>
+        <a href="{% url 'consult' %}" class="btn btn-secondary">Back</a>
+    </header>
+
+    <div class="container">
+        <!-- Your form content -->
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

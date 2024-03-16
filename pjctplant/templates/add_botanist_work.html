@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Botanist Work</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        header, footer {
+            background: linear-gradient(to right,#164f25,#158c35);
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        h1 {
+            text-align: left;
+            margin: 0;
+        }
+        .btn-primary {
+            color: #fff;
+            background-color: #65d94f;
+            border-color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <header class="mb-4">
+        <h1>Add Botanist Work</h1>
+        {% comment %} <a href="{% url 'consult' %}" class="btn btn-primary">Back</a> {% endcomment %}
+        <a href="{% url 'botanist_work_list' %}" class="btn btn-primary">setting</a>
+    </header>
+    <main class="container">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </main>
+
+    <!-- Bootstrap JS and jQuery (optional, but required for some Bootstrap features) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function redirectToOtherPage() {
+            window.location.href = '/other_page'; // Replace "/other_page" with the URL of the desired page
+        }
+    </script>
+</body>
+</html>
