@@ -375,7 +375,8 @@ class Book(models.Model):
     doctor_schedule = models.ForeignKey(DoctorSchedule, on_delete=models.CASCADE)
     method = models.CharField(max_length=50, choices=(("online", "Online"), ("offline", "Offline")))
     reason = models.TextField()
-    
+    fees = models.ForeignKey(BotProfile, on_delete=models.CASCADE, null=True, default=None)
+
 
     def __str__(self):
         return f"{self.user.username} - {self.doctor_schedule.date} - {self.doctor_schedule.time_slot}"

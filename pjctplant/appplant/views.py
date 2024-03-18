@@ -1734,7 +1734,8 @@ def upload_photo(request):
             return redirect('home')  # Redirect to success page or wherever you want
     else:
         form = CustomerPhotoForm()
-    return render(request, 'upload_photo.html', {'form': form})
+    user= request.user
+    return render(request, 'upload_photo.html', {'form': form,'user':user})
 
 from .models import CustomerPhoto
 
