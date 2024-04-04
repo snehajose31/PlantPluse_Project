@@ -169,7 +169,12 @@ urlpatterns = [
     path('subsidy/', views.subsidy, name='subsidy'),
     path('subsidy_list/', views.subsidy_list, name='subsidy_list'),
     path('items/', views.items, name='items'),
-    
+
+    path('order_status/', views.order_status, name='order_status'),
+    path('ordercancellation/<int:order_id>/', views.order_cancellation, name='order_cancellation'),
+    path('sub_sett/', views.sub_sett, name='sub_sett'),
+    path('edit_item/<int:item_id>/', views.edit_item, name='edit_item'),
+    path('delete_item/<int:item_id>/', views.delete_item, name='delete_item'),
     
     path('agri/', views.agri, name='agri'),
     

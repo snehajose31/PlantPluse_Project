@@ -553,6 +553,7 @@ from .forms import BookForm
 
 def confirm(request,id):
     doctorSchedule = DoctorSchedule.objects.get(id =id)
+    profile = BotProfile.objects.get(user = doctorSchedule.user)
     if request.method == 'POST':
         user = request.user
         form = BookForm(request.POST)
@@ -563,13 +564,15 @@ def confirm(request,id):
                 user=user,
                 doctor_schedule=doctorSchedule,
                 method=method,
-                reason=reason
+                reason=reason,
+                fees = profile
             )
             
             return redirect('home')  # Redirect to a success page after form submission
     else:
         form = BookForm()
-    return render(request, 'confirm.html', {'form': form,'doctorSchedule': doctorSchedule})
+    return render(request, 'confirm.html', {'form': form,'doctorSchedule': doctorSchedule ,
+                                            'profile':profile})
 
 def search_user(request):
     query = request.GET.get('query')
@@ -1768,3 +1771,94 @@ def items(request):
     # Fetch items from the Itemss model
     items = Itemss.objects.all()
     return render(request, 'items.html', {'items': items})
+
+
+
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def order_status(request):
+    orders = Order.objects.filter(user=request.user)
+    return render(request, 'order_status.html', {'orders': orders})
+
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import Order
+
+def cancel_order(request, order_id):
+    if request.method == 'POST':
+        order = Order.objects.get(id=order_id)
+        if order.payment_status:
+            order.cancelled = True
+            order.save()
+            messages.success(request, 'Order cancelled successfully.')
+        else:
+            messages.error(request, 'Cannot cancel unpaid orders.')
+    return redirect('order_status')  # Redirect to the order status page
+
+
+
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from .models import Order
+
+def order_cancellation(request, order_id):
+    order = get_object_or_404(Order, pk=order_id)
+
+    if request.method == 'POST':
+        # Assuming you handle the cancellation logic here
+        order.cancel()  # You may have a method like cancel() in your Order model
+        return JsonResponse({'success': True})
+    else:
+        return JsonResponse({'success': False, 'message': 'Invalid request method'})
+
+
+
+from django.shortcuts import render
+from django.core.exceptions import ObjectDoesNotExist
+from .models import Order
+
+def order_status(request):
+    orders = Order.objects.filter(user=request.user)
+    return render(request, 'order_status.html', {'orders': orders})
+
+
+from django.shortcuts import render
+from .models import Itemss
+
+def sub_sett(request):
+    items = Itemss.objects.all()
+    return render(request, 'sub_sett.html', {'items': items})
+
+# views.py
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Itemss
+from .forms import ItemForm  # Assuming you have an ItemForm defined in forms.py
+
+def edit_item(request, item_id):
+    item = get_object_or_404(Itemss, pk=item_id)
+    if request.method == 'POST':
+        form = ItemForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect('sub_sett')  # Redirect to the item list page
+    else:
+        form = ItemForm(instance=item)
+    return render(request, 'edit_item.html', {'form': form})
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
+from .models import Itemss
+
+def delete_item(request, item_id):
+    item = get_object_or_404(Itemss, pk=item_id)
+    
+    if request.method == 'POST':
+        item.delete()
+        return JsonResponse({'message': 'Item deleted successfully'})
+    
+    return JsonResponse({'error': 'Invalid request'})
+
+

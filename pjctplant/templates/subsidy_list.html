@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Item</title>
+    <title>Add Subsidies</title>
     <style>
         /* Global styles */
         body {
@@ -61,7 +61,8 @@
             padding: 10px 20px;
             cursor: pointer;
         }
-        .back-button {
+        .back-button,
+        .setting-button {
             background-color: #4CAF50;
             color: white;
             border: none;
@@ -76,7 +77,10 @@
     <div class="container">
         <div class="header">
             <h1>Add Subsidies</h1>
-            <button class="back-button" onclick="history.back()">Back</button> <!-- Back button on the right side -->
+            <div>
+                <a href="{% url 'sub_sett' %}" class="setting-button">Setting</a>
+                <button class="back-button" onclick="history.back()">Back to</button>
+            </div>
         </div>
         <div class="content">
             <div class="form-container">

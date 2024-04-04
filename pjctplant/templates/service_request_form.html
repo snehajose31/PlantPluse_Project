@@ -113,8 +113,14 @@
                                 <div id="content1" class="content-box active">
                                     <form id="serviceRequestForm" method="POST" enctype="multipart/form-data">
                                         {% csrf_token %}
-                                        {{ form.as_p }}
                                         
+                                        {{form.service.label}}
+                                        <br>
+                                        {{form.service}}
+                                        <br>
+                                        <label>Botanist</label>
+                                        {{form.bot_profile}}
+                                        <br>
                                         <button type="submit" class="btn btn-primary">Request</button>
                                     </form>
                                     <div id="submitted_details">

@@ -48,6 +48,10 @@ class ServiceRequestsForm(forms.ModelForm):
     class Meta:
         model = ServiceRequests
         fields = ['service', 'bot_profile']
+        labels = {
+            'service': 'Service:',
+            'bot_profile': 'Botanist:'
+        }
         
         
 from .models import Book
@@ -86,4 +90,4 @@ from .models import Itemss
 class ItemForm(forms.ModelForm):
     class Meta:
         model = Itemss
-        fields = ['title', 'link', 'image']
+        fields = ['title', 'link', 'image', 'description']

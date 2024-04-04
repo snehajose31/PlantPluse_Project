@@ -129,10 +129,12 @@
                     {% for schedule in doctor_schedules %}
                     <tr>
                         <td>{{ schedule.date|date }}</td>
+                       {{schedule.time_slot}}
                         <td>{{ schedule.time_slot }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
+                {{schedule.time_slot}}
             </table>
         </div>
     </div>

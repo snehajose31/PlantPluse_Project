@@ -33,11 +33,17 @@
         h1 {
             text-align: right;
         }
+        
+        .details-box {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <header>
-        
         <h1>FeedBack</h1>
         <a href="{% url 'home' %}" class="btn btn-primary">Back</a>
         <!-- Add any additional header content here -->
@@ -48,13 +54,24 @@
     </nav>
 
     <div class="container">
-        {% comment %} <h1>Upload Customer Photo</h1> {% endcomment %}
-        <form action="{% url 'upload_photo' %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            
-            <input type="submit" value="Upload" class="btn btn-primary">
-        </form>
+        <div class="details-box">
+            {% comment %} <h1>Upload Customer Photo</h1> {% endcomment %}
+            <form action="{% url 'upload_photo' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{  form.photo.label}}
+                {{  form.photo}}
+                <br><br>
+                <label>Submitted by</label>
+                <select name="submitted_by" required="" id="id_submitted_by">
+                    <option value="{{user.id}}" selected=""> {{user}}</option>
+                </select> 
+                <br><br>
+                {{  form.chosen_botanist.label}}
+                {{  form.chosen_botanist}}
+                <br>
+                <input type="submit" value="Upload" class="btn btn-primary">
+            </form>
+        </div>
     </div>
 
     <!-- Bootstrap JS (Optional) -->
