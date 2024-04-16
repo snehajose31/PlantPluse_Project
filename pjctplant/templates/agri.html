@@ -173,9 +173,9 @@
       </div>
       <div class="collapse navbar-collapse" id="myNavbar" style="color: black; scrollbar-highlight-color: green;">
         <ul class="nav navbar-nav navbar-right" style="padding-right: 10px;">
-          <li><a href="#Do" style="font-size: x-large;color: black;">Do's & Don'ts</a></li>
-          <li><a href="#Diseases" style="font-size: x-large;color: black;">Few Diseases</a></li>
-          <li><a href="{% url 'botanist' %}" style="font-size: x-large;color: black;">LogOut</a></li>
+          <li><a href="#Do" style="color: black;">Do's & Don'ts</a></li>
+          <li><a href="#Diseases" style="color: black;">Few Diseases</a></li>
+          <li><a href="{% url 'home' %}" style="color: black;">LogOut</a></li>
           {% comment %} <li><a href="https://github.com/Manikanta-Munnangi">
               <img src="../static/img/me.png" class="avatar img-fluid">
             </a>
@@ -199,21 +199,22 @@
       disease your plant affected with,then Upload a images of (Tomato, Potato) plants and get to know the disease it
       posses and the remedies and pratical video explanation to prevent further loss of plants. </p> {% endcomment %}
     <br>
-    <a href="#collapseExample" data-toggle="collapse" class="btn btn-default btn-lg"
-      style="border-radius: 10px;width: 150px;border-color: black;border-width: 1px;color: black;border-style: groove ;">
+    <a href="http://localhost:8501" class="btn btn-default btn-lg" style="border-radius: 10px;width: 150px;border-color: black;border-width: 1px;color: black;border-style: groove;">
       <span class="glyphicon glyphicon-leaf"></span> Start Here
     </a>
+    
     <br>
     <br>
+   
     <p style="color:limegreen;font-weight: bolder;text-align: center;font-size: 30px;">{{Error}}</p>
     <div class="collapse" id="collapseExample">
       <div class="card card-body">
-        <form action="/predict" method="POST" enctype="multipart/form-data">
+        {% comment %} <form action="/predict" method="POST" enctype="multipart/form-data">
           <input type="file" class="btn" name="image"
             style="font-size: 20px;font-weight: bolder;color: black;border-radius: 10px;" accept="image/*" required>
           <input type="submit" class="btn" 
             style="font-size: 20px;font-weight: bolder;color: black;border-radius: 10px;">
-        </form>
+        </form> {% endcomment %}
       </div>
     </div>
   </div>
@@ -277,6 +278,8 @@
       </div>
     </div>
   </div>
+  
+
   <!--Last Container-->
   {% comment %} <div class="container-fluid2 " style="color: black;" id="Me">
     <h2 style="font-weight: bolder;border-radius: 20px;text-align: center;">About Me</h2>

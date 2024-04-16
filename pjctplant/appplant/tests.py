@@ -36,56 +36,56 @@
 
 
 ######addproduct
-import unittest
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
+# import unittest
+# from selenium import webdriver
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
+# from selenium.common.exceptions import TimeoutException
 
-class AddProductTest(unittest.TestCase):
-    def setUp(self):
-        # Start the Selenium WebDriver
-        self.driver = webdriver.Chrome()  # Adjust based on your WebDriver configuration
-        self.driver.get('http://127.0.0.1:3000/addproduct/')  # Replace with the actual URL of your add product page
+# class AddProductTest(unittest.TestCase):
+#     def setUp(self):
+#         # Start the Selenium WebDriver
+#         self.driver = webdriver.Chrome()  # Adjust based on your WebDriver configuration
+#         self.driver.get('http://127.0.0.1:3000/addproduct/')  # Replace with the actual URL of your add product page
 
-    def test_add_product(self):
-        # Find the form inputs and submit button
-        product_name_input = self.driver.find_element(By.ID, 'product-name')
-        category_dropdown = self.driver.find_element(By.ID, 'category-name')
-        subcategory_dropdown = self.driver.find_element(By.ID, 'subcategory-name')
-        stock_input = self.driver.find_element(By.ID, 'stock')
-        description_input = self.driver.find_element(By.ID, 'description')
-        price_input = self.driver.find_element(By.ID, 'price')
-        discount_input = self.driver.find_element(By.ID, 'discount')
-        status_dropdown = self.driver.find_element(By.ID, 'status')
-        image_input = self.driver.find_element(By.ID, 'product-image')
-        add_product_button = self.driver.find_element(By.ID, 'add-product-button')
+#     def test_add_product(self):
+#         # Find the form inputs and submit button
+#         product_name_input = self.driver.find_element(By.ID, 'product-name')
+#         category_dropdown = self.driver.find_element(By.ID, 'category-name')
+#         subcategory_dropdown = self.driver.find_element(By.ID, 'subcategory-name')
+#         stock_input = self.driver.find_element(By.ID, 'stock')
+#         description_input = self.driver.find_element(By.ID, 'description')
+#         price_input = self.driver.find_element(By.ID, 'price')
+#         discount_input = self.driver.find_element(By.ID, 'discount')
+#         status_dropdown = self.driver.find_element(By.ID, 'status')
+#         image_input = self.driver.find_element(By.ID, 'product-image')
+#         add_product_button = self.driver.find_element(By.ID, 'add-product-button')
 
-        # Enter valid product details
-        product_name_input.send_keys("Test Product")
-        category_dropdown.send_keys("plant")  # Change based on your category
-        subcategory_dropdown.send_keys("flowering plant")  # Change based on your subcategory
-        stock_input.send_keys("10")
-        description_input.send_keys("This is a test product description.")
-        price_input.send_keys("100")
-        discount_input.send_keys("10")
-        status_dropdown.send_keys("active")  # Change based on your status
-        image_input.send_keys(r"C:\Users\DELL\Desktop\pulse\pjctplant\static\images\bck10.jpg")  # Replace with the actual path to your test image
+#         # Enter valid product details
+#         product_name_input.send_keys("Test Product")
+#         category_dropdown.send_keys("plant")  # Change based on your category
+#         subcategory_dropdown.send_keys("flowering plant")  # Change based on your subcategory
+#         stock_input.send_keys("10")
+#         description_input.send_keys("This is a test product description.")
+#         price_input.send_keys("100")
+#         discount_input.send_keys("10")
+#         status_dropdown.send_keys("active")  # Change based on your status
+#         image_input.send_keys(r"C:\Users\DELL\Desktop\pulse\pjctplant\static\images\bck10.jpg")  # Replace with the actual path to your test image
 
-        # Submit the form
-        add_product_button.click()
+#         # Submit the form
+#         add_product_button.click()
 
-        # Open the view product page
-        self.driver.get("http://127.0.0.1:3000/viewproduct/")  # Change the URL accordingly
+#         # Open the view product page
+#         self.driver.get("http://127.0.0.1:3000/viewproduct/")  # Change the URL accordingly
 
         
-    def tearDown(self):
-        # Close the browser window
-        self.driver.quit()
+#     def tearDown(self):
+#         # Close the browser window
+#         self.driver.quit()
 
-if __name__ == "__main__":
-    unittest.main()
+# if __name__ == "__main__":
+#     unittest.main()
     
 
 
@@ -194,3 +194,208 @@ if __name__ == "__main__":
 
 # if __name__ == "__main__":
 #     unittest.main()
+
+#########################################################################################################
+
+# from selenium import webdriver
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
+
+# # Start Chrome WebDriver
+# driver = webdriver.Chrome()
+
+# # Set the maximum wait time (in seconds) for Selenium actions
+# driver.implicitly_wait(10)  # Implicit wait for elements to be present
+
+# # Open the login page
+# driver.get("http://127.0.0.1:3000/login/")
+
+# # Find and fill in the email and password fields
+# email_input = driver.find_element(By.ID, "email")
+# password_input = driver.find_element(By.ID, "password")
+
+# email_input.send_keys("drbenjamin1@gmail.com")
+# password_input.send_keys("Sanjo@1010")
+
+# # Click the login button
+# login_button = driver.find_element(By.CSS_SELECTOR, ".login-button")
+# login_button.click()
+
+# # Navigate to the dashboard page
+# driver.get("http://127.0.0.1:3000/consult/")
+
+# # Wait for the scheduling link to be clickable
+# scheduling_link = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, "Scheduling")))
+# scheduling_link.click()
+
+# # Now you are on the scheduling page
+# # Perform any further actions on this page as needed
+
+# # Close the WebDriver session
+# driver.quit()
+##########################################################################################
+
+# from selenium import webdriver
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
+
+# # Start Chrome WebDriver
+# driver = webdriver.Chrome()
+
+# # Set the maximum wait time (in seconds) for Selenium actions
+# driver.implicitly_wait(5)  # Implicit wait for elements to be present
+
+# # Open the dashboard page
+# driver.get("http://127.0.0.1:3000/consult/")
+
+# # Wait for the scheduling button to be clickable
+# try:
+#     scheduling_button = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, "Scheduling")))
+#     scheduling_button.click()
+
+#     # Wait for the redirect to the appointment page with increased timeout
+#     WebDriverWait(driver, 30).until(EC.url_to_be("http://127.0.0.1:3000/appoint/"))
+
+#     # Now you are on the appointment page
+#     # Perform any further actions on this page as needed
+
+#     print("Successfully redirected to http://127.0.0.1:3000/appoint/")
+    
+# except Exception as e:
+#     print("An error occurred:", e)
+
+# finally:
+#     # Close the WebDriver session
+#     driver.quit()
+
+
+
+######################################################################################################################
+
+# from selenium import webdriver
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
+
+# try:
+#     # Start Chrome WebDriver
+#     driver = webdriver.Chrome()
+
+#     # Set the maximum wait time (in seconds) for Selenium actions
+#     driver.implicitly_wait(20)  # Implicit wait for elements to be present
+
+#     # Open the dashboard page
+#     driver.get("http://127.0.0.1:3000/consult/")
+
+#     # Wait for the scheduling button to be clickable
+#     scheduling_button = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, "Scheduling")))
+#     scheduling_button.click()
+
+#     # Wait for the redirect to the appointment page with increased timeout
+#     # WebDriverWait(driver, 60).until(EC.url_to_be("http://127.0.0.1:3000/appoint/"))
+#     driver.get("http://127.0.0.1:3000/appoint/")
+
+
+#     # Now you are on the appointment page
+#     # Perform any further actions on this page as needed
+
+#     print("Successfully redirected to http://127.0.0.1:3000/appoint/")
+
+# except Exception as e:
+#     print("An error occurred:", e)
+
+# finally:
+#     # Close the WebDriver session
+#     driver.quit()
+
+
+#################################################
+# from selenium import webdriver
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
+
+# try:
+#     # Start Chrome WebDriver
+#     driver = webdriver.Chrome()
+
+#     # Set the maximum wait time (in seconds) for Selenium actions
+#     driver.implicitly_wait(20)  # Implicit wait for elements to be present
+
+#     # Open the login page
+#     driver.get("http://127.0.0.1:3000/login/")
+
+#     # Find and fill in the email and password fields
+#     email_input = driver.find_element(By.ID, "email")
+#     email_input.send_keys("nimmysibi25@gmail.com")
+
+#     password_input = driver.find_element(By.ID, "password")
+#     password_input.send_keys("Nimmy@31")
+
+#     # Find and click the login button
+#     login_button = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//button[@type='submit']")))
+#     login_button.click()
+
+#     # Wait for the redirect to the home page
+#     WebDriverWait(driver, 20).until(EC.url_to_be("http://127.0.0.1:3000/home/"))
+
+#     print("Successfully logged in and redirected to the home page")
+
+# except Exception as e:
+#     print("An error occurred:", e)
+
+# finally:
+#     # Close the WebDriver session
+#     driver.quit()
+
+#####################################################################3
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+# Start Chrome WebDriver
+driver = webdriver.Chrome()
+
+try:
+    # Navigate to the login page
+    driver.get("http://127.0.0.1:3000/login/")
+
+    # Fill in email and password fields
+    email_input = driver.find_element(By.ID, "email")
+    email_input.send_keys("nimmysibi25@gmail.com")
+
+    password_input = driver.find_element(By.ID, "password")
+    password_input.send_keys("Nimmy@31")
+
+    # Click the login button
+    login_button = driver.find_element(By.XPATH, "//button[@type='submit']")
+    login_button.click()
+
+    # Wait for the home page to load
+    WebDriverWait(driver, 20).until(EC.url_contains("http://127.0.0.1:3000/home/"))
+
+    # Click on the "BOTANIST" link
+    botanist_link = driver.find_element(By.XPATH, "//a[contains(text(), 'BOTANIST')]")
+    botanist_link.click()
+
+    # Wait for the page to redirect to the specified path
+    WebDriverWait(driver, 20).until(EC.url_contains("http://127.0.0.1:3000/botanist/"))
+
+    print("Login successful and redirected to the BOTANIST page.")
+
+except Exception as e:
+    print("An error occurred:", e)
+
+finally:
+    # Close the WebDriver session
+    driver.quit()
+
+
+
+################################################################
+
+

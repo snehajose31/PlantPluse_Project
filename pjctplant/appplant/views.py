@@ -567,12 +567,26 @@ def confirm(request,id):
                 reason=reason,
                 fees = profile
             )
-            
-            return redirect('home')  # Redirect to a success page after form submission
+            client = razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
+            payment_data = {
+                'amount': int(book_instance.fees.fee * 100),
+                'currency': 'INR',
+                'receipt': f'order_{book_instance.id}',
+                'payment_capture': '1'
+            }
+            orderData = client.order.create(data=payment_data)
+            book_instance.payment_id = orderData['id']
+            book_instance.save()
+            return redirect('con_pay', book_id=book_instance.id)
     else:
         form = BookForm()
     return render(request, 'confirm.html', {'form': form,'doctorSchedule': doctorSchedule ,
                                             'profile':profile})
+    
+def con_pay(request,book_id):
+    book = Book.objects.get(id = book_id)
+    return render(request,'pay_confirm.html',{'book':book})
+    
 
 def search_user(request):
     query = request.GET.get('query')
@@ -975,6 +989,42 @@ def create_order(request):
             print(str(e))
             return JsonResponse({'error': 'An error occurred. Please try again.'}, status=500)
         
+        
+        
+@csrf_exempt
+def create_order1(request):
+    if request.method == 'POST':
+        user = request.user
+        last_item = Book.objects.filter(user=user).last()
+        total_amount = last_item.fees.fee
+        try:
+            # order = Order.objects.create(user=user, total_amount=last_item)
+            # for cart_item in cart_items:
+            #     OrderItem.objects.create(
+            #         order=order,
+            #         product=cart_item.product,
+            #         quantity=cart_item.quantity,
+            #         item_total=cart_item.product.price * cart_item.quantity
+            #     )
+
+            client = razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
+            payment_data = {
+                'amount': int( total_amount * 100),
+                'currency': 'INR',
+                'receipt': f'order_{last_item.id}',
+                'payment_capture': '1'
+            }
+            orderData = client.order.create(data=payment_data)
+            last_item.payment_id = orderData['id']
+            last_item.save()
+
+            return JsonResponse({'order_id': orderData['id']})
+        
+        except Exception as e:
+            print(str(e))
+            return JsonResponse({'error': 'An error occurred1. Please try again.'}, status=500)
+
+        
 def checkout(request):
     cart_items = CartItem.objects.filter(cart=request.user.cart)
     total_amount = sum(item.product.price * item.quantity for item in cart_items)
@@ -1023,6 +1073,31 @@ def handle_payment(request):
         
         
 
+def handle_payment1(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        razorpay_order_id = data.get('order_id')
+        payment_id = data.get('payment_id')
+
+        try:
+            order =Book.objects.get(payment_id=razorpay_order_id)
+
+            client = razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
+            payment = client.payment.fetch(payment_id)
+
+            if payment['status'] == 'captured':
+                order.payment_status = True
+                order.save()
+                return JsonResponse({'message': 'Payment successful'})
+            else:
+                return JsonResponse({'message': 'Payment failed'})
+
+        except Order.DoesNotExist:
+            return JsonResponse({'message': 'Invalid Order ID'})
+        except Exception as e:
+
+            print(str(e))
+            return JsonResponse({'message': 'Server error, please try again later.'})
 
 #user profile
 
@@ -1862,3 +1937,10 @@ def delete_item(request, item_id):
     return JsonResponse({'error': 'Invalid request'})
 
 
+def receipt_view(request):
+    
+    return render(request, 'receipt.html')
+
+def detect(request):
+    
+    return render(request, 'detect.html')

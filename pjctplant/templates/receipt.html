@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medical Bill Invoice</title>
+{% load static %}
+<style>
+body {
+    background: #f0f0f0;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    width: 80%;
+    margin: 50px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+.header .logo-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+.header .logo-container img {
+    max-width: 150px;
+    height: auto;
+}
+.header h1 {
+    color: #333;
+    margin-bottom: 10px;
+}
+.invoice-details {
+    margin-bottom: 30px;
+}
+.invoice-details p {
+    margin: 5px 0;
+}
+.invoice-details strong {
+    display: block;
+}
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+.total {
+    margin-top: 20px;
+    text-align: right;
+}
+.doctor-details {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+.print-button {
+    background-color: red;
+    color: white;
+}
+.header,
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+.back-button {
+    /
+    border: none;
+    color: white;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 1px 1px;
+    cursor: pointer;
+    position: absolute;
+    top: 4px;
+    right: 20px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1></h1>
+    <a href="{% url 'home' %}" class="back-button">Back</a>
+</div>
+<div class="container">
+    <div class="logo-container">
+        <img src="{% static 'images/trlogo.png' %}" alt="Company Logo">
+        {% comment %} <p><i>PlantPulse</i></p> {% endcomment %}
+    </div>
+    <center><h1> Bill Invoice</h1></center>
+    <div class="invoice-details">
+        <p><strong>Customer:</strong> {{request.user.username}}</p>
+        <p><strong>Email:</strong> {{request.user.email}}</p>
+        {% comment %} <p><strong>Phone:</strong> {{request.user.username}}</p> {% endcomment %}
+    </div>
+    <div class="doctor-details">
+        <br><br><br><br><br><br><br><br><br><br>
+        <p><strong>Doctor:</strong> Dr.Balakrishnan</p>
+        <p><strong>Email:</strong> drbenjamin1@gmail.com</p>
+    </div>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Consultation Fee</td>
+                <td>Rs.300.00</td>
+            </tr>
+            {% comment %} <tr>
+                <td>Medication</td>
+                <td>$30.00</td>
+            </tr> {% endcomment %}
+        </tbody>
+    </table>
+    <div class="total">
+        <p><strong>Total Amount:</strong> Rs.300.00</p>
+    </div>
+</div>
+
+
+
+<center><button onclick="window.print()" class="print-button">Print</button></center>
+
+</body>
+</html>

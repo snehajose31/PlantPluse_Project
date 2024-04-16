@@ -94,13 +94,70 @@
     <!-- Header -->
     <div class="header">
         <h1 >Confirmation Details</h1>
-        <button class="back-button" onclick="history.back()">Back</button>
+        <a href="{% url 'home'%}" class="btn btn-light">Back</a>
+        {% comment %} <button class="back-button" onclick="history.back()">Back</button> {% endcomment %}
     </div>
 
     <!-- Main content -->
     <div id="container">
         {% comment %} <h2>Confirmation Details</h2> {% endcomment %}
         <form method="post" action="">
+            {% csrf_token %}
+            <label for="user_first_name">UserName:</label>
+            <input type="text" id="user_first_name" name="user_first_name" value="AlwinGeorge" readonly="">
+        
+            <label for="selected_date">Selected Date:</label>
+            <input type="text" id="selected_date" name="selected_date" value="March 20, 2024" readonly="">
+        
+            <label for="selected_time_slot">Selected Time Slot:</label>
+            <input type="text" id="selected_time_slot" name="selected_time_slot" value="09:00 AM - 09:30 AM" readonly="">
+        
+            <label for="doctor_name">Doctor Email:</label>
+            <input type="text" id="doctor_name" name="doctor_name" value="drbalakrishnan10@gmail.com" readonly="">
+        
+            <label for="doctor_fee">Doctor Fee:</label>
+            <input type="text" id="doctor_fee" name="doctor_fee" value="300.00" readonly="">
+        
+            <p>
+                <label for="id_method">Method:</label>
+                <select name="method" required="" id="id_method">
+                    <option value="" selected="">---------</option>
+                    <option value="online">Online</option>
+                    <option value="offline">Offline</option>
+                </select>
+            </p>
+        
+            <p>
+                <label for="id_reason">Reason:</label>
+                <textarea name="reason" cols="40" rows="10" required="" id="id_reason"></textarea>
+            </p>
+        
+            <button type="submit" class="btn btn-primary" id="offlineButton" style="display: none;">Submit</button>
+            <button type="submit" class="btn btn-primary" id="onlineButton" style="display: none;">Payment</button>
+        </form>
+        
+        <script>
+            var methodSelect = document.getElementById('id_method');
+            var offlineButton = document.getElementById('offlineButton');
+            var onlineButton = document.getElementById('onlineButton');
+        
+            methodSelect.addEventListener('change', function() {
+                if (methodSelect.value === 'offline') {
+                    offlineButton.style.display = 'inline-block';
+                    onlineButton.style.display = 'none';
+                } else if (methodSelect.value === 'online') {
+                    offlineButton.style.display = 'none';
+                    onlineButton.style.display = 'inline-block';
+                } else {
+                    offlineButton.style.display = 'none';
+                    onlineButton.style.display = 'none';
+                }
+            });
+        </script>
+        
+
+
+        {% comment %} <form method="post" action="">
             {% csrf_token %}
             <label for="user_first_name">UserName:</label>
             <input type="text" id="user_first_name" name="user_first_name" value="{{ user.username }}" readonly>
@@ -119,7 +176,7 @@
             {{ form.as_p }}
 
             <button type="submit" class="btn btn-primary"> Payment</button>
-        </form>
+        </form> {% endcomment %}
     </div>
 
     <!-- Footer -->

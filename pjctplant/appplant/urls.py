@@ -52,6 +52,7 @@ urlpatterns = [
     
     path('book-appointment/<int:id>/',views.consultation_form, name='book-appointment'),
     path('confirm/<int:id>/',views.confirm, name='confirm'),
+    path('con_pay/<int:book_id>/',views.con_pay, name='con_pay'),
     path('botdetail/',views.botdetail,name="botdetail"),
     # path('consultation/',views.consultation_form, name='consultation_form'),
     path('search_user/',views.search_user, name='search_user'),
@@ -106,9 +107,12 @@ urlpatterns = [
     path('fetch-cart-count/',views.fetch_cart_count, name='fetch-cart-count'),
     path('fetch-cart-count/', views.fetch_cart_count, name='fetch-cart-count'),
     path('create-order/',views.create_order, name='create-order'),
+    path('create-order1/',views.create_order1, name='create-order1'),
     path('handle-payment/',views.handle_payment, name='handle-payment'),
+    path('handle-payment1/',views.handle_payment1, name='handle-payment1'),
     # path('checkot/',views.checkout, name='checkot'),
-    
+    path('receipt/', views.receipt_view, name='receipt'),
+    path('detect/', views.detect, name='detect'),
     
     #time_slot
     path('get_time_slots/<str:selected_date>/',views.get_time_slots, name='get_time_slots'),
