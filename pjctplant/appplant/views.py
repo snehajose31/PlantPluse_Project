@@ -1360,15 +1360,15 @@ def display_videos(request):
 
 
 #chatgpt nrs
-    # chatapp/views.py
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render
-from transformers import GPT2LMHeadModel, GPT2Tokenizer
+#     # chatapp/views.py
+# from django.http import JsonResponse
+# from django.views.decorators.csrf import csrf_exempt
+# from django.shortcuts import render
+# from transformers import GPT2LMHeadModel, GPT2Tokenizer
 
-model_name = "gpt2"
-tokenizer = GPT2Tokenizer.from_pretrained(model_name)
-model = GPT2LMHeadModel.from_pretrained(model_name)
+# model_name = "gpt2"
+# tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+# model = GPT2LMHeadModel.from_pretrained(model_name)
 
 @csrf_exempt
 # def chatgpt(request):
