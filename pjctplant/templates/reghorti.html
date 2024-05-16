@@ -81,9 +81,53 @@
         color: red;
         font-size: 14px;
     }
+    /* Sidebar Styles */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 120px;
+        background: linear-gradient(to right,#09241c,#158c35);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align:center;
+    }
+    
+    .sidebar-item {
+        width: 60px;
+        height: 50px;
+        background-color: #74a876;
+        margin-bottom: 10px;
+    }
+    .sidebar-item {
+        width:  60px;
+        height: 50px;
+        background-color: #43a347;
+        margin-bottom: 10px;
+        text-align: center;
+        text-decoration: none;
+        line-height: 50px;
+    }
+    
+    .sidebar-item:hover {
+        text-decoration: none;
+    }
+    
+    .sidebar-item:focus {
+        outline: none;
+    }
     
 </style>
 <body>
+    <div class="sidebar">
+        <a href="#" class="sidebar-item btn btn-outline-light btn-sm">Home</a>
+        <a href="{% url 'user_list' %}" class="sidebar-item btn btn-outline-light btn-sm">Users</a>
+        {% comment %} <a href="{% url 'service_list' %}" class="sidebar-item btn btn-outline-light btn-sm">Services</a> {% endcomment %}
+        <a href="{% url 'adminpanel' %}" class="sidebar-item btn btn-outline-light btn-sm">Back</a>
+    </div>
     <div class="container">
         <h2> horticulturist Registration </h2>
         <form id="registrationForm" action="#" method="post">

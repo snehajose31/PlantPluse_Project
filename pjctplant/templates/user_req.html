@@ -21,6 +21,7 @@
     <!-- Header -->
     <div class="header">
         <h1>Service Requests</h1>
+        <a href="{% url 'adminpanel'%}" class="btn btn-light" style="position: absolute; top: 4px; right: 20px;">Back</a>
     </div>
 
     <div class="container">
@@ -30,7 +31,7 @@
                     <th>User</th>
                     <th>Service</th>
                     <th>Status</th>
-                    <th>Actions</th> <!-- Add Actions column -->
+                    {% comment %} <th>Actions</th> <!-- Add Actions column --> {% endcomment %}
                 </tr>
             </thead>
             <tbody>
@@ -39,9 +40,9 @@
                     <td>{{ request.user.username }}</td>
                     <td>{{ request.service }}</td>
                     <td>{{ request.status }}</td>
-                    <td>
-                        <a href="{% url 'req_approve' %}" class="btn btn-primary">Add</a> <!-- Replace 'redirect_view_name' with your actual view name -->
-                    </td>
+                    
+                        {% comment %} <a href="{% url 'req_approve' %}" class="btn btn-primary">Add</a> <!-- Replace 'redirect_view_name' with your actual view name --> {% endcomment %}
+                    
                 </tr>
                 {% endfor %}
             </tbody>

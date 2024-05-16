@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book List</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        header, footer {
+            background: linear-gradient(to right,#164f25,#158c35);
+            color: white;
+            padding: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: green;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header class="text-center">
+        <h1>Appointments</h1>
+        <a href="{% url 'consult'%}" class="btn btn-light" style="position: absolute; top: 4px; right: 20px;">Back</a>
+        <!-- Add any content you want in the header -->
+    </header>
+    
+    <div class="container mt-5">
+        <h1 class="text-center"></h1>
+        <table class="table table-bordered">
+            <thead class="bg-success text-white">
+                <tr>
+                    <th>Username</th>
+                    <th>Schedule Date</th>
+                    <th>Schedule Time Slot</th>
+                    <th>Payment Method</th>
+                    {% comment %} <th>Payment ID</th> {% endcomment %}
+                    {% comment %} <th>Payment Status</th> {% endcomment %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                <tr>
+                    <td>{{ book.user.username }}</td>
+                    <td>{{ book.doctor_schedule.date }}</td>
+                    <td>{{ book.doctor_schedule.time_slot }}</td>
+                    <td>{{ book.method }}</td>
+                    {% comment %} <td>{{ book.payment_id }}</td> {% endcomment %}
+                    {% comment %} <td>{{ book.payment_status }}</td> {% endcomment %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    {% comment %} <footer class="text-center mt-5">
+        <!-- Add any content you want in the footer -->
+        <p>&copy; 2024 Your Website Name. All rights reserved.</p>
+    </footer> {% endcomment %}
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

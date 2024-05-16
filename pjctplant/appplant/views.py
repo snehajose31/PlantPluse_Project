@@ -1359,8 +1359,8 @@ def display_videos(request):
     return render(request, 'display_videos.html', {'videos': videos})
 
 
-#chatgpt nrs
-#     # chatapp/views.py
+# #chatgpt nrs
+#      # chatapp/views.py
 # from django.http import JsonResponse
 # from django.views.decorators.csrf import csrf_exempt
 # from django.shortcuts import render
@@ -1370,11 +1370,11 @@ def display_videos(request):
 # tokenizer = GPT2Tokenizer.from_pretrained(model_name)
 # model = GPT2LMHeadModel.from_pretrained(model_name)
 
-@csrf_exempt
+# @csrf_exempt
 # def chatgpt(request):
 #     return render(request, 'chatgpt.html')
 
-@csrf_exempt
+# @csrf_exempt
 # def generate_response(request):
 #     if request.method == 'POST':
 #         user_input = request.POST.get('user_input')
@@ -1944,3 +1944,10 @@ def receipt_view(request):
 def detect(request):
     
     return render(request, 'detect.html')
+
+from django.shortcuts import render
+from .models import Book
+
+def books(request):
+    books = Book.objects.all()
+    return render(request, 'books.html', {'books': books})

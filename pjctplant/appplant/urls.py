@@ -4,7 +4,7 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from .views import change_password
 from .views import upload_video
-# from .views import display_videos
+from .views import display_videos
 # from .views import chatgpt, generate_response
 urlpatterns = [
    
@@ -179,6 +179,15 @@ urlpatterns = [
     path('sub_sett/', views.sub_sett, name='sub_sett'),
     path('edit_item/<int:item_id>/', views.edit_item, name='edit_item'),
     path('delete_item/<int:item_id>/', views.delete_item, name='delete_item'),
+    
+    
+    
+
+
+
+    path('books/',views.books, name='books'),
+
+
     
     path('agri/', views.agri, name='agri'),
     
